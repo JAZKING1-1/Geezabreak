@@ -1,0 +1,232 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Home | Geeza Break{% endblock %}
+{% block content %}
+
+<!-- Hero Section -->
+<section class="hero text-center py-5 fade-in" style="background-color: #006D77; color: white;">
+  <div class="container">
+    <h1 class="display-4">Geeza Break: Supporting Families, Changing Lives</h1>
+    <p class="lead">We are here for you — every age, every stage, every family.</p>
+    <a href="#services" class="btn btn-light m-2">Explore Services</a>
+    <a href="#donate" class="btn btn-warning m-2">Donate</a>
+  </div>
+</section>
+
+<!-- Referral Section Button -->
+<section class="text-center py-5 section-animate" style="background-color: #e6fbcf">
+  <h2>Complete a referral today</h2>
+  <a href="{% url 'referral' %}" class="btn btn-primary mt-3">Make a Referral</a>
+</section>
+
+<!-- Impact Carousel -->
+<section class="container py-5 text-center section-animate" style="background-color: #fffbea">
+  <h2 class="mb-4">Our Impact in 2023</h2>
+  <div class="swiper mySwiper">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">
+        <img src="{% static 'images/1.jpg' %}" alt="Families Supported" class="img-fluid rounded shadow">
+        <p><strong>470</strong><br>Families Supported in 2023</p>
+      </div>
+      <div class="swiper-slide">
+        <img src="{% static 'images/2.jpg' %}" alt="Children Benefited" class="img-fluid rounded shadow">
+        <p><strong>714</strong><br>Children benefited in 2023</p>
+      </div>
+      <div class="swiper-slide">
+        <img src="{% static 'images/3.jpg' %}" alt="Kinship Families" class="img-fluid rounded shadow">
+        <p><strong>83</strong><br>Kinship families supported</p>
+      </div>
+      <div class="swiper-slide">
+        <img src="{% static 'images/4.jpg' %}" alt="Parents Assisted" class="img-fluid rounded shadow">
+        <p><strong>609</strong><br>Parents/Carers assisted</p>
+      </div>
+    </div>
+    <div class="swiper-pagination"></div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+  </div>
+</section>
+
+<!-- About Section -->
+<section class="container py-5 section-animate" id="about" style="background-color: #d0f4de">
+  <div class="row align-items-center">
+    <div class="col-md-6">
+      <img src="{% static 'images/thumbnail_LOGO.png' %}" alt="Geeza Break Logo" class="img-fluid mb-3" style="max-width: 300px;">
+    </div>
+    <div class="col-md-6">
+      <h2>About Geeza Break</h2>
+      <p>Since 1992, Geeza Break has provided families in Glasgow with practical and emotional support, helping them build resilience and stability during challenging times.</p>
+      <a href="#donate" class="btn btn-outline-primary mt-3">Support Our Mission</a>
+    </div>
+  </div>
+</section>
+
+<!-- Services Teaser -->
+<section class="container py-5 section-animate" id="services" style="background-color: #fff9c4">
+  <h2 class="text-center mb-4">A Glimpse of What We Do</h2>
+  <div class="row text-center">
+    <div class="col-md-4">
+      <div class="feature-card">
+        <h4>Respite Care</h4>
+        <p>Short-term childcare to give parents and carers a break.</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="feature-card">
+        <h4>Wellbeing Support</h4>
+        <p>Guidance and programs to strengthen mental and emotional health.</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="feature-card">
+        <h4>Parent Workshops</h4>
+        <p>Helpful advice and sessions to build parenting confidence.</p>
+      </div>
+    </div>
+  </div>
+  <div class="text-center mt-4">
+    <a href="/services/" class="btn btn-primary">View All Services</a>
+  </div>
+</section>
+
+<!-- Patron Section -->
+<section class="container py-5 section-animate" style="background-color: #caf0f8">
+  <div class="row align-items-center">
+    <div class="col-md-4">
+      <img src="https://source.unsplash.com/300x300/?woman" class="img-fluid rounded-circle" alt="Patron">
+    </div>
+    <div class="col-md-8">
+      <h3>Our Patron</h3>
+      <p><strong>Message of Support from Elaine C Smith</strong></p>
+      <p>I am delighted to be a supporter of Geeza Break as it is a brilliant voluntary organisation helping those who need it most. Their work fills a much-needed gap in childcare and family support in the East End of Glasgow.</p>
+    </div>
+  </div>
+</section>
+
+<!-- History Section -->
+<section class="container py-5 section-animate" style="background-color: #d0f4de">
+  <div class="row align-items-center">
+    <div class="col-md-4">
+      <img src="https://source.unsplash.com/300x200/?glasgow" class="img-fluid" alt="Glasgow history">
+    </div>
+    <div class="col-md-8">
+      <h3>Our History</h3>
+      <p>Geeza Break was founded in 1992 during a period of transformation in Glasgow. Local leaders came together to offer families support and respite during the city’s rapid regeneration. Their mission was to ensure that no family was left behind.</p>
+    </div>
+  </div>
+</section>
+
+<!-- The Work We Do -->
+<section class="container py-5 section-animate" style="background-color: #fffbea">
+  <div class="row align-items-center">
+    <div class="col-md-8">
+      <h3>The Work We Do</h3>
+      <p>At Geeza Break, our mission is to provide holistic, nurturing, and relationship-based family support. We help every child and parent achieve their full potential by creating a community where their voices are heard and supported.</p>
+    </div>
+    <div class="col-md-4">
+      <img src="https://source.unsplash.com/300x200/?family-support" class="img-fluid" alt="Work we do">
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="testimonial-section section-animate" id="testimonials" style="background-color: #caf0f8">
+  <h2 class="text-center mb-4">Testimonials</h2>
+  <blockquote class="testimonial">“Geeza Break helped us when we felt hopeless. Their care and consistency changed everything.” – Lisa</blockquote>
+  <blockquote class="testimonial">“I never thought I'd get support like this. They're truly a blessing to families.” – Ahmed</blockquote>
+</section>
+
+<!-- Donate Banner -->
+<section class="donate-banner text-center section-animate" id="donate" style="background-color: #ffd166;">
+  <div class="container">
+    <h2>Make a Difference</h2>
+    <p>Your donation provides hope and stability to families in Glasgow.</p>
+    <a href="#" class="btn btn-light">Donate Now</a>
+  </div>
+</section>
+
+<!-- Comment Section -->
+<section class="container py-5 section-animate" style="background-color: #ffffff;">
+  <div class="row">
+    <div class="col-md-12">
+      <h2 class="text-center mb-4">We Value Your Feedback</h2>
+      <form id="commentForm" class="mb-4" onsubmit="submitComment(event)">
+        {% csrf_token %}
+        <div class="row g-2 justify-content-center">
+          <div class="col-md-3 d-flex">
+            <input type="text" name="name" id="commentName" class="form-control me-2" placeholder="Your Name">
+            <button type="button" class="btn btn-outline-secondary" id="anonymousBtn" tabindex="0">Anonymous</button>
+          </div>
+          <div class="col-md-6">
+            <input type="text" name="message" class="form-control" placeholder="How did you find our service?" required>
+          </div>
+          <div class="col-md-2">
+            <button type="submit" class="btn btn-primary w-100">Post Comment</button>
+          </div>
+        </div>
+        <div id="commentMessage" class="text-center mt-2" style="display:none;"></div>
+      </form>
+      <div id="commentsList">
+        {% for comment in comments %}
+        <div class="card mb-2">
+          <div class="card-body">
+            <strong>{{ comment.name }}</strong> <span class="text-muted small">{{ comment.created_at|date:'M d, Y H:i' }}</span>
+            <p class="mb-0">{{ comment.message }}</p>
+          </div>
+        </div>
+        {% empty %}
+        <p class="text-center text-muted">No comments yet. Be the first to share your experience!</p>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Fun Zone Section -->
+<section class="text-center py-5 section-animate" style="background-color: #caf0f8">
+  <h2>Looking for Fun?</h2>
+  <a href="{% url 'fun_zone' %}" class="btn btn-success btn-lg mt-2">Go to Fun Zone 🎮</a>
+</section>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="{% static 'js/feedback.js' %}"></script>
+<script src="{% static 'js/comment.js' %}"></script>
+<script>
+    const swiper = new Swiper(".mySwiper", {
+        loop: true,
+        autoplay: {
+          delay: 4000,
+          disableOnInteraction: false,
+        },
+        effect: "coverflow",
+        grabCursor: true,
+        centeredSlides: true,
+        slidesPerView: 1.2,
+        spaceBetween: 20,
+        coverflowEffect: {
+          rotate: 25,
+          stretch: 0,
+          depth: 100,
+          modifier: 1,
+          slideShadows: false,
+        },
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+        breakpoints: {
+          768: {
+            slidesPerView: 2.2
+          }
+        }
+      });
+</script>
+{% endblock %}

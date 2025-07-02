@@ -1,0 +1,56 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Make a Referral | Geeza Break{% endblock %}
+
+{% block content %}
+<section class="container py-5 section-animate" id="referral" style="background-color: #e6fbcf">
+  <form id="referral-form" class="referral-form p-4 rounded-xl bg-white shadow-md max-w-2xl mx-auto mt-8 space-y-6">
+    <h2 class="text-2xl font-bold text-center mb-4">Make a Referral</h2>
+    <!-- Step 1: Referrer Details -->
+    <fieldset>
+      <legend class="font-semibold">Your Details</legend>
+      <label class="block mt-2">Your Name
+        <input type="text" name="referrer_name" required class="w-full p-2 border rounded">
+      </label>
+      <label class="block mt-2">Your Email
+        <input type="email" name="referrer_email" required class="w-full p-2 border rounded">
+      </label>
+      <label class="block mt-2">Phone Number
+        <input type="tel" name="referrer_phone" class="w-full p-2 border rounded">
+      </label>
+    </fieldset>
+    <!-- Step 2: Client Details -->
+    <fieldset>
+      <legend class="font-semibold">Client's Details</legend>
+      <label class="block mt-2">Client Name
+        <input type="text" name="client_name" required class="w-full p-2 border rounded">
+      </label>
+      <label class="block mt-2">Client Address
+        <textarea name="client_address" required class="w-full p-2 border rounded"></textarea>
+      </label>
+      <label class="block mt-2">Client Phone
+        <input type="tel" name="client_phone" class="w-full p-2 border rounded">
+      </label>
+      <label class="block mt-2">Reason for Referral
+        <textarea name="referral_reason" required class="w-full p-2 border rounded"></textarea>
+      </label>
+    </fieldset>
+    <!-- Step 3: Consent -->
+    <fieldset>
+      <legend class="font-semibold">Consent</legend>
+      <label class="block mt-2">
+        <input type="checkbox" name="consent" required> I confirm the client has consented to this referral.
+      </label>
+    </fieldset>
+    <!-- Submit -->
+    <div class="text-center">
+      <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">Submit Referral</button>
+    </div>
+  </form>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{% static 'js/main.js' %}"></script>
+{% endblock %}

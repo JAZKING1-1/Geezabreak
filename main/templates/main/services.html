@@ -1,0 +1,116 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Our Services | Geeza Break{% endblock %}
+
+{% block content %}
+<section class="hero text-center py-5 fade-in" style="background-color: #006D77; color: white;">
+    <div class="container">
+        <h1 class="display-4">Our Services</h1>
+        <p class="lead">Comprehensive Support for Glasgow Families</p>
+    </div>
+</section>
+
+<section class="container py-5 section-animate">
+    <div class="row">
+        <div class="col-md-4 mb-4 fade-in" style="animation-delay: 0.2s;">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h3>Respite Care</h3>
+                    <p>Short breaks for parents and carers when they need it most. Our registered childcare service provides:</p>
+                    <ul>
+                        <li>Weekend care</li>
+                        <li>Emergency support</li>
+                        <li>Planned breaks</li>
+                        <li>Holiday programmes</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary">Enquire Now</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4 fade-in" style="animation-delay: 0.4s;">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h3>Family Support</h3>
+                    <p>Comprehensive support services including:</p>
+                    <ul>
+                        <li>One-to-one support</li>
+                        <li>Parenting advice</li>
+                        <li>Home visits</li>
+                        <li>Crisis intervention</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary">Learn More</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4 fade-in" style="animation-delay: 0.6s;">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h3>Kinship Care</h3>
+                    <p>Specialized support for kinship carers:</p>
+                    <ul>
+                        <li>Advocacy support</li>
+                        <li>Peer support groups</li>
+                        <li>Training workshops</li>
+                        <li>Resource access</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary">Get Support</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 section-animate" style="background-color: #e6fbcf;">
+    <div class="container">
+        <h2 class="text-center mb-4 fade-in">Additional Support</h2>
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h4>Parent Groups</h4>
+                        <p>Regular meetups and workshops covering:</p>
+                        <ul>
+                            <li>Parenting skills</li>
+                            <li>Child development</li>
+                            <li>Mental health support</li>
+                            <li>Social connections</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h4>Youth Programs</h4>
+                        <p>Engaging activities for young people:</p>
+                        <ul>
+                            <li>After-school clubs</li>
+                            <li>Holiday activities</li>
+                            <li>Educational support</li>
+                            <li>Life skills workshops</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container py-5 section-animate">
+    <div class="text-center fade-in">
+        <h2>Need Support?</h2>
+        <p class="lead">We're here to help you and your family</p>
+        <a href="#referral" class="btn btn-primary m-2">Make a Referral</a>
+        <a href="#contact" class="btn btn-outline-primary m-2">Contact Us</a>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="{% static 'js/feedback.js' %}"></script>
+{% endblock %}

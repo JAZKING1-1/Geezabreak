@@ -1,0 +1,47 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}Fun Zone | Geeza Break{% endblock %}
+{% block content %}
+<!-- Google Fonts for Retro Theme -->
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+
+<section class="fun-zone container py-5">
+  <h1 class="fun-zone-title mb-4">Fun Zone</h1>
+  <p class="text-center lead mb-5">Discover, play, and learn with our handpicked games!</p>
+  <div class="filter-buttons d-flex justify-content-center flex-wrap mb-4 gap-2">
+    <button onclick="filterGames('all')" class="btn filter-btn">All</button>
+    <button onclick="filterGames('iq')" class="btn filter-btn">IQ Boosters</button>
+    <button onclick="filterGames('arcade')" class="btn filter-btn">Arcade</button>
+    <button onclick="filterGames('creative')" class="btn filter-btn">Creative</button>
+    <button onclick="filterGames('puzzle')" class="btn filter-btn">Puzzle</button>
+    <button onclick="filterGames('strategy')" class="btn filter-btn">Strategy</button>
+  </div>
+  <div class="row g-4" id="game-list">
+    {% for game in games %}
+      <div class="col-sm-6 col-md-4 game-card" data-category="{{game.category|lower}}">
+        <div class="card h-100">
+          <div class="card-img-container d-flex flex-column align-items-center justify-content-center" style="position:relative;">
+            <img src="{% static game.thumb %}" class="card-img-top mb-2" alt="{{game.title}}" style="max-height:110px; max-width:90%; object-fit:contain; background:#111; border-radius:12px; box-shadow:0 2px 8px #00fff7;">
+            {% if game.logo %}
+              <img src="{% static game.logo %}" alt="{{game.title}} Logo" class="game-logo-preview" style="position:absolute; bottom:8px; right:8px; width:48px; height:48px; background:#fff; border-radius:10px; box-shadow:0 1px 6px #ff00c8; border:2px solid #00fff7; object-fit:contain;">
+            {% endif %}
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">{{game.title}}</h5>
+            <p class="card-text">{{game.desc}}</p>
+            <a href="{{game.url}}" target="_blank" class="btn btn-primary">Play Now</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+<script>
+function filterGames(category) {
+  document.querySelectorAll('.game-card').forEach(card => {
+    const cat = card.dataset.category;
+    card.style.display = (category === 'all' || category === cat) ? 'block' : 'none';
+  });
+}
+</script>
+{% endblock %}

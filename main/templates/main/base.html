@@ -1,0 +1,249 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Geeza Break{% endblock %}</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <!-- Custom CSS -->
+    {% if not request.path == '/fun_zone/' %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% endif %}
+    <!-- Feedback Form CSS -->
+    <link rel="stylesheet" href="{% static 'css/feedback.css' %}">
+</head>
+<body>    <!-- Accessibility Skip Link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Navigation Bar -->
+    <header class="main-header" role="banner">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" role="navigation">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">Geeza Break</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
+                    <ul class="navbar-nav mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About Us</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'services' %}">Services</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'get_help' %}">Get Help</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#volunteer">Volunteer</a></li>
+                        <li class="nav-item"><a class="nav-link btn btn-outline-light ms-2" href="#donate">Donate</a></li>
+                        <li class="nav-item">
+                            <button onclick="toggleDarkMode()" class="nav-link btn btn-sm btn-outline-light ms-2" aria-label="Toggle dark mode">
+                                🌙 Dark Mode
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content" role="main">
+        {% block content %}
+        {# The home page content will be injected here. Remove default demo sections. #}
+        {% endblock %}
+    </main>
+
+    <!-- Sidebar Toggle Button -->
+    <button class="sidebar-toggle" aria-label="Toggle Menu" aria-controls="sidebarMenu" aria-expanded="false">
+        <img src="{% static 'images/hand-toggle.png' %}" alt="Open Menu" class="animated-hand" role="presentation">
+        <span class="visually-hidden">Toggle Navigation Menu</span>
+    </button>
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar bg-light p-4" id="sidebarMenu" role="complementary" aria-label="Quick navigation menu">
+        <button class="close-btn" aria-label="Close menu">&times;</button>
+        <h5>Quick Links</h5>
+        <nav role="navigation">
+            <ul class="list-unstyled">
+                <li><a href="{% url 'home' %}" class="sidebar-link">Home</a></li>
+                <li><a href="{% url 'about' %}" class="sidebar-link">About Us</a></li>
+                <li><a href="{% url 'services' %}" class="sidebar-link">Services</a></li>
+                <li><a href="{% url 'get_help' %}" class="sidebar-link">Get Help</a></li>
+                <li><a href="#donate" class="sidebar-link">Donate</a></li>
+                <li><a href="#volunteer" class="sidebar-link">Volunteer</a></li>
+                <li><a href="#contact" class="sidebar-link">Contact</a></li>
+            </ul>
+        </nav>
+    </aside>
+    <div class="sidebar-overlay" role="presentation"></div>
+
+    <!-- Feedback Modal -->
+    <button class="feedback-trigger" onclick="openFeedback()">
+        <i class="fas fa-comment-alt"></i> Give Feedback
+    </button>
+
+    <div id="feedbackModal" class="feedback-modal" style="display: none;">
+        <div class="feedback-content">
+            <button class="close-feedback" onclick="closeFeedback()">&times;</button>
+            <h2>Share Your Feedback</h2>
+            <form id="feedbackForm" class="feedback-form" onsubmit="submitFeedback(event)">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="contact_number">Contact Number</label>
+                    <input type="tel" id="contact_number" name="contact_number" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="service_used">Service Used</label>
+                    <select id="service_used" name="service_used" required>
+                        <option value="">Select a service</option>
+                        <option value="respite">Respite Care</option>
+                        <option value="wellbeing">Wellbeing Support</option>
+                        <option value="parenting">Parenting Workshops</option>
+                        <option value="kinship">Kinship Care</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="message">Your Message</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+                <button type="submit" class="feedback-submit">Submit Feedback</button>
+                <div id="feedbackMessage" class="feedback-message"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Feedback Form Include -->
+    {# {% include 'main/feedback_form.html' %} #}
+    <!-- Footer -->
+    <footer role="contentinfo" class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="{% url 'home' %}" class="text-white">Home</a></li>
+                        <li><a href="{% url 'about' %}" class="text-white">About Us</a></li>
+                        <li><a href="{% url 'services' %}" class="text-white">Our Services</a></li>
+                        <li><a href="{% url 'get_help' %}" class="text-white">Get Help</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5>Contact Us</h5>
+                    <ul class="list-unstyled">
+                        <li>📞 0141 XXX XXXX</li>
+                        <li>📧 info@geezabreak.org.uk</li>
+                        <li>📍 Glasgow Office</li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <h5>Follow Us</h5>
+                    <div class="social-links">
+                        <a href="#" class="text-white me-2"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-3">
+            <div class="text-center">
+                <p>&copy; 2025 Geeza Break. Supporting families in Glasgow.</p>
+                <p class="mb-0">
+                    <a href="#" class="text-white text-decoration-underline me-2">Privacy Policy</a>
+                    <a href="#" class="text-white text-decoration-underline me-2">Terms of Service</a>
+                    <a href="#" class="text-white text-decoration-underline">Accessibility</a>
+                </p>
+            </div>
+        </div>
+    </footer>    <!-- JS Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'js/theme.js' %}"></script>
+    <script src="{% static 'js/animations.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="{% static 'js/feedback.js' %}"></script>
+    <script>
+        // Sidebar functionality
+        const toggleBtn = document.querySelector('.sidebar-toggle');
+        const sidebar = document.getElementById('sidebarMenu');
+        const closeBtn = document.querySelector('.close-btn');
+        const overlay = document.querySelector('.sidebar-overlay');
+        let sidebarOpen = false;
+
+        function toggleSidebar() {
+            sidebar.classList.toggle('show');
+            overlay.classList.toggle('show');
+            sidebarOpen = !sidebarOpen;
+            toggleBtn.setAttribute('aria-expanded', sidebarOpen);
+            
+            // Manage focus for accessibility
+            if (sidebarOpen) {
+                closeBtn.focus();
+            } else {
+                toggleBtn.focus();
+            }
+        }
+
+        // Handle keyboard navigation
+        function handleEscape(event) {
+            if (event.key === 'Escape' && sidebarOpen) {
+                toggleSidebar();
+            }
+        }
+
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', toggleSidebar);
+            closeBtn.addEventListener('click', toggleSidebar);
+            overlay.addEventListener('click', toggleSidebar);
+            document.addEventListener('keydown', handleEscape);
+        }
+
+        // Add smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                    // If sidebar is open, close it
+                    if (sidebarOpen) {
+                        toggleSidebar();
+                    }
+                }
+            });
+        });
+
+        // Feedback form functionality
+        // Remove these duplicate functions to avoid modal opening on load
+        // function openFeedback() {
+        //     document.getElementById('feedbackModal').style.display = 'block';
+        // }
+        // function closeFeedback() {
+        //     document.getElementById('feedbackModal').style.display = 'none';
+        // }
+
+        function submitFeedback(event) {
+            event.preventDefault();
+            // Add your form submission logic here
+            document.getElementById('feedbackMessage').innerText = 'Thank you for your feedback!';
+            setTimeout(closeFeedback, 2000);
+        }
+    </script>
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>
