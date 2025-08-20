@@ -1,6 +1,8 @@
 {% extends 'main/base.html' %}
 {% load static %}
 
+{% block body_class %}about-page{% endblock %}
+
 {% block title %}About Us | Geeza Break{% endblock %}
 
 {% block content %}
@@ -46,34 +48,278 @@
     </div>
 </section>
 
-<section class="py-5 section-animate">
+<!-- Removed the simple three-card 'Our Team' panels as requested -->
+<!-- (Leadership / Support Workers / Volunteers cards removed) -->
+
+<!-- Meet Our Team - Trustee Cards Section -->
+<section class="py-5 bg-light section-animate">
     <div class="container">
-        <h2 class="text-center mb-4 fade-in">Our Team</h2>
+        <h2 class="text-center mb-5 fade-in">Board Members</h2>
         <div class="row">
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    <div class="card-body text-center">
-                        <h4>Leadership</h4>
-                        <p>Our experienced leadership team brings decades of social care and community support expertise.</p>
+
+            <!-- Hard-coded Board Members to appear first -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card team-card h-100">
+                    <div class="team-image-wrapper">
+                        <img src="{% static 'images/staff/m_kknrmlw8_img_2539.jpg' %}" alt="Gillian Middleton">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Gillian Middleton</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Chief Executive Officer</h6>
+                        <p><strong>Started:</strong> 7 October 2024</p>
+                        <p>A bit of everything really! Strategic, operational, and organisational leadership and progression of the charity, supporting staff development, safeguarding &amp; developing good practice as a registered, regulated health and social care organisation. Income generation, representing the organisation to external stakeholders, financial stewardship, service development, recruitment and working alongside the board of directors to support ongoing good governance.</p>
+                        <p><strong>Why I joined:</strong> Contributing to positive health, care and wellbeing outcomes of precious children, young people, and their families. Providing a service that is relied upon, valued, nurturing and person centred that makes a real difference.</p>
+                        <p><strong>For a break:</strong> I love live music — you can often find me singing and dancing along at a gig like nobody’s watching!</p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    <div class="card-body text-center">
-                        <h4>Support Workers</h4>
-                        <p>Dedicated professionals providing direct support to families and children.</p>
+
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card team-card h-100">
+                    <div class="team-image-wrapper">
+                        <img src="{% static 'images/staff/l_e51z28ys_img_3207.jpg' %}" alt="David Greenwood">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">David Greenwood</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Finance Officer</h6>
+                        <p><strong>Length of service:</strong> 6.5 years in post</p>
+                        <p>All things finance — making a difference every day.</p>
+                        <p><strong>For a break:</strong> I like to read when I get the chance; Agatha Christie is my favourite.</p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    <div class="card-body text-center">
-                        <h4>Volunteers</h4>
-                        <p>Committed community members helping to extend our reach and impact.</p>
+
+            {% for member in team_members %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card team-card h-100">
+                    {% if member.image_path %}
+                    <div class="team-image-wrapper">
+                        <img src="{% static member.image_path %}" alt="{{ member.name }}">
+                    </div>
+                    {% elif member.image %}
+                    <div class="team-image-wrapper">
+                        <img src="{{ member.image.url }}" alt="{{ member.name }}">
+                    </div>
+                    {% else %}
+                    <div class="team-image-placeholder">
+                        <span class="display-4">{{ member.name|slice:":1" }}</span>
+                    </div>
+                    {% endif %}
+
+                    <div class="card-body">
+                        <h5 class="card-title">{{ member.name }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{ member.role_title }}</h6>
+                        <p><strong>Joined:</strong> {{ member.joined_date }}</p>
+
+                        {% if member.reason_for_joining %}
+                        <p><strong>Why I got involved:</strong> {{ member.reason_for_joining }}</p>
+                        {% endif %}
+
+                        {% if member.role_description %}
+                        <p><strong>My role:</strong> {{ member.role_description }}</p>
+                        {% endif %}
+
+                        {% if member.favorite_aspect %}
+                        <p><strong>What I like best:</strong> {{ member.favorite_aspect }}</p>
+                        {% endif %}
+
+                        {% if member.fun_fact %}
+                        <p><strong>For a break:</strong> {{ member.fun_fact }}</p>
+                        {% endif %}
                     </div>
                 </div>
             </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <p>Our team member profiles are coming soon!</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-white section-animate">
+    <div class="container">
+        <h2 class="text-center mb-5 fade-in">Respite Sitters &amp; Family Support</h2>
+        <div class="row">
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card team-card h-100">
+                    <div class="team-image-wrapper">
+                        <img src="{% static 'images/staff/rs3.jpg' %}" alt="Emily Drummond">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Emily Drummond</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Respite Sitter &amp; Sleep Counsellor</h6>
+                        <p><strong>12 years at Geeza Break</strong></p>
+                        <p>My role is to support families within the community. I work with the parents within the family home and group settings. I support the young children by giving them positive play experiences and also one to one support and guidance.</p>
+                        <p><strong>For a break:</strong> I enjoy taking my border collie Shadow to the dog park.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card team-card h-100">
+                    <div class="team-image-wrapper">
+                        <img src="{% static 'images/staff/IMG_20250630_WA0000.jpg' %}" alt="Maureen Connor">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Maureen Connor</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Respite Carer</h6>
+                        <p><strong>10 years in total (5 volunteer, 5 paid)</strong></p>
+                        <p>I help and support families by providing overnight care in my home for children from ages 0 to 16 years. I spend quality one-to-one time with the children, do activities, and provide routine and stability during their respite stay.</p>
+                        <p><strong>Hobbies &amp; fun facts:</strong> I enjoy spending time with my four grandchildren, walking, swimming, World War II history and cowboy movies.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card team-card h-100">
+                    <div class="team-image-wrapper">
+                        <img src="{% static 'images/staff/sam.jpg' %}" alt="Samantha Melrose">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Samantha Melrose</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Senior Family Support Worker</h6>
+                        <p><strong>Approaching 9 years</strong></p>
+                        <p>Working alongside families helping them navigate the challenges of day-to-day life and parenthood, helping them get back on track. I also support other staff and assist the CEO with organisational needs.</p>
+                        <p><strong>For a break:</strong> When I'm not at work or being a mum I go to the gym.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card team-card h-100">
+                    <div class="team-image-wrapper">
+                        <img src="{% static 'images/staff/IMG_5410.jpg' %}" alt="Zaida Ahmed">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Zaida Ahmed</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Respite Sitter / Family Support Worker</h6>
+                        <p><strong>Respite sitter 11 years; Family Support just over 1 year</strong></p>
+                        <p>I provide weekly four-hour respite sessions, taking children into the local community for positive play, museums, arts &amp; crafts and activities planned around what the child wants. Family Support involves building relationships with the whole family.</p>
+                        <p><strong>Fun fact:</strong> I am a Certified IAIM Infant Massager.</p>
+                        <p><strong>For a break:</strong> I like spending time outside walking and with family.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card team-card h-100">
+                    <div class="team-image-wrapper">
+                        <img src="{% static 'images/staff/Trisha.jpg' %}" alt="Trisha Swan">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Trisha Swan</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Family Support Worker</h6>
+                        <p><strong>At Geeza Break since May 2023</strong></p>
+                        <p>I support families to deal with challenges affecting wellbeing and stability, assessing needs and providing appropriate support and guidance.</p>
+                        <p><strong>For a break:</strong> I often book overnight stays somewhere new in the UK or abroad when I can.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card team-card h-100">
+                    <div class="team-image-wrapper">
+                        <img src="{% static 'images/staff/IMG_7335.jpeg' %}" alt="Michele Moran">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Michele Moran</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Family Support / Respite Sitter / Sleep Counsellor</h6>
+                        <p><strong>12 years at Geeza Break</strong></p>
+                        <p>I provide family support (visiting homes and helping with budgeting, applications and practical support), respite sitting (weekly/fortnightly 4-hour sessions) and sleep counselling (creating sleep plans from diaries).</p>
+                        <p><strong>Fun fact:</strong> I'm a huge Harry Potter fan and read all the books in 4 days.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card team-card h-100">
+                    <div class="team-image-wrapper">
+                        <img src="{% static 'images/staff/IMG-20250627-WA0001.jpg' %}" alt="Cathy McInally">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Cathy McInally</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">P/T Senior Family Support Worker</h6>
+                        <p><strong>With Geeza Break for 20 years</strong></p>
+                        <p>My role has included family support and overseeing the family support / respite team and service delivery. Recently I reduced hours to part-time which gives me time for walking and climbing the odd hill.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card team-card h-100">
+                    <div class="team-image-wrapper">
+                        <div class="abstract-avatar" aria-hidden="true">
+                            <!-- simple abstract human SVG -->
+                            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Avatar">
+                                <g fill="none" fill-rule="evenodd">
+                                    <circle cx="32" cy="20" r="12" fill="#20b4ef" />
+                                    <path d="M8 56c0-13.255 10.745-24 24-24s24 10.745 24 24" fill="#0275e2" />
+                                    <circle cx="32" cy="20" r="6" fill="#fff" opacity="0.08" />
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Jack Anderson</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Project Coordinator</h6>
+                        <p><strong>Length of service:</strong> 2 years</p>
+                        <p>Work closely with the Family Support team and Respite Team to coordinate the right support for each family. Day-to-day oversight of support provided and administrative support for services. Monitor and track support, provide stats for reports, support vetting and onboarding and sit on Health &amp; Safety and Fundraising sub-groups.</p>
+                        <p><strong>What I like best:</strong> Seeing the difference the organisation makes.</p>
+                        <p><strong>For a break:</strong> Watch the 80s sitcom “Cheers”.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card team-card h-100">
+                    <div class="team-image-wrapper">
+                        <div class="abstract-avatar" aria-hidden="true">
+                            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Avatar">
+                                <g fill="none" fill-rule="evenodd">
+                                    <circle cx="32" cy="20" r="12" fill="#20b4ef" />
+                                    <path d="M8 56c0-13.255 10.745-24 24-24s24 10.745 24 24" fill="#0275e2" />
+                                    <circle cx="32" cy="20" r="6" fill="#fff" opacity="0.08" />
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Brenda Crawford</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Respite Sitter</h6>
+                        <p><strong>Length of service:</strong> 3 years</p>
+                        <p>Provide a 4 hour respite service taking children out for positive play — parks, soft play, museums or our community flat with sensory and toy rooms. Activities are planned around the child’s needs.</p>
+                        <p><strong>What I like best:</strong> Knowing I'm making a difference and seeing children play and make new friends.</p>
+                        <p><strong>For a break:</strong> I enjoy long walks with my dog and spending time with family.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card team-card h-100">
+                    <div class="team-image-wrapper">
+                        <div class="abstract-avatar" aria-hidden="true">
+                            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Avatar">
+                                <g fill="none" fill-rule="evenodd">
+                                    <circle cx="32" cy="20" r="12" fill="#20b4ef" />
+                                    <path d="M8 56c0-13.255 10.745-24 24-24s24 10.745 24 24" fill="#0275e2" />
+                                    <circle cx="32" cy="20" r="6" fill="#fff" opacity="0.08" />
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Gerry (Geraldine)</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Respite Carer</h6>
+                        <p><strong>Length of service:</strong> Volunteering for several months</p>
+                        <p>Provide overnight respite care in my home for children under 4, including dinner, playtime, bathtime and bedtime stories. Carers sometimes meet so children can play together.</p>
+                        <p><strong>What I like best:</strong> Helping families, building trust with parents and seeing children thrive.</p>
+                        <p><strong>For a break:</strong> I enjoy travelling and exploring new experiences — heading to Italy soon!</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </section>

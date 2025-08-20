@@ -142,3 +142,23 @@ class Criterion(models.Model):
 
     def __str__(self):
         return self.label
+
+
+class TeamMember(models.Model):
+    """Team member profiles for the 'Meet Our Team' section"""
+    name = models.CharField(max_length=100)
+    role_title = models.CharField(max_length=100)
+    joined_date = models.CharField(max_length=100, help_text="When you came on board as a trustee")
+    reason_for_joining = models.TextField(help_text="Why you got involved in supporting Geeza Break")
+    role_description = models.TextField(help_text="What your role entails")
+    favorite_aspect = models.TextField(help_text="What you like best about being a Geeza Break Trustee")
+    fun_fact = models.TextField(help_text="Fun fact/what you like to do 'for a break' when you have the chance")
+    image = models.ImageField(upload_to='team_members/', blank=True, null=True)
+    image_path = models.CharField(max_length=255, blank=True, help_text="Path to image in static folder (e.g. 'images/staff/1t.jpg')")
+    order = models.PositiveIntegerField(default=0, help_text="Display order on the page")
+    
+    class Meta:
+        ordering = ["order", "name"]
+        
+    def __str__(self):
+        return f"{self.name} - {self.role_title}"

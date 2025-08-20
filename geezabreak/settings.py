@@ -19,13 +19,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-scl2%4pj8gy#**u^ldc7l^9*3y$hfnlmsg_-p@wlkc=02*oq%)'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+# Import environment-specific settings
+from .env_settings import *
 
 
 # Application definition
@@ -42,6 +37,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Add WhiteNoise
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -122,32 +118,15 @@ STATICFILES_DIRS = [
 ]
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# Add this to ensure static files are served in development
-if DEBUG:
-    STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+# Static file storage configuration
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Email configuration
-# Using console backend to make sure you see all emails in the terminal output
-# This will print all emails to the console where you run manage.py runserver
-
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-DEFAULT_FROM_EMAIL = 'no-reply@geezabreak.org.uk' 
-REFERRAL_NOTIFICATION_RECIPIENTS = ['ds16022004@gmail.com']
-
-# If you want to see the emails in a file instead, uncomment these lines:
-# EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-# EMAIL_FILE_PATH = BASE_DIR / 'sent_emails'  # Directory where emails will be saved
-
-# For production, you'll want to use an SMTP backend with proper credentials:
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
+# Email configuration settings are now in env_settings.py
 # EMAIL_HOST_USER = 'ds16022004@gmail.com'
 # EMAIL_HOST_PASSWORD = 'your-app-password-here'  # Use Gmail App Password
 # DEFAULT_FROM_EMAIL = 'ds16022004@gmail.com'

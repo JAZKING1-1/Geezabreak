@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Feedback, Referral, ReferralChild, Criterion
+from .models import Feedback, Referral, ReferralChild, Criterion, TeamMember
 
 @admin.register(Feedback)
 class FeedbackAdmin(admin.ModelAdmin):
@@ -18,9 +18,16 @@ class ReferralAdmin(admin.ModelAdmin):
 	search_fields = ("primary_carer_name", "referrer_name", "postcode")
 	inlines = [ReferralChildInline]
 
-	@admin.register(Criterion)
-	class CriterionAdmin(admin.ModelAdmin):
-		list_display = ("label", "key", "order", "active")
-		list_editable = ("order", "active")
-		search_fields = ("label", "key")
-		ordering = ("order", "label")
+@admin.register(Criterion)
+class CriterionAdmin(admin.ModelAdmin):
+	list_display = ("label", "key", "order", "active")
+	list_editable = ("order", "active")
+	search_fields = ("label", "key")
+	ordering = ("order", "label")
+
+@admin.register(TeamMember)
+class TeamMemberAdmin(admin.ModelAdmin):
+	list_display = ("name", "role_title", "order")
+	list_editable = ("order",)
+	search_fields = ("name", "role_title")
+	ordering = ("order", "name")

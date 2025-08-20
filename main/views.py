@@ -25,7 +25,9 @@ def landing(request):
     return render(request, 'main/landing.html')
 
 def about(request):
-    return render(request, 'main/about.html')
+    from .models import TeamMember
+    team_members = TeamMember.objects.filter().order_by('order', 'name')
+    return render(request, 'main/about.html', {'team_members': team_members})
 
 def services(request):
     return render(request, 'main/services.html')
