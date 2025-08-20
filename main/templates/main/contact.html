@@ -1,0 +1,84 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Contact Us | Geeza Break{% endblock %}
+
+{% block extra_head %}
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
+{% endblock %}
+
+{% block content %}
+<section class="hero text-center py-5" style="background-color: #006D77; color: white;">
+  <div class="container">
+    <h1 class="display-4">Contact Us</h1>
+    <p class="lead">We're here to help. Reach out to Geeza Break below.</p>
+  </div>
+</section>
+
+<section class="container py-5 section-animate">
+  <div class="row">
+    <div class="col-md-6 mb-4">
+      <div class="card h-100">
+        <div class="card-body">
+          <h3>Visit Us</h3>
+          <p>📍 1284 Duke Street, Glasgow G31 4EB</p>
+          <div id="map" style="height: 300px;" class="mb-3"></div>
+          
+          <h4 class="mt-4">Opening Hours</h4>
+          <ul class="list-unstyled">
+            <li>Monday - Friday: 9:00 AM - 5:00 PM</li>
+            <li>Saturday - Sunday: Closed</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-6 mb-4">
+      <div class="card h-100">
+        <div class="card-body">
+          <h3>Get in Touch</h3>
+          <ul class="list-unstyled">
+            <li>📞 0141 XXX XXXX</li>
+            <li>📧 info@geezabreak.org.uk</li>
+          </ul>
+          
+          <form id="contact-form" class="mt-4">
+            <div class="mb-3">
+              <label for="name" class="form-label">Name</label>
+              <input type="text" class="form-control" id="name" required>
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" class="form-control" id="email" required>
+            </div>
+            <div class="mb-3">
+              <label for="message" class="form-label">Message</label>
+              <textarea class="form-control" id="message" rows="4" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+function initMap() {
+    const geezaBreak = { lat: 55.8561, lng: -4.2289 }; // Replace with actual coordinates
+    const map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 15,
+        center: geezaBreak,
+    });
+    const marker = new google.maps.Marker({
+        position: geezaBreak,
+        map: map,
+        title: "Geeza Break"
+    });
+}
+
+document.addEventListener('DOMContentLoaded', initMap);
+</script>
+{% endblock %}

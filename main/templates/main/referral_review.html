@@ -1,0 +1,66 @@
+{% extends "main/base.html" %}
+{% block title %}Review Referral | Geeza Break{% endblock %}
+{% block content %}
+<main class="form-page" aria-labelledby="review-title">
+  <div class="form-header">
+    <h1 id="review-title">Review your referral</h1>
+    <p class="lede">Please check everything is correct. You can go back to edit if needed.</p>
+  </div>
+
+  <section class="review-card">
+    <h2>Referrer</h2>
+    <dl>
+      {% for k,v in ref.items %}
+        {% if k in "referrer_agency referrer_name referrer_email referrer_phone preferred_contact_times".split %}
+          <div><dt>{{ k|capfirst|replace:"_"," " }}</dt><dd>{{ v }}</dd></div>
+        {% endif %}
+      {% endfor %}
+    </dl>
+  </section>
+
+  <section class="review-card">
+    <h2>Family / Carer</h2>
+    <dl>
+      <div><dt>Name</dt><dd>{{ ref.primary_carer_name }}</dd></div>
+      <div><dt>Address</dt><dd>{{ ref.address_line1 }} {{ ref.address_line2 }} {{ ref.city }} {{ ref.postcode }}</dd></div>
+      <div><dt>Interpreter required</dt><dd>{{ ref.interpreter_required|yesno:"Yes,No" }}{% if ref.preferred_language %} — {{ ref.preferred_language }}{% endif %}</dd></div>
+      <div><dt>Re-referral</dt><dd>{{ ref.is_rereferral|yesno:"Yes,No" }}{% if ref.last_support_when %} — {{ ref.last_support_when }}{% endif %}</dd></div>
+    </dl>
+  </section>
+
+  <section class="review-card">
+    <h2>Children</h2>
+    {% if children %}
+      <ul class="review-list">
+        {% for c in children %}
+        <li><strong>{{ c.full_name }}</strong> — DOB {{ c.dob }} — {{ c.relationship }}{% if c.has_asn %} — ASN{% endif %}{% if c.school_nursery %} — {{ c.school_nursery }}{% endif %}</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="muted">No children added.</p>
+    {% endif %}
+  </section>
+
+  <section class="review-card">
+    <h2>Criteria & Services</h2>
+    <p><strong>Criteria:</strong> {{ criteria_labels|join:", " }}{% if ref.criteria_other %} — Other: {{ ref.criteria_other }}{% endif %}</p>
+    <p><strong>Services:</strong>
+      {% with s="" %}
+        {% if ref.srv_family_support %}Family Support{% endif %}
+        {% if ref.srv_respite_sitting %}{% if ref.srv_family_support %}, {% endif %}Respite Sitting{% endif %}
+        {% if ref.srv_respite_care %}{% if ref.srv_family_support or ref.srv_respite_sitting %}, {% endif %}Respite Care{% endif %}
+        {% if ref.srv_geezachance %}{% if ref.srv_family_support or ref.srv_respite_sitting or ref.srv_respite_care %}, {% endif %}Geeza Chance{% endif %}
+        {% if ref.srv_kinship_care %}{% if ref.srv_family_support or ref.srv_respite_sitting or ref.srv_respite_care or ref.srv_geezachance %}, {% endif %}Kinship Care{% endif %}
+      {% endwith %}
+    </p>
+  </section>
+
+  <form method="post">
+    {% csrf_token %}
+    <div class="actions" style="gap:.6rem">
+      <a class="btn btn--light" href="{% url 'main:referral' %}">Back to edit</a>
+      <button class="btn btn-primary" type="submit">Confirm & submit</button>
+    </div>
+  </form>
+</main>
+{% endblock %}

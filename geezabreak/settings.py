@@ -116,23 +116,38 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = '/static/'  # Add forward slash at the beginning
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / "main" / "static",
 ]
-STATIC_ROOT = BASE_DIR / 'staticfiles'  # Add this line
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# Add this to ensure static files are served in development
+if DEBUG:
+    STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Email backend for feedback form
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
-EMAIL_HOST_USER = 'ds16022004@gmail.com'
-EMAIL_HOST_PASSWORD = 'qlhj rbnw ownl xsas'  # Gmail App Password
-DEFAULT_FROM_EMAIL = 'Geeza Break <ds16022004@gmail.com>'
+# Email configuration
+# Using console backend to make sure you see all emails in the terminal output
+# This will print all emails to the console where you run manage.py runserver
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'no-reply@geezabreak.org.uk' 
+REFERRAL_NOTIFICATION_RECIPIENTS = ['ds16022004@gmail.com']
+
+# If you want to see the emails in a file instead, uncomment these lines:
+# EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+# EMAIL_FILE_PATH = BASE_DIR / 'sent_emails'  # Directory where emails will be saved
+
+# For production, you'll want to use an SMTP backend with proper credentials:
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = 'ds16022004@gmail.com'
+# EMAIL_HOST_PASSWORD = 'your-app-password-here'  # Use Gmail App Password
+# DEFAULT_FROM_EMAIL = 'ds16022004@gmail.com'

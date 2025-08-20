@@ -1,32 +1,32 @@
-// Navigation style change on scroll
+// Core functionality only
 document.addEventListener('DOMContentLoaded', () => {
-  const nav = document.querySelector('nav');
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-      nav.classList.add('scrolled');
-    } else {
-      nav.classList.remove('scrolled');
-    }
-  });
+  // Section animations
+  const observeCards = () => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate');
+        }
+      });
+    }, { threshold: 0.2 });
 
-  // Smooth scroll for internal links
-  document.querySelectorAll('a[href^=\"#\"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-      e.preventDefault();
-      const target = document.querySelector(this.getAttribute('href'));
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth' });
-      }
+    document.querySelectorAll('.section-animate').forEach(section => {
+      observer.observe(section);
     });
-  });
+  };
 
-  // Accessibility: show focus outlines only when using keyboard
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Tab') {
-      document.body.classList.add('keyboard-nav');
-    }
-  });
+  // Initialize features
+  observeCards();
 
+  // Feedback modal functions
+  window.openFeedback = function() {
+    document.getElementById('feedbackModal').style.display = 'block';
+  }
+
+  window.closeFeedback = function() {
+    document.getElementById('feedbackModal').style.display = 'none';
+  }
+});
   document.addEventListener('mousedown', () => {
     document.body.classList.remove('keyboard-nav');
   });

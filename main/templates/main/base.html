@@ -6,244 +6,593 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Geeza Break{% endblock %}</title>
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-    <!-- Swiper CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <!-- Custom CSS -->
-    {% if not request.path == '/fun_zone/' %}
+    <!-- Theme CSS must load first -->
+    <link rel="stylesheet" href="{% static 'css/theme-colors.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    {% endif %}
-    <!-- Feedback Form CSS -->
     <link rel="stylesheet" href="{% static 'css/feedback.css' %}">
+    <link rel="stylesheet" href="{% static 'css/button-animations.css' %}">
+    <link rel="stylesheet" href="{% static 'css/button-slide-fill.css' %}">
+    <link rel="stylesheet" href="{% static 'css/enhanced-layout.css' %}">
+    <link rel="stylesheet" href="{% static 'css/footer-assets.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    {% block extra_css %}{% endblock %}
 </head>
-<body>    <!-- Accessibility Skip Link -->
-    <a href="#main-content" class="skip-link">Skip to main content</a>
+<body class="{% block body_class %}{% endblock %}">
 
-    <!-- Navigation Bar -->
-    <header class="main-header" role="banner">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" role="navigation">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="/">Geeza Break</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
+<!-- Quick Links Bar removed per design: keep only Get Support in navbar -->
+
+<!-- Header -->
+<header class="gb-header" role="banner">
+    <nav class="navbar gb-navbar navbar-expand-lg navbar-dark fixed-top" role="navigation">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Geeza Break</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
+                <div class="w-100 d-flex justify-content-center align-items-center">
                     <ul class="navbar-nav mb-2 mb-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About Us</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'services' %}">Services</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'get_help' %}">Get Help</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#volunteer">Volunteer</a></li>
-                        <li class="nav-item"><a class="nav-link btn btn-outline-light ms-2" href="#donate">Donate</a></li>
-                        <li class="nav-item">
-                            <button onclick="toggleDarkMode()" class="nav-link btn btn-sm btn-outline-light ms-2" aria-label="Toggle dark mode">
-                                🌙 Dark Mode
-                            </button>
+                        {% if request.path != '/' and request.path != '/home/' %}
+                        <li class="nav-item d-flex align-items-center me-3">
+                            <a href="{% url 'main:referral' %}" class="btn btn-referral" role="button">Make a Referral</a>
+                        </li>
+                        {% endif %}
+                        <li class="nav-item d-flex align-items-center me-3">
+                            <a href="{% url 'main:donate' %}" class="nav-donate" role="button">Donate</a>
+                        </li>
+                        <li class="nav-item d-flex align-items-center">
+                            <a id="gbSupportBtn" class="btn btn--secondary" href="#" role="button" aria-haspopup="dialog" aria-controls="gbSupportModal">Get Support</a>
                         </li>
                     </ul>
                 </div>
             </div>
-        </nav>
-    </header>
+        </div>
+    </nav>
+</header>
 
-    <!-- Main Content -->
-    <main id="main-content" role="main">
-        {% block content %}
-        {# The home page content will be injected here. Remove default demo sections. #}
-        {% endblock %}
-    </main>
+<!-- Main Content -->
+<main id="main-content" role="main">
+    {% block content %}{% endblock %}
+</main>
 
-    <!-- Sidebar Toggle Button -->
-    <button class="sidebar-toggle" aria-label="Toggle Menu" aria-controls="sidebarMenu" aria-expanded="false">
-        <img src="{% static 'images/hand-toggle.png' %}" alt="Open Menu" class="animated-hand" role="presentation">
-        <span class="visually-hidden">Toggle Navigation Menu</span>
-    </button>
+<!-- Sidebar Toggle -->
+<button class="sidebar-toggle" aria-label="Toggle Menu" aria-controls="sidebarMenu" aria-expanded="false">
+    <img src="{% static 'images/hand-toggle.png' %}" alt="Open Menu" class="animated-hand" role="presentation">
+    <span class="visually-hidden">Toggle Navigation Menu</span>
+</button>
 
-    <!-- Sidebar Navigation -->
-    <aside class="sidebar bg-light p-4" id="sidebarMenu" role="complementary" aria-label="Quick navigation menu">
-        <button class="close-btn" aria-label="Close menu">&times;</button>
-        <h5>Quick Links</h5>
-        <nav role="navigation">
-            <ul class="list-unstyled">
-                <li><a href="{% url 'home' %}" class="sidebar-link">Home</a></li>
-                <li><a href="{% url 'about' %}" class="sidebar-link">About Us</a></li>
-                <li><a href="{% url 'services' %}" class="sidebar-link">Services</a></li>
-                <li><a href="{% url 'get_help' %}" class="sidebar-link">Get Help</a></li>
-                <li><a href="#donate" class="sidebar-link">Donate</a></li>
-                <li><a href="#volunteer" class="sidebar-link">Volunteer</a></li>
-                <li><a href="#contact" class="sidebar-link">Contact</a></li>
-            </ul>
-        </nav>
-    </aside>
-    <div class="sidebar-overlay" role="presentation"></div>
+<!-- Sidebar -->
+<aside class="sidebar bg-light p-4" id="sidebarMenu">
+    <button class="close-btn" aria-label="Close menu">&times;</button>
+    <h5>Quick Links</h5>
+    <nav role="navigation">
+        <!-- Sidebar Links -->
+        <ul class="list-unstyled">
+            <li><a href="{% url 'main:home' %}" class="sidebar-link">Home</a></li>
+            <li><a href="{% url 'main:about' %}" class="sidebar-link">About Us</a></li>
+            <li><a href="{% url 'main:services' %}" class="sidebar-link">Services</a></li>
+            <li><a href="{% url 'main:contact' %}" class="sidebar-link">Contact</a></li>
+            <li><a href="{% url 'main:donate' %}" class="sidebar-link">Donate</a></li>
+            <li><a href="#volunteer" class="sidebar-link">Volunteer</a></li>
+        </ul>
+    </nav>
+</aside>
+<div class="sidebar-overlay" role="presentation"></div>
 
-    <!-- Feedback Modal -->
-    <button class="feedback-trigger" onclick="openFeedback()">
-        <i class="fas fa-comment-alt"></i> Give Feedback
-    </button>
+<!-- Global Right-side Quick Links Drawer Trigger -->
+<button id="quickDrawerToggle" class="quick-drawer-toggle" aria-controls="globalQuickDrawer" aria-expanded="false" aria-label="Open quick links">
+    <i class="fas fa-bars" aria-hidden="true"></i>
+    <span class="visually-hidden">Open quick links</span>
+ </button>
 
-    <div id="feedbackModal" class="feedback-modal" style="display: none;">
-        <div class="feedback-content">
-            <button class="close-feedback" onclick="closeFeedback()">&times;</button>
-            <h2>Share Your Feedback</h2>
-            <form id="feedbackForm" class="feedback-form" onsubmit="submitFeedback(event)">
-                {% csrf_token %}
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" name="name" required>
-                </div>
-                <div class="form-group">
-                    <label for="contact_number">Contact Number</label>
-                    <input type="tel" id="contact_number" name="contact_number" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="service_used">Service Used</label>
-                    <select id="service_used" name="service_used" required>
-                        <option value="">Select a service</option>
-                        <option value="respite">Respite Care</option>
-                        <option value="wellbeing">Wellbeing Support</option>
-                        <option value="parenting">Parenting Workshops</option>
-                        <option value="kinship">Kinship Care</option>
-                        <option value="other">Other</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="message">Your Message</label>
-                    <textarea id="message" name="message" required></textarea>
-                </div>
-                <button type="submit" class="feedback-submit">Submit Feedback</button>
-                <div id="feedbackMessage" class="feedback-message"></div>
-            </form>
+<!-- Global Right-side Quick Links Drawer -->
+<aside id="globalQuickDrawer" class="home-quick-drawer" role="navigation" aria-label="Quick links" aria-hidden="true">
+    <div class="qd-header d-flex align-items-center justify-content-between">
+        <h5 class="mb-0">Quick Links</h5>
+        <button type="button" class="qd-close-btn" aria-label="Close quick links">&times;</button>
+    </div>
+    <nav>
+        <ul class="qd-list">
+            <li><a href="{% url 'main:home' %}"><i class="fas fa-house"></i> Home</a></li>
+            <li><a href="{% url 'main:about' %}"><i class="fas fa-circle-info"></i> About Us</a></li>
+            <li><a href="{% url 'main:services' %}"><i class="fas fa-hands-helping"></i> Services</a></li>
+            <li><a href="{% url 'main:contact' %}"><i class="fas fa-envelope"></i> Contact</a></li>
+            <li><a href="{% url 'main:referral' %}"><i class="fas fa-file-pen"></i> Make a Referral</a></li>
+            <li><a href="{% url 'main:donate' %}"><i class="fas fa-donate"></i> Donate</a></li>
+            <li><a href="#volunteer"><i class="fas fa-user-friends"></i> Volunteer</a></li>
+        </ul>
+    </nav>
+    <div class="qd-footer small text-muted">Geeza Break</div>
+</aside>
+<div id="quickDrawerOverlay" class="quick-drawer-overlay" aria-hidden="true"></div>
+
+<!-- Feedback Button -->
+<button class="feedback-trigger" onclick="openFeedback()">
+    <i class="fas fa-comment-alt"></i> Give Feedback
+</button>
+
+<!-- Feedback Modal -->
+<div id="feedbackModal" class="feedback-modal" style="display: none;">
+    <div class="feedback-content">
+        <button class="close-feedback" onclick="closeFeedback()">&times;</button>
+        <h2>Share Your Feedback</h2>
+        <form id="feedbackForm" class="feedback-form" onsubmit="submitFeedback(event)">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="contact_number">Contact Number</label>
+                <input type="tel" id="contact_number" name="contact_number" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="service_used">Service Used</label>
+                <select id="service_used" name="service_used" required>
+                    <option value="">Select a service</option>
+                    <option value="respite">Respite Care</option>
+                    <option value="wellbeing">Wellbeing Support</option>
+                    <option value="parenting">Parenting Workshops</option>
+                    <option value="kinship">Kinship Care</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="message">Your Message</label>
+                <textarea id="message" name="message" required></textarea>
+            </div>
+            <button type="submit" class="feedback-submit">Submit Feedback</button>
+            <div id="feedbackMessage" class="feedback-message"></div>
+        </form>
+    </div>
+</div>
+
+<!-- Support Modal (overlay + dialog) -->
+<div id="gbSupportBackdrop" class="gb-support-backdrop" aria-hidden="true">
+    <div id="gbSupportModal" class="gb-support-modal" role="dialog" aria-modal="true" aria-labelledby="gbSupportTitle" aria-describedby="gbSupportDesc">
+        <button type="button" class="gb-support-close" id="gbSupportClose" aria-label="Close support options">&times;</button>
+        <header class="gb-support-header">
+            <h2 id="gbSupportTitle">How would you like to get support?</h2>
+            <p id="gbSupportDesc" class="gb-support-sub">Choose an option to see details</p>
+        </header>
+
+        <div class="gb-support-content">
+            <!-- Options -->
+            <div class="gb-support-options" role="tablist" aria-label="Support methods">
+                <button id="gb-tab-call" class="gb-support-option" role="tab" aria-selected="true" tabindex="0" data-option="call" aria-controls="gb-panel-call">
+                    <i class="fas fa-phone"></i>
+                    <span>Call</span>
+                </button>
+                <button id="gb-tab-text" class="gb-support-option" role="tab" aria-selected="false" tabindex="-1" data-option="text" aria-controls="gb-panel-text">
+                    <i class="fas fa-sms"></i>
+                    <span>Text</span>
+                </button>
+                <button id="gb-tab-email" class="gb-support-option" role="tab" aria-selected="false" tabindex="-1" data-option="email" aria-controls="gb-panel-email">
+                    <i class="fas fa-envelope"></i>
+                    <span>Email</span>
+                </button>
+                <button id="gb-tab-chat" class="gb-support-option" role="tab" aria-selected="false" tabindex="-1" data-option="chat" aria-controls="gb-panel-chat">
+                    <i class="fas fa-comments"></i>
+                    <span>Web Chat</span>
+                </button>
+            </div>
+
+            <!-- Panels -->
+            <div class="gb-support-panels">
+                <section id="gb-panel-call" class="gb-support-panel active" role="tabpanel" data-panel="call" aria-label="Phone support" aria-labelledby="gb-tab-call">
+                    <h3>Call Us</h3>
+                    <p>Mon–Fri, 9am–5pm</p>
+                    <a href="tel:08088026666" class="btn btn-primary">Call 0808 802 6666</a>
+                </section>
+
+                <section id="gb-panel-text" class="gb-support-panel" role="tabpanel" data-panel="text" aria-label="Text support" aria-labelledby="gb-tab-text" hidden>
+                    <h3>Text Us</h3>
+                    <p>Send us a message and we’ll reply ASAP.</p>
+                    <a href="sms:+447537404282" class="btn btn-primary">Text 07537 404 282</a>
+                </section>
+
+                <section id="gb-panel-email" class="gb-support-panel" role="tabpanel" data-panel="email" aria-label="Email support" aria-labelledby="gb-tab-email" hidden>
+                    <h3>Email Us</h3>
+                    <p><strong>Email:</strong> <a href="mailto:familyline@family-action.org.uk">familyline@family-action.org.uk</a></p>
+                    <form class="gb-support-form" aria-label="Email support form">
+                        <label>
+                            Your Email
+                            <input type="email" required placeholder="you@example.com">
+                        </label>
+                        <label>
+                            Message
+                            <textarea rows="4" required placeholder="How can we help?"></textarea>
+                        </label>
+                        <button type="submit" class="btn btn-primary">Send Email</button>
+                    </form>
+                </section>
+
+                <section id="gb-panel-chat" class="gb-support-panel" role="tabpanel" data-panel="chat" aria-label="Web chat support" aria-labelledby="gb-tab-chat" hidden>
+                    <h3>Start a Chat</h3>
+                    <p>Connect with our team in real time.</p>
+                    <a href="{% url 'main:contact' %}#chat" class="btn btn-primary">Open Web Chat</a>
+                </section>
+            </div>
         </div>
     </div>
-
-    <!-- Feedback Form Include -->
-    {# {% include 'main/feedback_form.html' %} #}
-    <!-- Footer -->
-    <footer role="contentinfo" class="bg-dark text-white py-4">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 mb-3">
-                    <h5>Quick Links</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="{% url 'home' %}" class="text-white">Home</a></li>
-                        <li><a href="{% url 'about' %}" class="text-white">About Us</a></li>
-                        <li><a href="{% url 'services' %}" class="text-white">Our Services</a></li>
-                        <li><a href="{% url 'get_help' %}" class="text-white">Get Help</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <h5>Contact Us</h5>
-                    <ul class="list-unstyled">
-                        <li>📞 0141 XXX XXXX</li>
-                        <li>📧 info@geezabreak.org.uk</li>
-                        <li>📍 Glasgow Office</li>
-                    </ul>
-                </div>
-                <div class="col-md-4 mb-3">
-                    <h5>Follow Us</h5>
-                    <div class="social-links">
-                        <a href="#" class="text-white me-2"><i class="fab fa-facebook"></i></a>
-                        <a href="#" class="text-white me-2"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="text-white me-2"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="text-white"><i class="fab fa-linkedin"></i></a>
-                    </div>
-                </div>
-            </div>
-            <hr class="my-3">
-            <div class="text-center">
-                <p>&copy; 2025 Geeza Break. Supporting families in Glasgow.</p>
-                <p class="mb-0">
-                    <a href="#" class="text-white text-decoration-underline me-2">Privacy Policy</a>
-                    <a href="#" class="text-white text-decoration-underline me-2">Terms of Service</a>
-                    <a href="#" class="text-white text-decoration-underline">Accessibility</a>
-                </p>
+</div>
+<!-- Footer -->
+<footer role="contentinfo" class="bg-dark text-white py-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h5>Quick Links</h5>
+                <ul>
+                    <li><a href="{% url 'main:home' %}" class="text-white">Home</a></li>
+                    <li><a href="{% url 'main:about' %}" class="text-white">About Us</a></li>
+                    <li><a href="{% url 'main:services' %}" class="text-white">Our Services</a></li>
+                    <li><a href="{% url 'main:contact' %}" class="text-white">Contact</a></li>
+                    <li><a href="{% url 'main:referral' %}" class="text-white">Make a Referral</a></li>
+                </ul>
             </div>
         </div>
-    </footer>    <!-- JS Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{% static 'js/theme.js' %}"></script>
-    <script src="{% static 'js/animations.js' %}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="{% static 'js/feedback.js' %}"></script>
-    <script>
-        // Sidebar functionality
-        const toggleBtn = document.querySelector('.sidebar-toggle');
-        const sidebar = document.getElementById('sidebarMenu');
-        const closeBtn = document.querySelector('.close-btn');
-        const overlay = document.querySelector('.sidebar-overlay');
-        let sidebarOpen = false;
+    </div>
+</footer>
 
-        function toggleSidebar() {
-            sidebar.classList.toggle('show');
-            overlay.classList.toggle('show');
-            sidebarOpen = !sidebarOpen;
-            toggleBtn.setAttribute('aria-expanded', sidebarOpen);
-            
-            // Manage focus for accessibility
-            if (sidebarOpen) {
-                closeBtn.focus();
-            } else {
-                toggleBtn.focus();
-            }
+<!-- Core Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'js/animations.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="{% static 'js/feedback.js' %}"></script>
+<script src="{% static 'js/gb_nav.js' %}"></script>
+
+<script>
+  // Open the sidebar when the hamburger menu is clicked (left-slide, .active)
+  (function(){
+    const sidebarToggle = document.querySelector('.sidebar-toggle');
+    const sidebarMenu = document.getElementById('sidebarMenu');
+    const closeBtn = document.querySelector('.close-btn');
+    const sidebarOverlay = document.querySelector('.sidebar-overlay');
+    if(!sidebarToggle || !sidebarMenu || !sidebarOverlay) return;
+
+    sidebarToggle.addEventListener('click', () => {
+        sidebarMenu.classList.add('active');       // show the sidebar
+        sidebarOverlay.style.display = 'block';    // show overlay
+        sidebarToggle.setAttribute('aria-expanded', 'true');
+    });
+
+    function closeSidebar(){
+        sidebarMenu.classList.remove('active');    // hide the sidebar
+        sidebarOverlay.style.display = 'none';     // hide overlay
+        sidebarToggle.setAttribute('aria-expanded', 'false');
+    }
+
+    if (closeBtn) closeBtn.addEventListener('click', closeSidebar);
+    sidebarOverlay.addEventListener('click', closeSidebar);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeSidebar(); });
+  })();
+</script>
+<script>
+    // Scroll shadow + reveal animations
+    (function(){
+        const root = document.documentElement;
+        function onScroll(){ if(window.scrollY>8) root.classList.add('scrolled'); else root.classList.remove('scrolled'); }
+        window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+        const io = new IntersectionObserver(entries=>{ entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('is-visible');}); }, {threshold:.12});
+        document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+    })();
+</script>
+
+<!-- Only one extra_scripts block -->
+{% block extra_scripts %}{% endblock %}
+
+<script>
+    // Site-wide Support modal behavior with analytics tracking
+    (function(){
+        const openBtn = document.getElementById('gbSupportBtn');
+        const backdrop = document.getElementById('gbSupportBackdrop');
+        const dialog = document.getElementById('gbSupportModal');
+        const closeBtn = document.getElementById('gbSupportClose');
+        if(!openBtn || !backdrop || !dialog) return;
+
+        const options = Array.from(dialog.querySelectorAll('.gb-support-option'));
+        const panels = Array.from(dialog.querySelectorAll('.gb-support-panel'));
+        let lastFocused = null;
+        let focusHandler = null;
+
+        function trackSupportEvent(action, method){
+            try {
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({ event: 'support_modal', action, method: method || null });
+                if (typeof window.gtag === 'function') {
+                    window.gtag('event', 'support_' + action, { event_category: 'Support', event_label: method || undefined });
+                }
+            } catch (e) { /* no-op */ }
+            if (window.console) console.log('[Support]', action, method || '');
         }
 
-        // Handle keyboard navigation
-        function handleEscape(event) {
-            if (event.key === 'Escape' && sidebarOpen) {
-                toggleSidebar();
-            }
+        function trapFocus(){
+            const focusable = dialog.querySelectorAll('a, button, input, textarea, select, [tabindex]:not([tabindex="-1"])');
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+            focusHandler = function(e){
+                if (!backdrop.classList.contains('show')) return;
+                if (e.key !== 'Tab') return;
+                if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+                else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+            };
+            document.addEventListener('keydown', focusHandler);
+        }
+        function releaseFocus(){
+            if (focusHandler) document.removeEventListener('keydown', focusHandler);
+            focusHandler = null;
         }
 
-        if (toggleBtn) {
-            toggleBtn.addEventListener('click', toggleSidebar);
-            closeBtn.addEventListener('click', toggleSidebar);
-            overlay.addEventListener('click', toggleSidebar);
-            document.addEventListener('keydown', handleEscape);
+        function openModal(){
+            lastFocused = document.activeElement;
+            backdrop.classList.remove('hide-anim');
+            backdrop.classList.add('show');
+            backdrop.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+            setTimeout(()=> options[0]?.focus(), 50);
+            trapFocus();
+            trackSupportEvent('open');
         }
 
-        // Add smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                    // If sidebar is open, close it
-                    if (sidebarOpen) {
-                        toggleSidebar();
-                    }
+        function closeModal(){
+            backdrop.classList.add('hide-anim');
+            setTimeout(() => {
+                backdrop.classList.remove('show', 'hide-anim');
+                backdrop.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+                if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
+                releaseFocus();
+                trackSupportEvent('close');
+            }, 200);
+        }
+
+        function selectOption(name){
+            options.forEach(btn => {
+                const active = btn.dataset.option === name;
+                btn.classList.toggle('active', active);
+                btn.setAttribute('aria-selected', active ? 'true' : 'false');
+                btn.setAttribute('tabindex', active ? '0' : '-1');
+            });
+            panels.forEach(panel => {
+                const match = panel.dataset.panel === name;
+                panel.classList.toggle('active', match);
+                if (match) { panel.removeAttribute('hidden'); }
+                else { panel.setAttribute('hidden', 'hidden'); }
+            });
+            trackSupportEvent('select', name);
+        }
+
+        openBtn.addEventListener('click', (e)=>{ e.preventDefault(); openModal(); });
+        closeBtn?.addEventListener('click', closeModal);
+        backdrop.addEventListener('click', (e)=>{ if(e.target === backdrop) closeModal(); });
+        document.addEventListener('keydown', (e)=>{ if(backdrop.classList.contains('show') && e.key === 'Escape') closeModal(); });
+
+        options.forEach(btn => {
+            btn.addEventListener('click', ()=> selectOption(btn.dataset.option));
+            btn.addEventListener('keydown', (e)=>{
+                if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    const idx = options.indexOf(btn);
+                    const nextIdx = e.key === 'ArrowRight' ? (idx + 1) % options.length : (idx - 1 + options.length) % options.length;
+                    options[nextIdx].focus();
+                    selectOption(options[nextIdx].dataset.option);
+                }
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    selectOption(btn.dataset.option);
                 }
             });
         });
 
-        // Feedback form functionality
-        // Remove these duplicate functions to avoid modal opening on load
-        // function openFeedback() {
-        //     document.getElementById('feedbackModal').style.display = 'block';
-        // }
-        // function closeFeedback() {
-        //     document.getElementById('feedbackModal').style.display = 'none';
-        // }
+        // Prevent email form submission (demo)
+        const emailForm = dialog.querySelector('.gb-support-panel[data-panel="email"] form');
+        emailForm?.addEventListener('submit', (e)=> {
+            e.preventDefault();
+            alert('Thanks, we will reply by email.');
+            closeModal();
+        });
 
-        function submitFeedback(event) {
-            event.preventDefault();
-            // Add your form submission logic here
-            document.getElementById('feedbackMessage').innerText = 'Thank you for your feedback!';
-            setTimeout(closeFeedback, 2000);
+        // Init default state
+        selectOption('call');
+        })();
+</script>
+<script>
+    // Global Right-side Quick Drawer behavior (appended after other scripts)
+    (function(){
+        const toggle = document.getElementById('quickDrawerToggle');
+        const drawer = document.getElementById('globalQuickDrawer');
+        const overlay = document.getElementById('quickDrawerOverlay');
+        const closeBtn = drawer?.querySelector('.qd-close-btn');
+        if(!toggle || !drawer || !overlay) return;
+
+        let lastFocus = null;
+
+        function openDrawer(){
+            lastFocus = document.activeElement;
+            drawer.classList.add('active');
+            drawer.setAttribute('aria-hidden', 'false');
+            overlay.classList.add('show');
+            overlay.setAttribute('aria-hidden', 'false');
+            toggle.setAttribute('aria-expanded', 'true');
+            document.body.style.overflow = 'hidden';
+            const firstLink = drawer.querySelector('a, button');
+            setTimeout(()=> firstLink?.focus(), 30);
         }
+        function closeDrawer(){
+            drawer.classList.remove('active');
+            drawer.setAttribute('aria-hidden', 'true');
+            overlay.classList.remove('show');
+            overlay.setAttribute('aria-hidden', 'true');
+            toggle.setAttribute('aria-expanded', 'false');
+            document.body.style.overflow = '';
+            if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+        }
+
+        toggle.addEventListener('click', openDrawer);
+        closeBtn?.addEventListener('click', closeDrawer);
+        overlay.addEventListener('click', closeDrawer);
+        document.addEventListener('keydown', (e)=>{
+            if(e.key === 'Escape' && drawer.classList.contains('active')) closeDrawer();
+        });
+    })();
+</script>
+    <script>
+    // Corkboard Story Wall JS (applies if .gb-wall exists)
+    (function(){
+        const wall = document.querySelector('.gb-wall');
+        if(!wall) return;
+        const tiles = wall.querySelectorAll('.tile');
+        tiles.forEach((el)=>{
+            const r = (Math.random()*2 - 1) * 1.6; // random rotation
+            el.style.setProperty('--rot', r.toFixed(2)+'deg');
+            const tapeR = (Math.random()*6 - 3); // -3deg..+3deg for tape
+            el.style.setProperty('--tape-rot', tapeR.toFixed(2)+'deg');
+        });
+        // Reveal using existing observer if present; else own IO
+        if(!('IntersectionObserver' in window)){
+            tiles.forEach(t=> t.classList.add('is-visible'));
+        } else {
+            const io = new IntersectionObserver(entries=>{
+                entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('is-visible'); io.unobserve(e.target);} });
+            }, {threshold:.12});
+            tiles.forEach(t=>{ t.classList.add('reveal'); io.observe(t); });
+            // Fallback: force visible if already in viewport (first paint) but not yet intersected
+            requestAnimationFrame(()=>{
+                tiles.forEach(t=>{
+                    const rect = t.getBoundingClientRect();
+                    if(rect.top < window.innerHeight * 0.9) t.classList.add('is-visible');
+                });
+            });
+        }
+
+        // Lightbox setup
+        const lb = document.createElement('div');
+        lb.className='lightbox';
+        lb.innerHTML = '<button aria-label="Close">×</button><figure></figure>';
+        document.body.appendChild(lb);
+        const fig = lb.querySelector('figure');
+        function openLB(node){
+            fig.innerHTML='';
+            const clone = node.cloneNode(true);
+            if(clone.tagName==='VIDEO'){ clone.controls=true; clone.muted=false; clone.autoplay=true; }
+            fig.appendChild(clone); lb.classList.add('open');
+        }
+        lb.addEventListener('click', e=>{ if(e.target.tagName==='BUTTON' || e.target===lb) lb.classList.remove('open'); });
+        wall.querySelectorAll('img,video').forEach(m=> m.addEventListener('click', ()=>openLB(m)) );
+    })();
     </script>
-    {% block extra_scripts %}{% endblock %}
+    
+    <!-- Button Animation Scripts -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Handle click animations for submit buttons
+        const submitButtons = document.querySelectorAll('button[type="submit"]');
+        submitButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                this.classList.add('clicked');
+                setTimeout(() => {
+                    this.classList.remove('clicked');
+                }, 1000);
+            });
+        });
+        
+        // Track form submissions and add success animation
+        const forms = document.querySelectorAll('form');
+        forms.forEach(form => {
+            form.addEventListener('submit', function(e) {
+                // Store the submission in local storage to show animation after redirect
+                localStorage.setItem('formSubmitted', 'true');
+                localStorage.setItem('formSubmitTime', Date.now());
+            });
+        });
+        
+        // Check if we need to show form submission animation after redirect
+        if (localStorage.getItem('formSubmitted') === 'true') {
+            const submitTime = parseInt(localStorage.getItem('formSubmitTime'));
+            const currentTime = Date.now();
+            
+            // Only show animation if the form was submitted less than 2 seconds ago
+            if (currentTime - submitTime < 2000) {
+                const successMessage = document.querySelector('.alert-success');
+                if (successMessage) {
+                    successMessage.classList.add('form-success-animation');
+                }
+            }
+            
+            // Clear the storage
+            localStorage.removeItem('formSubmitted');
+            localStorage.removeItem('formSubmitTime');
+        }
+        
+        // Add button click wave effect for donate and support buttons
+        const specialButtons = document.querySelectorAll('.donate-btn, .nav-donate, #gbSupportBtn');
+        specialButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                this.classList.add('clicked');
+                setTimeout(() => {
+                    this.classList.remove('clicked');
+                }, 500);
+            });
+        });
+    });
+    </script>
+
+<!-- Footer -->
+<footer class="gb-footer">
+    <div class="gb-footer-content">
+        <div class="gb-footer-column">
+            <img src="{% static 'images/geezabreak_logo.png' %}" alt="Geeza Break Logo" class="gb-footer-logo">
+        </div>
+        
+        <div class="gb-footer-column">
+            <h3>About</h3>
+            <p>Geeza Break is a registration<br>
+            Company Number: 357219<br>
+            Place of Registration: Scotland<br>
+            Charity Number: SC015637</p>
+            
+            <div class="care-inspectorate">
+                <a href="https://www.careinspectorate.com/" target="_blank" rel="noopener">
+                    <img src="{% static 'images/care-inspectorate-logo.png' %}" alt="Care Inspectorate Registered Service Info">
+                </a>
+            </div>
+        </div>
+        
+        <div class="gb-footer-column">
+            <h3>Website information</h3>
+            <ul>
+                <li><a href="/terms-and-conditions/">Terms and conditions</a></li>
+                <li><a href="/privacy-policy/">Privacy policy</a></li>
+                <li><a href="/cookies/">Cookies</a></li>
+                <li><a href="/sitemap/">Sitemap</a></li>
+            </ul>
+        </div>
+        
+        <div class="gb-footer-column">
+            <h3>Get in touch</h3>
+            <div class="gb-footer-address">
+                Geeza Break<br>
+                1450 - 1456 Gallowgate<br>
+                Parkhead<br>
+                G31 4ST
+            </div>
+            <div class="gb-footer-contact">
+                <strong>T:</strong> 0141 573 2900<br>
+                <strong>E:</strong> <a href="mailto:info@geezabreak.org.uk">info@geezabreak.org.uk</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="gb-footer-bottom">
+            <p>© 2025 Geeza Break. Web by Digital Dexterity.</p>
+        </div>
+    </div>
+</footer>
 </body>
 </html>

@@ -21,9 +21,9 @@
       <div class="col-sm-6 col-md-4 game-card" data-category="{{game.category|lower}}">
         <div class="card h-100">
           <div class="card-img-container d-flex flex-column align-items-center justify-content-center" style="position:relative;">
-            <img src="{% static game.thumb %}" class="card-img-top mb-2" alt="{{game.title}}" style="max-height:110px; max-width:90%; object-fit:contain; background:#111; border-radius:12px; box-shadow:0 2px 8px #00fff7;">
+            <img src="{% static game.thumb %}" class="card-img-top mb-2" alt="{{game.title}}">
             {% if game.logo %}
-              <img src="{% static game.logo %}" alt="{{game.title}} Logo" class="game-logo-preview" style="position:absolute; bottom:8px; right:8px; width:48px; height:48px; background:#fff; border-radius:10px; box-shadow:0 1px 6px #ff00c8; border:2px solid #00fff7; object-fit:contain;">
+              <img src="{% static game.logo %}" alt="{{game.title}} Logo" class="game-logo-preview">
             {% endif %}
           </div>
           <div class="card-body">

@@ -1,0 +1,125 @@
+{% extends "main/base.html" %}
+
+{% block title %}Email Test - Geeza Break{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h2>Email Configuration Test</h2>
+                </div>
+                <div class="card-body">
+                    <h4>Test Your Email Configuration</h4>
+                    <p>Use this page to verify that email notifications are working correctly for referral submissions.</p>
+                    
+                    <div id="emailResults" class="alert d-none my-3"></div>
+                    
+                    <div class="mb-4">
+                        <h5>Current Email Configuration:</h5>
+                        <ul>
+                            <li><strong>Backend:</strong> {{ email_backend }}</li>
+                            <li><strong>From Email:</strong> {{ from_email }}</li>
+                            <li><strong>Recipients:</strong> {{ recipients|join:", " }}</li>
+                        </ul>
+                    </div>
+                    
+                    <button id="testEmailBtn" class="btn btn-primary">Send Test Email</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const testEmailBtn = document.getElementById('testEmailBtn');
+    const emailResults = document.getElementById('emailResults');
+    
+    testEmailBtn.addEventListener('click', function() {
+        // Disable button and show loading state
+        testEmailBtn.disabled = true;
+        testEmailBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Sending...';
+        
+        // Clear previous results
+        emailResults.classList.remove('alert-success', 'alert-danger', 'd-none');
+        emailResults.classList.add('alert-info');
+        emailResults.innerHTML = 'Sending test email, please wait...';
+        
+        // Send API request
+        fetch('/test-email/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            body: JSON.stringify({})
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Show results
+            emailResults.classList.remove('alert-info', 'd-none');
+            
+            if (data.success) {
+                emailResults.classList.add('alert-success');
+                emailResults.innerHTML = '<strong>Success!</strong> ' + data.message;
+            } else {
+                emailResults.classList.add('alert-danger');
+                emailResults.innerHTML = '<strong>Error:</strong> ' + data.message;
+                
+                // Add technical details if available
+                if (data.error_details) {
+                    const detailsElement = document.createElement('pre');
+                    detailsElement.className = 'mt-3 bg-light p-2';
+                    detailsElement.style.maxHeight = '200px';
+                    detailsElement.style.overflow = 'auto';
+                    detailsElement.textContent = typeof data.error_details === 'string' 
+                        ? data.error_details 
+                        : JSON.stringify(data.error_details, null, 2);
+                    emailResults.appendChild(detailsElement);
+                }
+            }
+            
+            // Add configuration info
+            const configInfo = document.createElement('div');
+            configInfo.className = 'mt-3';
+            configInfo.innerHTML = `
+                <p class="mb-1"><small>Backend: ${data.email_backend}</small></p>
+                <p class="mb-1"><small>Timestamp: ${data.timestamp}</small></p>
+            `;
+            emailResults.appendChild(configInfo);
+            
+            // Reset button
+            testEmailBtn.disabled = false;
+            testEmailBtn.innerHTML = 'Send Test Email';
+        })
+        .catch(error => {
+            emailResults.classList.remove('alert-info');
+            emailResults.classList.add('alert-danger');
+            emailResults.innerHTML = `<strong>Error:</strong> ${error.message}`;
+            
+            // Reset button
+            testEmailBtn.disabled = false;
+            testEmailBtn.innerHTML = 'Send Test Email';
+        });
+    });
+    
+    // Helper function to get CSRF token from cookies
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+});
+</script>
+{% endblock %}

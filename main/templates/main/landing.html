@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
         intro.classList.add('fade-out');
 
         setTimeout(() => {
-            window.location.href = "{% url 'home' %}";
+            window.location.href = "{% url 'main:home' %}";
             sessionStorage.setItem('introShown', 'true');
         }, 1500);
     }, 3000);

@@ -1,0 +1,65 @@
+:root {
+  --brand-blue: #00789D;      /* Poster Blue */
+  --brand-teal: #6ED9DF;      /* Poster Teal */
+  --brand-yellow: #FDC300;    /* Poster Yellow */
+  --brand-text-dark: #222222;
+  --brand-text-light: #ffffff;
+}
+
+/* About Section */
+.about-section {
+    background-color: var(--brand-teal) !important;
+    color: var(--brand-text-dark) !important;
+    padding: 2rem;
+    border-radius: 8px;
+}
+
+.about-section h2 {
+    color: var(--brand-blue);
+}
+
+.about-section p {
+    margin-bottom: 1rem;
+}
+
+.about-section .btn {
+    margin-top: 10px;
+    margin-right: 10px;
+    background-color: var(--brand-yellow) !important;
+    color: #000 !important;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.about-section .btn:hover {
+    background-color: #e0b000 !important;
+}
+
+/* Optional secondary button (Discover our services) */
+.about-section .btn-secondary {
+    background-color: var(--brand-blue) !important;
+    color: #fff !important;
+}
+
+.about-section .btn-secondary:hover {
+    background-color: #005f7a !important;
+}
+
+/* Read More hidden text */
+#more-text {
+    display: none;
+}
+
+#read-more {
+    display: inline-block;
+}
+
+/* Section Headings */
+section h2 {
+    color: var(--brand-blue);
+}

@@ -2,53 +2,29 @@
 {% load static %}
 
 {% block title %}Home | Geeza Break{% endblock %}
+{% block body_class %}home{% endblock %}
 {% block content %}
-
-<!-- Hero Section -->
-<section class="hero text-center py-5 fade-in" style="background-color: #006D77; color: white;">
+<!-- Header Section -->
+<section class="hero text-center py-5 fade-in section-1">
   <div class="container">
-    <h1 class="display-4">Geeza Break: Supporting Families, Changing Lives</h1>
-    <p class="lead">We are here for you — every age, every stage, every family.</p>
-    <a href="#services" class="btn btn-light m-2">Explore Services</a>
-    <a href="#donate" class="btn btn-warning m-2">Donate</a>
+    <h1 class="display-4 hero-headline">
+      Supporting Families<br>
+      to <span class="highlight">Thrive</span> since<br>
+      <span class="hero-year">1992</span>
+    </h1>
+    <p class="lead">Care in the community, by the community.</p>
   </div>
 </section>
 
 <!-- Referral Section Button -->
-<section class="text-center py-5 section-animate" style="background-color: #e6fbcf">
-  <h2>Complete a referral today</h2>
-  <a href="{% url 'referral' %}" class="btn btn-primary mt-3">Make a Referral</a>
-</section>
-
-<!-- Impact Carousel -->
-<section class="container py-5 text-center section-animate" style="background-color: #fffbea">
-  <h2 class="mb-4">Our Impact in 2023</h2>
-  <div class="swiper mySwiper">
-    <div class="swiper-wrapper">
-      <div class="swiper-slide">
-        <img src="{% static 'images/1.jpg' %}" alt="Families Supported" class="img-fluid rounded shadow">
-        <p><strong>470</strong><br>Families Supported in 2023</p>
-      </div>
-      <div class="swiper-slide">
-        <img src="{% static 'images/2.jpg' %}" alt="Children Benefited" class="img-fluid rounded shadow">
-        <p><strong>714</strong><br>Children benefited in 2023</p>
-      </div>
-      <div class="swiper-slide">
-        <img src="{% static 'images/3.jpg' %}" alt="Kinship Families" class="img-fluid rounded shadow">
-        <p><strong>83</strong><br>Kinship families supported</p>
-      </div>
-      <div class="swiper-slide">
-        <img src="{% static 'images/4.jpg' %}" alt="Parents Assisted" class="img-fluid rounded shadow">
-        <p><strong>609</strong><br>Parents/Carers assisted</p>
-      </div>
-    </div>
-    <div class="swiper-pagination"></div>
-    <div class="swiper-button-next"></div>
-    <div class="swiper-button-prev"></div>
+<section class="section-animate referral-cta-wrap">
+  <div class="referral-pill" role="region" aria-labelledby="referralTitle">
+    <h2 id="referralTitle" class="mb-0">Complete a referral today</h2>
+  <a href="{% url 'main:referral' %}" class="btn btn-referral inner-referral-btn" aria-label="Make a Referral">Make a Referral</a>
   </div>
 </section>
 
-<!-- About Section -->
+<!-- About Geeza Break Section -->
 <section class="container py-5 section-animate" id="about" style="background-color: #d0f4de">
   <div class="row align-items-center">
     <div class="col-md-6">
@@ -56,94 +32,79 @@
     </div>
     <div class="col-md-6">
       <h2>About Geeza Break</h2>
-      <p>Since 1992, Geeza Break has provided families in Glasgow with practical and emotional support, helping them build resilience and stability during challenging times.</p>
-      <a href="#donate" class="btn btn-outline-primary mt-3">Support Our Mission</a>
+      <p>
+        Since 1992 Geeza Break has been providing practical and emotional support to children, young people and families. We provide services predominantly in the North East of Glasgow.
+        <span id="about-more" style="display:none;">
+          Our kinship care service is, however, open to families Glasgow-wide.
+          Geeza Break provides a holistic, person and child led service which are both flexible and supportive. Our service is responsive to families’ needs within the North East of Glasgow and encompasses priorities outlined in the Glasgow City Council Family Support Strategy. Building resilience is key for empowering families to be self-reliant, make their own informed choices and reduce dependency for long-term support from statutory services.
+          <br>
+          Our experienced staff and volunteer team are proficient in supporting families that are experiencing challenging and changing family circumstances. Our aim is to provide early intervention and preventative services focusing on the three cornerstones of GCCHSCP’s Promise Framework for Practice (Voice, Validation, and Hope). This recognises that families are the experts in their own lives.
+          <br>
+          We aim to develop trusting and non-judgemental relationships with families. With a strength-based approach, our experienced staff and volunteers help families identify and set realistic personal goals. Geeza Break works collaboratively with families to help them achieve these goals, building on and validating their current strengths, assets, and capabilities. By doing this, Geeza Break provide hope that meaningful and sustainable change can be achieved.
+        </span>
+        <a href="javascript:void(0);" id="about-read-more" style="font-weight:bold;">read more</a>
+        <a href="javascript:void(0);" id="about-read-less" style="font-weight:bold; display:none;">read less</a>
+      </p>
     </div>
   </div>
 </section>
 
-<!-- Services Teaser -->
-<section class="container py-5 section-animate" id="services" style="background-color: #fff9c4">
-  <h2 class="text-center mb-4">A Glimpse of What We Do</h2>
-  <div class="row text-center">
-    <div class="col-md-4">
-      <div class="feature-card">
-        <h4>Respite Care</h4>
-        <p>Short-term childcare to give parents and carers a break.</p>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="feature-card">
-        <h4>Wellbeing Support</h4>
-        <p>Guidance and programs to strengthen mental and emotional health.</p>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="feature-card">
-        <h4>Parent Workshops</h4>
-        <p>Helpful advice and sessions to build parenting confidence.</p>
-      </div>
-    </div>
-  </div>
-  <div class="text-center mt-4">
-    <a href="/services/" class="btn btn-primary">View All Services</a>
-  </div>
+<!-- Corkboard Story Wall / Impact (gb-wall) -->
+<section class="gb-wall" aria-labelledby="story-wall-heading">
+  <h2 id="story-wall-heading" class="wall-title">Our Impact</h2>
+
+  <!-- Example tiles (replace with dynamic loop if desired) -->
+  <article class="tile size-m tape-yellow">
+    <img src="{% static 'images/1.jpg' %}" alt="Mentor supporting a young person" />
+    <p class="scrap">“This place changed my life.” — A.</p>
+  </article>
+
+  <article class="tile size-l tape-sky">
+    <img src="{% static 'images/2.jpg' %}" alt="Family resources corner" />
+    <p class="scrap">“We finally felt heard.” — J &amp; K</p>
+  </article>
+
+  <article class="tile size-s tape-green">
+    <img src="{% static 'images/3.jpg' %}" alt="Children engaged in creative play" />
+    <p class="scrap">“Ideas for when they said ‘I’m bored!’” — Parent</p>
+  </article>
+
+  <article class="tile size-m tape-sky">
+    <img src="{% static 'images/4.jpg' %}" alt="Meal support during school holidays" />
+    <p class="scrap">“Holiday hunger help made a real difference.” — Carer</p>
+  </article>
+
+  <article class="tile size-l tape-yellow">
+    <img src="{% static 'images/1.jpg' %}" alt="Volunteer smiling with family" />
+    <p class="scrap">“Together we’re building a stronger story.” — Volunteer</p>
+  </article>
+
+  <article class="tile size-m tape-green">
+    <img src="{% static 'images/2.jpg' %}" alt="Parent finding resources online" />
+    <p class="scrap">“Resources empowered me to support my child better.” — Parent</p>
+  </article>
+
+  {# Example dynamic loop
+  {% comment %}
+  {% for s in stories %}
+    <article class="tile {{ s.size }} tape-{{ s.brand_tape }}">
+      {% if s.video %}
+        <video src="{{ s.video.url }}" muted playsinline loop></video>
+      {% else %}
+        <img src="{{ s.image.url }}" alt="{{ s.alt }}" />
+      {% endif %}
+      <p class="scrap">{{ s.quote }}</p>
+    </article>
+  {% endfor %}
+  {% endcomment %}
+  #}
 </section>
 
-<!-- Patron Section -->
-<section class="container py-5 section-animate" style="background-color: #caf0f8">
-  <div class="row align-items-center">
-    <div class="col-md-4">
-      <img src="https://source.unsplash.com/300x300/?woman" class="img-fluid rounded-circle" alt="Patron">
-    </div>
-    <div class="col-md-8">
-      <h3>Our Patron</h3>
-      <p><strong>Message of Support from Elaine C Smith</strong></p>
-      <p>I am delighted to be a supporter of Geeza Break as it is a brilliant voluntary organisation helping those who need it most. Their work fills a much-needed gap in childcare and family support in the East End of Glasgow.</p>
-    </div>
-  </div>
-</section>
-
-<!-- History Section -->
-<section class="container py-5 section-animate" style="background-color: #d0f4de">
-  <div class="row align-items-center">
-    <div class="col-md-4">
-      <img src="https://source.unsplash.com/300x200/?glasgow" class="img-fluid" alt="Glasgow history">
-    </div>
-    <div class="col-md-8">
-      <h3>Our History</h3>
-      <p>Geeza Break was founded in 1992 during a period of transformation in Glasgow. Local leaders came together to offer families support and respite during the city’s rapid regeneration. Their mission was to ensure that no family was left behind.</p>
-    </div>
-  </div>
-</section>
-
-<!-- The Work We Do -->
-<section class="container py-5 section-animate" style="background-color: #fffbea">
-  <div class="row align-items-center">
-    <div class="col-md-8">
-      <h3>The Work We Do</h3>
-      <p>At Geeza Break, our mission is to provide holistic, nurturing, and relationship-based family support. We help every child and parent achieve their full potential by creating a community where their voices are heard and supported.</p>
-    </div>
-    <div class="col-md-4">
-      <img src="https://source.unsplash.com/300x200/?family-support" class="img-fluid" alt="Work we do">
-    </div>
-  </div>
-</section>
-
-<!-- Testimonials Section -->
-<section class="testimonial-section section-animate" id="testimonials" style="background-color: #caf0f8">
-  <h2 class="text-center mb-4">Testimonials</h2>
-  <blockquote class="testimonial">“Geeza Break helped us when we felt hopeless. Their care and consistency changed everything.” – Lisa</blockquote>
-  <blockquote class="testimonial">“I never thought I'd get support like this. They're truly a blessing to families.” – Ahmed</blockquote>
-</section>
-
-<!-- Donate Banner -->
-<section class="donate-banner text-center section-animate" id="donate" style="background-color: #ffd166;">
-  <div class="container">
-    <h2>Make a Difference</h2>
-    <p>Your donation provides hope and stability to families in Glasgow.</p>
-    <a href="#" class="btn btn-light">Donate Now</a>
-  </div>
+<!-- Testimonials (updated styling) -->
+<section class="testimonials reveal" id="testimonials">
+  <h2>Testimonials</h2>
+  <blockquote class="reveal">“Geeza Break helped us when we felt hopeless. Their care and consistency changed everything.”<br><span>– Lisa</span></blockquote>
+  <blockquote class="reveal">“I never thought I’d get support like this. They’re truly a blessing to families.”<br><span>– Ahmed</span></blockquote>
 </section>
 
 <!-- Comment Section -->
@@ -183,50 +144,76 @@
   </div>
 </section>
 
-<!-- Fun Zone Section -->
-<section class="text-center py-5 section-animate" style="background-color: #caf0f8">
-  <h2>Looking for Fun?</h2>
-  <a href="{% url 'fun_zone' %}" class="btn btn-success btn-lg mt-2">Go to Fun Zone 🎮</a>
-</section>
+<!-- (Global quick drawer now included in base template) -->
 
 {% endblock %}
 
 {% block extra_scripts %}
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<script src="{% static 'js/feedback.js' %}"></script>
 <script src="{% static 'js/comment.js' %}"></script>
 <script>
-    const swiper = new Swiper(".mySwiper", {
-        loop: true,
-        autoplay: {
-          delay: 4000,
-          disableOnInteraction: false,
-        },
-        effect: "coverflow",
-        grabCursor: true,
-        centeredSlides: true,
-        slidesPerView: 1.2,
-        spaceBetween: 20,
-        coverflowEffect: {
-          rotate: 25,
-          stretch: 0,
-          depth: 100,
-          modifier: 1,
-          slideShadows: false,
-        },
-        pagination: {
-          el: ".swiper-pagination",
-          clickable: true,
-        },
-        navigation: {
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev",
-        },
-        breakpoints: {
-          768: {
-            slidesPerView: 2.2
-          }
-        }
+    document.addEventListener("DOMContentLoaded", function() {
+      const readMore = document.getElementById("about-read-more");
+      const readLess = document.getElementById("about-read-less");
+      const moreSpan = document.getElementById("about-more");
+      if (readMore && readLess) {
+        readMore.addEventListener("click", function() {
+          moreSpan.style.display = "inline";
+          readMore.style.display = "none";
+          readLess.style.display = "inline";
+        });
+        readLess.addEventListener("click", function() {
+          moreSpan.style.display = "none";
+          readMore.style.display = "inline";
+          readLess.style.display = "none";
+        });
+      }
+    });
+
+    window.filterGames = function(category) {
+      document.querySelectorAll('.game-card').forEach(card => {
+        const cat = card.dataset.category;
+        card.style.display = (category === 'all' || category === cat) ? 'block' : 'none';
       });
-</script>
+    };
+
+    // Home Quick Drawer behavior (right-side)
+    (function(){
+      const toggle = document.getElementById('quickDrawerToggle');
+      const drawer = document.getElementById('homeQuickDrawer');
+      const overlay = document.getElementById('quickDrawerOverlay');
+      const closeBtn = drawer?.querySelector('.qd-close-btn');
+      if(!toggle || !drawer || !overlay) return;
+
+      let lastFocus = null;
+
+      function openDrawer(){
+        lastFocus = document.activeElement;
+        drawer.classList.add('active');
+        drawer.setAttribute('aria-hidden', 'false');
+        overlay.classList.add('show');
+        overlay.setAttribute('aria-hidden', 'false');
+        toggle.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden';
+        const firstLink = drawer.querySelector('a, button');
+        setTimeout(()=> firstLink?.focus(), 30);
+      }
+      function closeDrawer(){
+        drawer.classList.remove('active');
+        drawer.setAttribute('aria-hidden', 'true');
+        overlay.classList.remove('show');
+        overlay.setAttribute('aria-hidden', 'true');
+        toggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+        if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+      }
+
+      toggle.addEventListener('click', openDrawer);
+      closeBtn?.addEventListener('click', closeDrawer);
+      overlay.addEventListener('click', closeDrawer);
+      document.addEventListener('keydown', (e)=>{
+        if(e.key === 'Escape' && drawer.classList.contains('active')) closeDrawer();
+      });
+    })();
+
+  </script>
 {% endblock %}

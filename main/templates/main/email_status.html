@@ -1,0 +1,200 @@
+{% extends "main/base.html" %}
+
+{% block title %}Email Status - Geeza Break{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h2>Email Notification Status</h2>
+                    <a href="{% url 'main:test_email' %}" class="btn btn-light">Send Test Email</a>
+                </div>
+                <div class="card-body">
+                    <h4>Recent Referrals</h4>
+                    <p>This page shows recent referrals and whether an email notification was sent for each.</p>
+                    
+                    {% if referrals %}
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Date</th>
+                                    <th>Primary Carer</th>
+                                    <th>Referrer</th>
+                                    <th>Email Sent</th>
+                                    <th>Services</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for ref in referrals %}
+                                <tr>
+                                    <td>{{ ref.id }}</td>
+                                    <td>{{ ref.created_at|date:"d/m/Y H:i" }}</td>
+                                    <td>{{ ref.primary_carer_name }}</td>
+                                    <td>{{ ref.referrer_name }} ({{ ref.referrer_agency }})</td>
+                                    <td>
+                                        {% if ref.email_sent %}
+                                        <span class="badge bg-success">Yes</span>
+                                        {% else %}
+                                        <span class="badge bg-danger">No</span>
+                                        <button 
+                                            class="btn btn-sm btn-outline-primary ms-2 resend-email" 
+                                            data-referral-id="{{ ref.id }}">
+                                            Resend
+                                        </button>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if ref.srv_family_support %}<span class="badge bg-info me-1">Family Support</span>{% endif %}
+                                        {% if ref.srv_respite_sitting %}<span class="badge bg-info me-1">Respite Sitting</span>{% endif %}
+                                        {% if ref.srv_respite_care %}<span class="badge bg-info me-1">Respite Care</span>{% endif %}
+                                        {% if ref.srv_geezachance %}<span class="badge bg-info me-1">Geeza Chance</span>{% endif %}
+                                        {% if ref.srv_kinship_care %}<span class="badge bg-info me-1">Kinship Care</span>{% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="alert alert-info">
+                        No referrals found in the database yet.
+                    </div>
+                    {% endif %}
+                    
+                    <hr>
+                    
+                    <div class="card mt-4">
+                        <div class="card-header">
+                            <h5>Email Configuration</h5>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <strong>Backend:</strong>
+                                    <span>{{ email_backend }}</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <strong>From Email:</strong>
+                                    <span>{{ from_email }}</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <strong>Recipients:</strong>
+                                    <span>{{ recipients|join:", " }}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="resendModal" tabindex="-1" aria-labelledby="resendModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="resendModalLabel">Resending Email</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="resendModalBody">
+                <div class="text-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2">Attempting to resend email notification...</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Setup resend buttons
+    const resendButtons = document.querySelectorAll('.resend-email');
+    const resendModal = new bootstrap.Modal(document.getElementById('resendModal'));
+    const resendModalBody = document.getElementById('resendModalBody');
+    
+    resendButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const referralId = this.getAttribute('data-referral-id');
+            
+            // Show modal with loading state
+            resendModalBody.innerHTML = `
+                <div class="text-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="mt-2">Attempting to resend email notification for referral #${referralId}...</p>
+                </div>
+            `;
+            resendModal.show();
+            
+            // Send request to resend email
+            fetch(`/resend-email/${referralId}/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    resendModalBody.innerHTML = `
+                        <div class="alert alert-success">
+                            <h5>Success!</h5>
+                            <p>${data.message}</p>
+                        </div>
+                        <p>The page will refresh in 3 seconds...</p>
+                    `;
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 3000);
+                } else {
+                    resendModalBody.innerHTML = `
+                        <div class="alert alert-danger">
+                            <h5>Error!</h5>
+                            <p>${data.message}</p>
+                            <pre class="mt-3 bg-light p-2" style="max-height:200px;overflow:auto">${data.error_details || ''}</pre>
+                        </div>
+                    `;
+                }
+            })
+            .catch(error => {
+                resendModalBody.innerHTML = `
+                    <div class="alert alert-danger">
+                        <h5>Error!</h5>
+                        <p>An unexpected error occurred: ${error.message}</p>
+                    </div>
+                `;
+            });
+        });
+    });
+    
+    // Helper function to get CSRF token
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+});
+</script>
+{% endblock %}

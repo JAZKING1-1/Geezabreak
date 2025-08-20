@@ -1,0 +1,336 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block title %}Donate to Geeza Break{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/donation-impact.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="donate-hero container">
+  <h1>Support Geeza Break</h1>
+  <p>Your donation helps families in Glasgow thrive. Together, we can make a difference.</p>
+  
+  <!-- Donation Progress Bar -->
+  <div class="donation-progress">
+    <div class="progress-bar">
+      <div class="progress-filled" id="progressBar"></div>
+    </div>
+    <div class="progress-stats">
+      <span id="progressText">Loading...</span>
+    </div>
+  </div>
+</section>
+
+<!-- Donation Amount Selection -->
+<section class="donation-amount container">
+  <h2>Choose Your Donation Amount</h2>
+  <div class="amount-buttons">
+    <button class="amount-btn" data-amount="5">£5</button>
+    <button class="amount-btn" data-amount="10">£10</button>
+    <button class="amount-btn" data-amount="20">£20</button>
+    <button class="amount-btn" data-amount="50">£50</button>
+    <button class="amount-btn" data-amount="100">£100</button>
+    <button class="amount-btn custom" data-amount="custom">Custom</button>
+  </div>
+  
+  <div class="custom-amount-container" id="customAmountContainer" style="display: none;">
+    <label for="customAmount">Enter Amount (£):</label>
+    <input type="number" id="customAmount" min="1" value="15">
+    <button id="updateCustomAmount" class="update-amount-btn">Update</button>
+  </div>
+
+  <div class="donation-cta">
+    <a class="donate-btn" id="donateButton" href="https://www.justgiving.com/geezabreak" 
+       target="_blank" rel="noopener">
+      Donate £10 Now
+    </a>
+    <div class="trust-signals">
+      <span><i class="fas fa-lock"></i> Secure payment</span>
+      <span><i class="fas fa-shield-alt"></i> Protected by JustGiving</span>
+    </div>
+  </div>
+</section>
+
+<!-- Impact Section -->
+<section class="container donation-impact">
+  <h2>The Impact of Your Donation</h2>
+  <div class="impact-grid">
+    <div class="impact-item">
+      <div class="impact-icon">
+        <i class="fas fa-hands-helping"></i>
+      </div>
+      <h3>£10 provides</h3>
+      <p>A home cooked meal for a family experiencing food insecurity</p>
+    </div>
+    <div class="impact-item">
+      <div class="impact-icon">
+        <i class="fas fa-child"></i>
+      </div>
+      <h3>£20 provides</h3>
+      <p>A childcare session for a parent who needs respite support</p>
+    </div>
+    <div class="impact-item">
+      <div class="impact-icon">
+        <i class="fas fa-home"></i>
+      </div>
+      <h3>£50 provides</h3>
+      <p>Essential supplies for a family facing crisis or emergency</p>
+    </div>
+  </div>
+</section>
+
+<!-- JustGiving Widgets -->
+<section class="container donation-widgets">
+  <!-- Campaign progress widget -->
+  <div class="widget-card">
+    <h2>Campaign Progress</h2>
+    <script type="text/javascript">
+      (function() {
+        var container = document.createElement('div');
+        container.setAttribute('data-jg-widget', 'progressbar');
+        container.setAttribute('data-jg-shortname', 'geezabreak');
+        document.write(container.outerHTML);
+      })();
+    </script>
+    <script src="https://widgets.justgiving.com/widget.js"></script>
+    <p class="widget-note">Live updates from our JustGiving campaign</p>
+  </div>
+  
+  <!-- Recent supporters widget -->
+  <div class="widget-card">
+    <h2>Recent Supporters</h2>
+    <script type="text/javascript">
+      (function() {
+        var container = document.createElement('div');
+        container.setAttribute('data-jg-widget', 'donationslist');
+        container.setAttribute('data-jg-shortname', 'geezabreak');
+        document.write(container.outerHTML);
+      })();
+    </script>
+    <script src="https://widgets.justgiving.com/widget.js"></script>
+  </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="container donation-testimonials">
+  <h2>What Your Support Means</h2>
+  <div class="testimonials-grid">
+    <div class="testimonial-card">
+      <div class="testimonial-quote">"Geeza Break has been a lifeline for our family during difficult times. The support we've received has been incredible."</div>
+      <div class="testimonial-author">- Claire, Glasgow parent</div>
+    </div>
+    <div class="testimonial-card">
+      <div class="testimonial-quote">"The respite care gave me a much-needed break and helped me become a better parent. I don't know what I would have done without Geeza Break."</div>
+      <div class="testimonial-author">- Michael, single parent</div>
+    </div>
+  </div>
+</section>
+
+<section class="container donation-faq">
+  <h2>Donation FAQ</h2>
+  <div class="faq-item">
+    <h3>How is my donation used?</h3>
+    <p>Your donation directly supports our programs for families in Glasgow, including respite childcare, emergency support, and community resources.</p>
+  </div>
+  <div class="faq-item">
+    <h3>Is my payment secure?</h3>
+    <p>Yes, all donations are processed securely through JustGiving, a trusted online donation platform with bank-level security.</p>
+  </div>
+  <div class="faq-item">
+    <h3>Can I make a recurring donation?</h3>
+    <p>Yes, you can set up a monthly donation through our JustGiving page to provide ongoing support.</p>
+  </div>
+</section>
+
+<noscript>
+  <p class="container">
+    JavaScript is disabled. Please
+    <a href="https://www.justgiving.com/geezabreak" target="_blank" rel="noopener">
+      donate on JustGiving
+    </a>.
+  </p>
+</noscript>
+
+<!-- JavaScript for donation functionality -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Set default amount
+    let currentAmount = 10;
+    updateDonateButton(currentAmount);
+    
+    // Amount button functionality
+    const amountButtons = document.querySelectorAll('.amount-btn');
+    const customAmountContainer = document.getElementById('customAmountContainer');
+    const customAmountInput = document.getElementById('customAmount');
+    const updateCustomAmountBtn = document.getElementById('updateCustomAmount');
+    
+    amountButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        // Remove active class from all buttons
+        amountButtons.forEach(btn => btn.classList.remove('active'));
+        
+        // Add active class to clicked button
+        this.classList.add('active');
+        
+        const amount = this.getAttribute('data-amount');
+        
+        if (amount === 'custom') {
+          customAmountContainer.style.display = 'block';
+          customAmountInput.focus();
+        } else {
+          customAmountContainer.style.display = 'none';
+          currentAmount = parseInt(amount);
+          updateDonateButton(currentAmount);
+        }
+      });
+    });
+    
+    // Custom amount update
+    updateCustomAmountBtn.addEventListener('click', function() {
+      const customAmount = parseInt(customAmountInput.value);
+      if (customAmount >= 1) {
+        currentAmount = customAmount;
+        updateDonateButton(currentAmount);
+      }
+    });
+    
+    // Set initial active button (£10)
+    document.querySelector('[data-amount="10"]').classList.add('active');
+    
+    // Animated progress bar (for demonstration)
+    setTimeout(setupProgressBar, 1000);
+    // Add click animation for amount buttons
+    amountButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        createSparkle(this);
+      });
+    });
+    
+    // Add click animation for the update button
+    updateCustomAmountBtn.addEventListener('click', function() {
+      createSparkle(this);
+    });
+    
+    // Add click animation for the donate button
+    const donateButton = document.getElementById('donateButton');
+    donateButton.addEventListener('click', function() {
+      createConfetti(this);
+    });
+  });
+  
+  function updateDonateButton(amount) {
+    const donateButton = document.getElementById('donateButton');
+    donateButton.textContent = `Donate £${amount} Now`;
+    donateButton.href = `https://www.justgiving.com/geezabreak?amount=${amount}`;
+  }
+  
+  function setupProgressBar() {
+    // This would ideally get real data from JustGiving API
+    // For now, we'll simulate it with static data
+    const target = 10000;
+    const current = 6540;
+    const percentage = Math.min((current / target) * 100, 100);
+    
+    const progressBar = document.getElementById('progressBar');
+    const progressText = document.getElementById('progressText');
+    
+    progressBar.style.width = '0%';
+    
+    // Animate the progress bar
+    setTimeout(() => {
+      progressBar.style.transition = 'width 1.5s ease-out';
+      progressBar.style.width = percentage + '%';
+      progressText.textContent = `£${current.toLocaleString()} raised of £${target.toLocaleString()} goal`;
+    }, 300);
+  }
+  
+  // Create sparkle effect when buttons are clicked
+  function createSparkle(element) {
+    const rect = element.getBoundingClientRect();
+    const sparkleCount = 20;
+    
+    for (let i = 0; i < sparkleCount; i++) {
+      const sparkle = document.createElement('div');
+      sparkle.className = 'sparkle';
+      
+      // Random position within the button
+      const x = Math.random() * rect.width;
+      const y = Math.random() * rect.height;
+      
+      // Styling for the sparkle
+      sparkle.style.cssText = `
+        position: absolute;
+        top: ${y}px;
+        left: ${x}px;
+        width: 6px;
+        height: 6px;
+        background: #fff;
+        border-radius: 50%;
+        opacity: 0;
+        pointer-events: none;
+        z-index: 1000;
+      `;
+      
+      // Add to element
+      element.appendChild(sparkle);
+      
+      // Animate
+      const animation = sparkle.animate([
+        { transform: 'translate(0, 0) scale(0)', opacity: 1 },
+        { transform: `translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px) scale(1)`, opacity: 0 }
+      ], {
+        duration: 600 + Math.random() * 400,
+        easing: 'cubic-bezier(0,0,0.2,1)'
+      });
+      
+      // Remove sparkle when animation completes
+      animation.onfinish = () => sparkle.remove();
+    }
+  }
+  
+  // Create confetti effect for the main donate button
+  function createConfetti(element) {
+    const rect = element.getBoundingClientRect();
+    const confettiCount = 40;
+    const colors = ['#a6ce39', '#5ce1e6', '#20b4ef', '#0275e2', '#fcd92b'];
+    
+    for (let i = 0; i < confettiCount; i++) {
+      const confetti = document.createElement('div');
+      confetti.className = 'confetti';
+      
+      // Random position above the button
+      const x = Math.random() * rect.width;
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      
+      // Styling for confetti
+      confetti.style.cssText = `
+        position: absolute;
+        left: ${x}px;
+        top: 0;
+        width: ${Math.random() * 10 + 5}px;
+        height: ${Math.random() * 5 + 3}px;
+        background: ${color};
+        opacity: 0;
+        pointer-events: none;
+        z-index: 1000;
+      `;
+      
+      element.appendChild(confetti);
+      
+      // Animate falling confetti
+      const animation = confetti.animate([
+        { transform: 'translateY(-10px) rotate(0deg)', opacity: 1 },
+        { transform: `translateY(${rect.height + 20}px) rotate(${Math.random() * 360}deg)`, opacity: 0 }
+      ], {
+        duration: 1000 + Math.random() * 500,
+        easing: 'cubic-bezier(0.1, 0.8, 0.3, 1)'
+      });
+      
+      animation.onfinish = () => confetti.remove();
+    }
+  }
+</script>
+{% endblock %}

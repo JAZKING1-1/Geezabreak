@@ -4,7 +4,7 @@
 {% block title %}About Us | Geeza Break{% endblock %}
 
 {% block content %}
-<section class="hero text-center py-5 fade-in" style="background-color: #006D77; color: white;">
+<section class="hero text-center py-5 fade-in">
     <div class="container">
         <h1 class="display-4">About Geeza Break</h1>
         <p class="lead">30+ Years of Supporting Glasgow Families</p>
@@ -46,7 +46,7 @@
     </div>
 </section>
 
-<section class="py-5 section-animate" style="background-color: #e6fbcf;">
+<section class="py-5 section-animate">
     <div class="container">
         <h2 class="text-center mb-4 fade-in">Our Team</h2>
         <div class="row">
@@ -83,8 +83,9 @@
         <div class="text-center fade-in">
             <h2>Want to Make a Difference?</h2>
             <p class="lead">Join us in supporting Glasgow families</p>
-            <a href="#donate" class="btn btn-primary m-2">Donate Now</a>
+            <a href="{% url 'main:donate' %}" class="btn btn-primary m-2">Donate Now</a>
             <a href="#volunteer" class="btn btn-outline-primary m-2">Volunteer With Us</a>
+            <a href="{% url 'main:referral' %}" class="btn btn-success m-2">Make a Referral</a>
         </div>
     </div>
 </section>

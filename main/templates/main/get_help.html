@@ -4,7 +4,7 @@
 {% block title %}Get Help | Geeza Break{% endblock %}
 
 {% block content %}
-<section class="hero text-center py-5 fade-in" style="background-color: #006D77; color: white;">
+<section class="hero text-center py-5 fade-in">
     <div class="container">
         <h1 class="display-4">Get Help</h1>
         <p class="lead">Support is Just a Step Away</p>
@@ -29,7 +29,7 @@
                 </div>
             </div>
 
-            <h3 class="fade-in" style="animation-delay: 0.3s;">Making a Referral</h3>
+            <h3 class="fade-in">Making a Referral</h3>
             <p>You can access our services through:</p>
             <ul>
                 <li>Self-referral</li>
@@ -39,11 +39,11 @@
             </ul>
             
             <div class="mt-4">
-                <a href="#referral" class="btn btn-primary">Complete Referral Form</a>
+                <a href="{% url 'main:referral' %}" class="btn btn-primary">Complete Referral Form</a>
             </div>
         </div>
         
-        <div class="col-md-4 fade-in" style="animation-delay: 0.4s;">
+        <div class="col-md-4 fade-in">
             <div class="card mb-4">
                 <div class="card-body">
                     <h4>Quick Contact</h4>
@@ -69,11 +69,11 @@
     </div>
 </section>
 
-<section class="py-5 section-animate" style="background-color: #e6fbcf;">
+<section class="py-5 section-animate">
     <div class="container">
         <h2 class="text-center mb-4 fade-in">Common Questions</h2>
         <div class="row">
-            <div class="col-md-6 mb-4 fade-in" style="animation-delay: 0.2s;">
+            <div class="col-md-6 mb-4 fade-in">
                 <div class="card h-100">
                     <div class="card-body">
                         <h5>Who can access your services?</h5>
@@ -81,7 +81,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 mb-4 fade-in" style="animation-delay: 0.3s;">
+            <div class="col-md-6 mb-4 fade-in">
                 <div class="card h-100">
                     <div class="card-body">
                         <h5>How long does it take to get help?</h5>
@@ -89,7 +89,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 mb-4 fade-in" style="animation-delay: 0.4s;">
+            <div class="col-md-6 mb-4 fade-in">
                 <div class="card h-100">
                     <div class="card-body">
                         <h5>Is there a cost?</h5>
@@ -97,7 +97,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 mb-4 fade-in" style="animation-delay: 0.5s;">
+            <div class="col-md-6 mb-4 fade-in">
                 <div class="card h-100">
                     <div class="card-body">
                         <h5>What areas do you cover?</h5>

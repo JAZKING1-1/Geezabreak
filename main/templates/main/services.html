@@ -2,98 +2,100 @@
 {% load static %}
 
 {% block title %}Our Services | Geeza Break{% endblock %}
+{% block body_class %}services-page{% endblock %}
 
 {% block content %}
-<section class="hero text-center py-5 fade-in" style="background-color: #006D77; color: white;">
+<section class="hero services-hero text-center py-5 fade-in">
     <div class="container">
         <h1 class="display-4">Our Services</h1>
         <p class="lead">Comprehensive Support for Glasgow Families</p>
     </div>
 </section>
 
-<section class="container py-5 section-animate">
+<section class="container py-5 section-animate services-grid">
     <div class="row">
-        <div class="col-md-4 mb-4 fade-in" style="animation-delay: 0.2s;">
+        <!-- Family Support -->
+        <div class="col-lg-6 mb-4">
             <div class="card h-100">
                 <div class="card-body">
-                    <h3>Respite Care</h3>
-                    <p>Short breaks for parents and carers when they need it most. Our registered childcare service provides:</p>
-                    <ul>
-                        <li>Weekend care</li>
-                        <li>Emergency support</li>
-                        <li>Planned breaks</li>
-                        <li>Holiday programmes</li>
-                    </ul>
-                    <a href="#contact" class="btn btn-primary">Enquire Now</a>
+                    <h3 class="card-title">Family Support</h3>
+                    <p>This service is tailored to provide trauma-informed bespoke guidance and relationship-based assistance for families when they need it most. We're here to lend a hand, promote strong bonds, navigate challenges and offer a supportive network for parents and caregivers.</p>
                 </div>
             </div>
         </div>
-        
-        <div class="col-md-4 mb-4 fade-in" style="animation-delay: 0.4s;">
+
+        <!-- Respite Sitting -->
+        <div class="col-lg-6 mb-4">
             <div class="card h-100">
                 <div class="card-body">
-                    <h3>Family Support</h3>
-                    <p>Comprehensive support services including:</p>
+                    <h3 class="card-title">Respite Sitting</h3>
+                    <p>Community based respite where children 16 years and under are provided with engaging experiences and quality time outside their homes fostering positive interactions and personal growth.</p>
                     <ul>
-                        <li>One-to-one support</li>
-                        <li>Parenting advice</li>
-                        <li>Home visits</li>
-                        <li>Crisis intervention</li>
+                        <li>Weekly/fortnightly sessions for up to 8 weeks</li>
+                        <li>4 hour sessions</li>
+                        <li>Same respite provider for consistency</li>
+                        <li>Individualised care plans</li>
                     </ul>
-                    <a href="#contact" class="btn btn-primary">Learn More</a>
+                    <p><em>Activities include exploring local parks, museums and creative/sensory activities within our accessible Community Flat.</em></p>
                 </div>
             </div>
         </div>
-        
-        <div class="col-md-4 mb-4 fade-in" style="animation-delay: 0.6s;">
+
+        <!-- Respite Care -->
+        <div class="col-lg-6 mb-4">
             <div class="card h-100">
                 <div class="card-body">
-                    <h3>Kinship Care</h3>
-                    <p>Specialized support for kinship carers:</p>
+                    <h3 class="card-title">Respite Care</h3>
+                    <p>This service provides children and young people with a safe and nurturing, home away from home experience, giving parents and carers a well-deserved extended break.</p>
                     <ul>
-                        <li>Advocacy support</li>
-                        <li>Peer support groups</li>
-                        <li>Training workshops</li>
-                        <li>Resource access</li>
+                        <li>Weekly/fortnightly sessions for up to 8 weeks</li>
+                        <li>Up to 18hrs respite provided</li>
+                        <li>Same respite provider for consistency</li>
+                        <li>Individualised care plans</li>
                     </ul>
-                    <a href="#contact" class="btn btn-primary">Get Support</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Geeza Chance -->
+        <div class="col-lg-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h3 class="card-title">Geeza Chance</h3>
+                    <p>A program for children and young people in kinship care aged 8-16 years, providing activities and workshops to build confidence, social and life skills. Through outings, skill-based sessions, and peer support, it creates a nurturing, inclusive space for children and young people to thrive.</p>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<section class="py-5 section-animate" style="background-color: #e6fbcf;">
-    <div class="container">
-        <h2 class="text-center mb-4 fade-in">Additional Support</h2>
-        <div class="row">
-            <div class="col-md-6 mb-4">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <h4>Parent Groups</h4>
-                        <p>Regular meetups and workshops covering:</p>
-                        <ul>
-                            <li>Parenting skills</li>
-                            <li>Child development</li>
-                            <li>Mental health support</li>
-                            <li>Social connections</li>
-                        </ul>
-                    </div>
+<!-- Family Support Groups -->
+<section class="container py-5 section-animate services-grid">
+    <h2 class="text-center mb-4 services-section-title">Family Support Group Work</h2>
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h4>Regular Groups & Workshops</h4>
+                    <ul>
+                        <li>Health and wellbeing groups</li>
+                        <li>Parent and child cookery class</li>
+                        <li>Baby massage</li>
+                    </ul>
                 </div>
             </div>
-            
-            <div class="col-md-6 mb-4">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <h4>Youth Programs</h4>
-                        <p>Engaging activities for young people:</p>
-                        <ul>
-                            <li>After-school clubs</li>
-                            <li>Holiday activities</li>
-                            <li>Educational support</li>
-                            <li>Life skills workshops</li>
-                        </ul>
-                    </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h4>Seasonal Support</h4>
+                    <p>Activities during holiday periods:</p>
+                    <ul>
+                        <li>Christmas party</li>
+                        <li>Community meals</li>
+                        <li>Stay and play</li>
+                        <li>Movie munchie matinee</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -101,11 +103,11 @@
 </section>
 
 <section class="container py-5 section-animate">
-    <div class="text-center fade-in">
+    <div class="text-center fade-in services-support-cta">
         <h2>Need Support?</h2>
         <p class="lead">We're here to help you and your family</p>
-        <a href="#referral" class="btn btn-primary m-2">Make a Referral</a>
-        <a href="#contact" class="btn btn-outline-primary m-2">Contact Us</a>
+        <a href="{% url 'main:referral' %}" class="btn btn-primary m-2">Make a Referral</a>
+        <a href="{% url 'main:contact' %}" class="btn btn-outline-primary m-2">Contact Us</a>
     </div>
 </section>
 {% endblock %}

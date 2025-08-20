@@ -4,36 +4,36 @@
 {% block title %}Make a Referral | Geeza Break{% endblock %}
 
 {% block content %}
-<section class="container py-5 section-animate" id="referral" style="background-color: #e6fbcf">
+<section class="container py-5 section-animate" id="referral">
   <form id="referral-form" class="referral-form p-4 rounded-xl bg-white shadow-md max-w-2xl mx-auto mt-8 space-y-6">
     <h2 class="text-2xl font-bold text-center mb-4">Make a Referral</h2>
     <!-- Step 1: Referrer Details -->
     <fieldset>
       <legend class="font-semibold">Your Details</legend>
       <label class="block mt-2">Your Name
-        <input type="text" name="referrer_name" required class="w-full p-2 border rounded">
+        <input type="text" name="referrer_name" required>
       </label>
       <label class="block mt-2">Your Email
-        <input type="email" name="referrer_email" required class="w-full p-2 border rounded">
+        <input type="email" name="referrer_email" required>
       </label>
       <label class="block mt-2">Phone Number
-        <input type="tel" name="referrer_phone" class="w-full p-2 border rounded">
+        <input type="tel" name="referrer_phone">
       </label>
     </fieldset>
     <!-- Step 2: Client Details -->
     <fieldset>
       <legend class="font-semibold">Client's Details</legend>
       <label class="block mt-2">Client Name
-        <input type="text" name="client_name" required class="w-full p-2 border rounded">
+        <input type="text" name="client_name" required>
       </label>
       <label class="block mt-2">Client Address
-        <textarea name="client_address" required class="w-full p-2 border rounded"></textarea>
+        <textarea name="client_address" required></textarea>
       </label>
       <label class="block mt-2">Client Phone
-        <input type="tel" name="client_phone" class="w-full p-2 border rounded">
+        <input type="tel" name="client_phone">
       </label>
       <label class="block mt-2">Reason for Referral
-        <textarea name="referral_reason" required class="w-full p-2 border rounded"></textarea>
+        <textarea name="referral_reason" required></textarea>
       </label>
     </fieldset>
     <!-- Step 3: Consent -->
@@ -45,7 +45,7 @@
     </fieldset>
     <!-- Submit -->
     <div class="text-center">
-      <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">Submit Referral</button>
+      <button type="submit">Submit Referral</button>
     </div>
   </form>
 </section>

@@ -1,0 +1,312 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% block title %}Referral Form | Geeza Break{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/referral-structure.css' %}">
+<link rel="stylesheet" href="{% static 'css/referral-colors.css' %}">
+<link rel="stylesheet" href="{% static 'css/referral-green.css' %}">
+<link rel="stylesheet" href="{% static 'css/referral-dynamic.css' %}">
+{% endblock %}
+{% block content %}
+<main class="gb-page referral-theme">
+  <div class="gb-container">
+    <header class="gb-header">
+      <h1 id="form-title">Make a Referral</h1>
+    </header>
+    
+    {% if form.errors or form.non_field_errors %}
+    <div class="error-summary" role="alert" aria-labelledby="error-summary-title" tabindex="-1">
+      <h2 id="error-summary-title">Please fix the following</h2>
+      <ul>
+        {% for field in form %}
+          {% for error in field.errors %}
+            <li><a href="#{{ field.id_for_label }}">{{ field.label }} — {{ error }}</a></li>
+          {% endfor %}
+        {% endfor %}
+        {% for err in form.non_field_errors %}
+          <li>{{ err }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+    
+    <form id="referral-form" method="post" novalidate aria-describedby="form-help">
+      {% csrf_token %}
+      <p id="form-help" class="visually-hidden">All fields have clear labels and errors will appear below each input.</p>
+      
+      <!-- Referrer Details -->
+      <section class="card" id="card-referrer" aria-labelledby="referrer-details-h">
+        <div class="card__head">
+          <h2 id="referrer-details-h">Referrer Details</h2>
+        </div>
+        <div class="card__body">
+          <div class="grid-2">
+            <div class="field">
+              <label for="{{ form.referrer_agency.id_for_label }}">Referrer agency</label>
+              {{ form.referrer_agency }}
+              {% include "main/partials/field_errors.html" with field=form.referrer_agency %}
+            </div>
+            <div class="field">
+              <label for="{{ form.referrer_name.id_for_label }}">Referrer name<span class="req">*</span></label>
+              {{ form.referrer_name }}
+              {% include "main/partials/field_errors.html" with field=form.referrer_name %}
+            </div>
+          </div>
+          <div class="grid-2">
+            <div class="field">
+              <label for="{{ form.referrer_email.id_for_label }}">Referrer email<span class="req">*</span></label>
+              {{ form.referrer_email }}
+              {% include "main/partials/field_errors.html" with field=form.referrer_email %}
+            </div>
+            <div class="field">
+              <label for="{{ form.referrer_phone.id_for_label }}">Referrer phone</label>
+              {{ form.referrer_phone }}
+              {% include "main/partials/field_errors.html" with field=form.referrer_phone %}
+            </div>
+          </div>
+          <div class="field">
+            <label for="{{ form.preferred_contact_times.id_for_label }}">Preferred contact times</label>
+            {{ form.preferred_contact_times }}
+            <small class="hint">e.g., Weekdays 10–2</small>
+            {% include "main/partials/field_errors.html" with field=form.preferred_contact_times %}
+          </div>
+        </div>
+      </section>
+      
+      <!-- Family / Carer -->
+      <section class="card" id="card-family" aria-labelledby="family-carer-h">
+        <div class="card__head">
+          <h2 id="family-carer-h">Family / Carer</h2>
+        </div>
+        <div class="card__body">
+          <div class="field">
+            <label for="{{ form.primary_carer_name.id_for_label }}">Parent/Carer name<span class="req">*</span></label>
+            {{ form.primary_carer_name }}
+            {% include "main/partials/field_errors.html" with field=form.primary_carer_name %}
+          </div>
+          <div class="field">
+            <label for="{{ form.address_line1.id_for_label }}">Street address<span class="req">*</span></label>
+            {{ form.address_line1 }}
+            {% include "main/partials/field_errors.html" with field=form.address_line1 %}
+          </div>
+          <div class="field">
+            <label for="{{ form.address_line2.id_for_label }}">Street address line 2</label>
+            {{ form.address_line2 }}
+            {% include "main/partials/field_errors.html" with field=form.address_line2 %}
+          </div>
+          <div class="grid-2">
+            <div class="field">
+              <label for="{{ form.city.id_for_label }}">City</label>
+              {{ form.city }}
+              {% include "main/partials/field_errors.html" with field=form.city %}
+            </div>
+            <div class="field">
+              <label for="{{ form.postcode.id_for_label }}">Postcode<span class="req">*</span></label>
+              {{ form.postcode }}
+              <small class="hint">e.g. G31 4ST</small>
+              {% include "main/partials/field_errors.html" with field=form.postcode %}
+            </div>
+          </div>
+          <div class="field check">
+            <label>{{ form.interpreter_required }} Interpreter required?</label>
+            <small class="hint">Where possible, Geeza Break will ask the referring agency to provide the interpreter so support can take place.</small>
+            {% include "main/partials/field_errors.html" with field=form.interpreter_required %}
+          </div>
+        </div>
+      </section>
+      
+      <!-- Re-referral -->
+      <section class="card" id="card-rereferral" aria-labelledby="rereferral-h">
+        <div class="card__head">
+          <h2 id="rereferral-h">Re-referral</h2>
+        </div>
+        <div class="card__body grid-2">
+          <div class="field check">
+            <label>{{ form.is_rereferral }} Is this a re-referral?</label>
+            {% include "main/partials/field_errors.html" with field=form.is_rereferral %}
+          </div>
+          <div class="field">
+            <label for="{{ form.last_support_when.id_for_label }}">If yes, approximate time of last support received</label>
+            {{ form.last_support_when }}
+            <small class="hint">Month/Year is fine (e.g. 05/2024)</small>
+            {% include "main/partials/field_errors.html" with field=form.last_support_when %}
+          </div>
+        </div>
+      </section>
+      
+      <!-- Services Requested -->
+      <section class="card" id="card-services" aria-labelledby="services-h">
+        <div class="card__head">
+          <h2 id="services-h">Services Requested</h2>
+        </div>
+        <div class="card__body">
+          <div class="service-grid">
+            <label class="checkcard">{{ form.srv_family_support }} <span>Family Support</span><small>Working 1:1 with parents to focus on the needs of the family unit. This can include parenting support, help with poor mental health, and supporting children with additional support needs (ASN).</small></label>
+            <label class="checkcard">{{ form.srv_respite_sitting }} <span>Respite Sitting</span><small>Support for children within the family home and in the community, for 4 hours once a week, for up to 8 weeks.</small></label>
+            <label class="checkcard">{{ form.srv_respite_care }} <span>Respite Care</span><small>Overnight respite in an approved carer's home, once a week for a period of 8 weeks.</small></label>
+            <label class="checkcard">{{ form.srv_geezachance }} <span>Geeza Chance</span><small>A 10-week programme for children aged 8–16 in kinship care. It offers group activities and workshops designed to build confidence, social skills, and life skills.</small></label>
+            <label class="checkcard">{{ form.srv_kinship_care }} <span>Kinship Care</span><small>1:1 support for carers, focusing on the needs of the family unit. This can include parenting support, advocacy, emotional support, and help with children who have additional support needs (ASN).</small></label>
+          </div>
+          <div class="field">
+            <label for="{{ form.reason.id_for_label }}">Brief reason for referral / goals</label>
+            {{ form.reason }}
+            {% include "main/partials/field_errors.html" with field=form.reason %}
+          </div>
+        </div>
+      </section>
+      
+      <!-- Additional Information -->
+      <section class="card" id="card-more" aria-labelledby="more-h">
+        <div class="card__head">
+          <h2 id="more-h">Additional Information</h2>
+        </div>
+        <div class="card__body">
+          <details class="acc" id="acc-children" {% if child_formset.total_form_count %}open{% endif %}>
+            <summary>
+              Details of children in the household
+              <span class="chip" id="children-chip" aria-live="polite">
+                {% if child_formset.total_form_count %}{{ child_formset.total_form_count }} form(s){% else %}Not added{% endif %}
+              </span>
+            </summary>
+            <div class="acc-body">
+              {{ child_formset.management_form }}
+              <div id="children-forms" class="stack-md" data-prefix="{{ child_formset.prefix }}">
+                {% for cf in child_formset.forms %}
+                  <fieldset class="child-card">
+                    <legend class="visually-hidden">Child {{ forloop.counter }}</legend>
+                    <div class="grid-3">
+                      <div class="field">
+                        <label for="{{ cf.full_name.id_for_label }}">Child name*</label>
+                        {{ cf.full_name }}
+                        {% include "main/partials/field_errors.html" with field=cf.full_name %}
+                      </div>
+                      <div class="field">
+                        <label for="{{ cf.dob.id_for_label }}">Date of birth*</label>
+                        {{ cf.dob }}
+                        {% include "main/partials/field_errors.html" with field=cf.dob %}
+                      </div>
+                      <div class="field">
+                        <label for="{{ cf.relationship.id_for_label }}">Relationship*</label>
+                        {{ cf.relationship }}
+                      </div>
+                    </div>
+                    <div class="grid-2">
+                      <div class="field check">
+                        <label>{{ cf.has_asn }} Additional support needs / disability</label>
+                      </div>
+                      <div class="field">
+                        <label for="{{ cf.school_nursery.id_for_label }}">School/Nursery (optional)</label>
+                        {{ cf.school_nursery }}
+                      </div>
+                    </div>
+                    {% if cf.DELETE %}
+                    <div class="field check">
+                      <label>{{ cf.DELETE }} Remove this child</label>
+                    </div>
+                    {% endif %}
+                  </fieldset>
+                {% endfor %}
+              </div>
+              <button type="button" class="btn btn--light" id="add-child">+ Add another child</button>
+              <template id="child-empty-form">
+                <fieldset class="child-card">
+                  <legend class="visually-hidden">New child</legend>
+                  <div class="grid-3">
+                    <div class="field">
+                      <label>Child name*</label>
+                      __FULL_NAME__
+                    </div>
+                    <div class="field">
+                      <label>Date of birth*</label>
+                      __DOB__
+                    </div>
+                    <div class="field">
+                      <label>Relationship*</label>
+                      __REL__
+                    </div>
+                  </div>
+                  <div class="grid-2">
+                    <div class="field check"><label>__ASN__ Additional support needs / disability</label></div>
+                    <div class="field">
+                      <label>School/Nursery (optional)</label>
+                      __SCH__
+                    </div>
+                  </div>
+                </fieldset>
+              </template>
+            </div>
+          </details>
+          
+          <details class="acc" id="acc-criteria">
+            <summary>
+              Referral criteria
+              <span class="chip" aria-live="polite">Select all that apply</span>
+            </summary>
+            <div class="acc-body">
+              <div class="criteria-grid">
+                {{ form.criteria }}
+              </div>
+              <div class="field" style="margin-top:10px">
+                <label for="{{ form.criteria_other.id_for_label }}">Other (optional)</label>
+                {{ form.criteria_other }}
+              </div>
+            </div>
+          </details>
+        </div>
+      </section>
+      
+      <!-- Geography -->
+      <section class="card" id="card-geog" aria-labelledby="geog-h">
+        <div class="card__head">
+          <h2 id="geog-h">Geography</h2>
+        </div>
+        <div class="card__body">
+          <div class="grid-3">
+            <div class="field">
+              <label for="{{ form.hscp_locality.id_for_label }}">HSCP locality<span class="req">*</span></label>
+              {{ form.hscp_locality }}
+              <small class="hint">North East, North West or South</small>
+              {% include "main/partials/field_errors.html" with field=form.hscp_locality %}
+            </div>
+            <div class="field">
+              <label for="{{ form.ward.id_for_label }}">Ward<span class="req">*</span></label>
+              {{ form.ward }}
+              <small class="hint">Not sure? <a class="help-link" href="https://www.glasgow.gov.uk/councillorsandcommittees/" target="_blank" rel="noopener">Find my ward</a></small>
+              {% include "main/partials/field_errors.html" with field=form.ward %}
+            </div>
+            <div class="field">
+              <label for="{{ form.neighbourhood.id_for_label }}">Neighbourhood (optional)</label>
+              {{ form.neighbourhood }}
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Consent -->
+      <section class="card" id="card-consent" aria-labelledby="consent-h">
+        <div class="card__head">
+          <h2 id="consent-h">Consent</h2>
+        </div>
+        <div class="card__body">
+          <div class="field check">
+            <label>{{ form.consent_privacy }} I agree to Geeza Break's privacy notice.</label>
+            {% include "main/partials/field_errors.html" with field=form.consent_privacy %}
+          </div>
+          <div class="field check">
+            <label>{{ form.consent_media }} I consent to photos being taken and used for Geeza Break's marketing purposes.</label>
+            {% include "main/partials/field_errors.html" with field=form.consent_media %}
+          </div>
+        </div>
+      </section>
+      
+      <div class="actions action-buttons">
+        <button class="btn btn-secondary btn--light" name="action" value="review">Review your answers</button>
+        <button class="btn btn-primary" name="action" value="submit">Submit referral</button>
+      </div>
+    </form>
+  </div>
+</main>
+
+<script src="{% static 'js/referral-a11y.js' %}"></script>
+<script src="{% static 'js/referral-dynamic.js' %}"></script>
+{% endblock %}
