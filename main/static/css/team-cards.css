@@ -140,3 +140,45 @@ body.about-page .team-card:hover { transform: translateY(-8px); box-shadow: 0 28
 }
 
 /* end of about-page overrides */
+
+/* About page hero text color adjustments */
+body.about-page .hero .display-4,
+body.about-page .hero .lead { color: var(--gb-green) !important; text-shadow: none !important; }
+
+/* Blue information card used on About page for Mission/Impact/Values */
+.info-blue-card {
+    background: linear-gradient(180deg, #eaf6ff 0%, #d6efff 100%);
+    border-left: 6px solid var(--gb-blue);
+    color: #073642;
+}
+.info-blue-card h3 { color: var(--gb-blue); }
+.info-blue-card p { color: #073642; }
+.info-blue-card ul { margin-left: 1rem; }
+
+/* Highlight card used when mirroring Services cards on About page */
+/* Primary blue highlight card variant (solid brand blue) */
+.highlight-card {
+    background: var(--gb-blue); /* flat solid blue */
+    border-left: 6px solid var(--gb-aqua);
+    border-radius: 1rem;
+    box-shadow: 0 10px 28px -8px rgba(0,0,0,0.35), 0 4px 12px rgba(0,0,0,0.25);
+    border: 0;
+    color: #ffffff;
+}
+/* remove previous sheen */
+.highlight-card::after { display:none !important; }
+.highlight-card .card-body { padding: 1.9rem 1.9rem 2.1rem; color: #f5faff; }
+.highlight-card h2.services-section-title{color:#ffffff;}
+.highlight-card h3{color:#ffffff;}
+.highlight-card p, .highlight-card li { color:#f5faff; }
+.highlight-card strong { color:#ffffff; }
+
+/* Force blue highlight card on About page to override generic services-grid yellow */
+body.about-page .services-grid .card.highlight-card {
+    background: var(--gb-blue) !important;
+    background-image: none !important; /* strip any gradient */
+    border-left: 6px solid var(--gb-aqua) !important;
+    color: #ffffff !important;
+}
+body.about-page .services-grid .card.highlight-card:before { display:none !important; content:none !important; background:none !important; }
+

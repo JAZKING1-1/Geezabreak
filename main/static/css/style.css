@@ -498,7 +498,7 @@ body.home .skip-link { display: none !important; }
 
 /* ====== Polaroid Impact Board Overrides (match design reference) ====== */
 /* Cork background & layout (responsive masonry via column-width) */
-.gb-wall{--tile-min:240px;--wall-side:clamp(1rem,4vw,4rem);--wall-max:1500px;--gap:clamp(1.2rem,1.2vw,2rem);background:#b18042; /* base cork */
+.gb-wall{--tile-min:200px;/* reduced from 240px for smaller cards */--wall-side:clamp(1rem,4vw,4rem);--wall-max:1500px;--gap:clamp(1rem,1vw,1.6rem);background:#b18042; /* base cork */
   background-image:
     radial-gradient(circle at 12% 18%, rgba(255,255,255,.08) 0 3px, transparent 4px),
     radial-gradient(circle at 78% 66%, rgba(0,0,0,.08) 0 2px, transparent 3px),
@@ -754,7 +754,7 @@ form.referral-layout .form-section > h2 > .no-pill{display:none;}
 @media (orientation:landscape) and (max-height:520px){.gb-wall{--tile-min:260px;padding-top:2.2rem;}}
 
 /* Polaroid card base */
-.gb-wall .tile{background:#fdfcf9;border:1px solid #eee5d6;border-bottom:3px solid #e2d3be;border-radius:4px;padding:.85rem .85rem 1.2rem;margin:0 0 2.1rem;box-shadow:0 6px 14px -2px rgba(0,0,0,.22),0 2px 4px rgba(0,0,0,.15);transform-origin:center top;transition:box-shadow .35s ease, transform .35s ease;}
+.gb-wall .tile{background:#fdfcf9;border:1px solid #eee5d6;border-bottom:3px solid #e2d3be;border-radius:4px;padding:.7rem .7rem 1rem;margin:0 0 1.6rem;/* slightly tighter for less vertical compression */box-shadow:0 6px 14px -2px rgba(0,0,0,.22),0 2px 4px rgba(0,0,0,.15);transform-origin:center top;transition:box-shadow .35s ease, transform .35s ease;}
 .gb-wall .tile::after{content:none;} /* remove torn edge */
 .gb-wall .tile img,.gb-wall .tile video{aspect-ratio:4/5;border:1px solid #d6c9b5;border-radius:2px;box-shadow:0 3px 6px rgba(0,0,0,.25);background:#ddd;margin:0 0 .75rem;}
 

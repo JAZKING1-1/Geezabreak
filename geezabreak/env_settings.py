@@ -13,9 +13,15 @@ DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
 
 # Email configuration
+# By default include both the personal Gmail and the organisation Outlook address so
+# referral notifications go to both inboxes. Override via the REFERRAL_NOTIFICATION_RECIPIENTS
+# environment variable if you prefer a different list (comma-separated).
 EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND', 'django.core.mail.backends.console.EmailBackend')
-DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'no-reply@geezabreak.org.uk') 
-REFERRAL_NOTIFICATION_RECIPIENTS = os.environ.get('REFERRAL_NOTIFICATION_RECIPIENTS', 'ds16022004@gmail.com').split(',')
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'no-reply@geezabreak.org.uk')
+REFERRAL_NOTIFICATION_RECIPIENTS = os.environ.get(
+	'REFERRAL_NOTIFICATION_RECIPIENTS',
+	'ds16022004@gmail.com,info@geezabreak.org.uk'
+).split(',')
 
 # Optional SMTP settings
 EMAIL_HOST = os.environ.get('EMAIL_HOST', '')

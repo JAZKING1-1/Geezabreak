@@ -8,41 +8,52 @@
 {% block content %}
 <section class="hero text-center py-5 fade-in">
     <div class="container">
-        <h1 class="display-4">About Geeza Break</h1>
-        <p class="lead">30+ Years of Supporting Glasgow Families</p>
+        <h1 class="display-4" style="color:#4caf50;">About Geeza Break</h1>
+        <p class="lead" style="color:#4caf50;">30+ Years of Supporting Glasgow Families</p>
     </div>
 </section>
 
 <section class="container py-5 section-animate">
-    <div class="row">
-        <div class="col-md-8">
-            <h2 class="fade-in">Our Story</h2>
-            <p>Founded in 1992, Geeza Break emerged from a community need in Glasgow's East End. What started as a grassroots initiative has grown into a vital support system for hundreds of families across Glasgow.</p>
-            
-            <h3 class="mt-4">Our Mission</h3>
-            <p>To provide comprehensive support services that strengthen families, enhance child development, and build resilient communities across Glasgow.</p>
-            
-            <h3 class="mt-4">Our Values</h3>
-            <ul>
-                <li>Respect for every family's unique journey</li>
-                <li>Commitment to excellence in service delivery</li>
-                <li>Integrity in all our interactions</li>
-                <li>Innovation in addressing community needs</li>
-                <li>Inclusivity and accessibility for all</li>
-            </ul>
-        </div>
-        <div class="col-md-4">
-            <img src="{% static 'images/thumbnail_LOGO.png' %}" alt="Geeza Break Logo" class="img-fluid mb-4 fade-in">
-            <div class="card">
-                <div class="card-body">
-                    <h4>Quick Facts</h4>
-                    <ul class="list-unstyled">
-                        <li>✓ Founded in 1992</li>
-                        <li>✓ 470+ Families Supported Annually</li>
-                        <li>✓ 30+ Years of Experience</li>
-                        <li>✓ Glasgow-wide Services</li>
-                    </ul>
+    <div class="row align-items-stretch g-0" style="min-height:100%;">
+        <div class="col-md-8 ps-md-0" style="margin-left:-8px;">
+            <!-- About summary moved into the blue info card below -->
+
+            <!-- Info section styled like Services cards for consistent layout -->
+            <div class="services-grid mt-4">
+                <div id="about-info-card" class="card highlight-card" style="background:#20b4ef !important;background-image:none !important;border-left:none !important;color:#fff !important;">
+                    <div class="card-body p-4">
+                        <h2 class="services-section-title">About Geeza Break</h2>
+                        <h3 class="mt-3">Our Mission Statement</h3>
+                        <p>Geeza Break provides flexible, relationship based and holistic wraparound whole family support designed to meet the unique needs of disadvantaged families within the Northeast End of Glasgow. We are a 'grass roots' organisation embedded in the centre of the community offering 1 to 1 family support and group work for parents and carers, as well as a range of respite opportunities (sitting, overnight care, centre-based group work) for children from birth to 16 years of age.</p>
+
+                        <h3 class="mt-3">Our Impact Statement</h3>
+                        <p>Families experiencing crises and adversity including addiction issues, food/fuel poverty, mental health, domestic violence and other complex needs, will gain, knowledge and understanding and an ability to build healthy coping strategies for the whole family. Overall, our intervention empowers families to lead more inclusive, active, and resilient lives, helping break the poverty and trauma cycle and improving their long-term health and wellbeing.</p>
+
+                        <h3 class="mt-3">Our Values</h3>
+                        <p>Our core values and principles are in line with Health and Social Care Standards (2017), SSSC's Codes of Practice (2016) and in line with the 10 family support principles within The Promise, these are as follows:</p>
+                        <ul>
+                            <li><strong>Accessibility</strong> – easily accessible service to all, removing barriers at the referral process.</li>
+                            <li><strong>Participation</strong> – encouraging people to fulfil their potential and co-design support.</li>
+                            <li><strong>Dignity &amp; respect</strong> – human rights are respected and promoted.</li>
+                            <li><strong>Equality and Diversity</strong> – a clear and equal rights policy.</li>
+                            <li><strong>Privacy &amp; confidentiality</strong> – as underpinned by the Data Protection Act 2018.</li>
+                            <li><strong>Choice &amp; Hope</strong> – providing families with hope for meaningful change.</li>
+                            <li><strong>Health &amp; Safety</strong> – ensuring safe environments for families and staff.</li>
+                            <li><strong>Professionalism</strong> – committed staff providing co-developed services.</li>
+                        </ul>
+                        <p class="small text-muted">Geeza Break staff are provided weekly updates to legislation and guidance so we can provide the right people, in the right place, with the right skills, at the right time.</p>
+
+                        <h3 class="mt-3">Our Community Flat</h3>
+                        <p>Our community flat is multi-purpose and unique to Geeza Break enabling families to receive the benefit from the right support at the right time in the right way. We consider whether the venue for assessment and support best suits the family's needs and can provide support at the organisation's community flat.</p>
+                        <p>Children have access to a playroom, arts &amp; crafts, a fully functioning kitchen for cooking and baking opportunities, and a sensory room adapted for children with additional support needs. Benefits of a sensory environment include stress reduction, sensory stimulation, enhanced learning through play, improved balance and movement, improved communication skills and improved focus and socialisation.</p>
+                    </div>
                 </div>
+            </div>
+        </div>
+        <div class="col-md-4 p-0 position-relative" style="display:flex;align-items:stretch;">
+            {# Timeline image now scales fully into the space without cropping (contain) #}
+            <div class="w-100" style="background:#a5c63b;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.25);display:flex;align-items:center;justify-content:center;padding:0;">
+                <img src="{% static 'images/time.png' %}" alt="Geeza Break Timeline" class="fade-in about-timeline-img" style="max-width:100%;max-height:100%;width:100%;height:100%;object-fit:contain;border-radius:12px;">
             </div>
         </div>
     </div>

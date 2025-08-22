@@ -84,6 +84,18 @@
     <p class="scrap">“Resources empowered me to support my child better.” — Parent</p>
   </article>
 
+  <!-- Newly added impact photo tiles -->
+  <article class="tile size-s tape-yellow">
+    {# Ensure the source image is placed in main/static/images not only in collected staticfiles #}
+    <img src="{% static 'images/IMG-20250822-WA0032.jpg' %}" alt="Community engagement scene" />
+    <p class="scrap">“Moments like these show the power of support.”</p>
+  </article>
+
+  <article class="tile size-m tape-sky">
+    <img src="{% static 'images/IMG-20250822-WA0028.jpg' %}" alt="Interactive learning display" />
+    <p class="scrap">“Exploring, learning, growing together.”</p>
+  </article>
+
   {# Example dynamic loop
   {% comment %}
   {% for s in stories %}
