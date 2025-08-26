@@ -1,0 +1,47 @@
+{% load static %}
+<section class="impact-slideshow" aria-label="Our Impact slideshow">
+  <div class="impact-slideshow__inner">
+    <div class="impact-slides" id="impactSlides">
+      <figure class="impact-slide polaroid" data-caption="“This place changed my life.” — A.">
+        <img src="{% static 'images/1.jpg' %}" alt="Mentor supporting a young person">
+        <figcaption>“This place changed my life.” <span class="sig">— A.</span></figcaption>
+      </figure>
+      <figure class="impact-slide polaroid" data-caption="“We finally felt heard.” — J &amp; K">
+        <img src="{% static 'images/2.jpg' %}" alt="Family resources corner">
+        <figcaption>“We finally felt heard.” <span class="sig">— J &amp; K</span></figcaption>
+      </figure>
+      <figure class="impact-slide polaroid" data-caption="“Ideas for when they said ‘I’m bored!’” — Parent">
+        <img src="{% static 'images/3.jpg' %}" alt="Children engaged in creative play">
+        <figcaption>“Ideas for when they said ‘I’m bored!’” <span class="sig">— Parent</span></figcaption>
+      </figure>
+      <figure class="impact-slide polaroid" data-caption="“Local support made all the difference.” — Family">
+        <img src="{% static 'images/4.jpg' %}" alt="Community group activity">
+        <figcaption>“Local support made all the difference.” <span class="sig">— Family</span></figcaption>
+      </figure>
+      <figure class="impact-slide polaroid" data-caption="“Moments like these show the power of support.” — Community">
+        <img src="{% static 'images/i3.jpg' %}" alt="Community engagement scene">
+        <figcaption>“Moments like these show the power of support.” <span class="sig">— Community</span></figcaption>
+      </figure>
+      <figure class="impact-slide polaroid" data-caption="“Exploring, learning, growing together.” — Parent">
+        <img src="{% static 'images/i5.jpg' %}" alt="Interactive learning display">
+        <figcaption>“Exploring, learning, growing together.” <span class="sig">— Parent</span></figcaption>
+      </figure>
+      <figure class="impact-slide polaroid" data-caption="“Volunteers brought us hope.” — Volunteer">
+        <img src="{% static 'images/i7.jpg' %}" alt="Volunteers and families">
+        <figcaption>“Volunteers brought us hope.” <span class="sig">— Volunteer</span></figcaption>
+      </figure>
+    </div>
+
+    <div class="impact-controls">
+      <button class="impact-prev" aria-label="Previous slide">◀</button>
+      <button class="impact-play" aria-label="Pause slideshow" data-playing="true">⏸</button>
+      <button class="impact-next" aria-label="Next slide">▶</button>
+    </div>
+
+    <div class="impact-caption" id="impactCaption" aria-live="polite"></div>
+    <div class="impact-dots" id="impactDots" role="tablist"></div>
+  </div>
+
+  <link rel="stylesheet" href="{% static 'css/impact-slideshow.css' %}">
+  <script src="{% static 'js/impact-slideshow.js' %}" defer></script>
+</section>

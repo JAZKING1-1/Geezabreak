@@ -49,67 +49,74 @@
   </div>
 </section>
 
-<!-- Corkboard Story Wall / Impact (gb-wall) -->
-<section class="gb-wall" aria-labelledby="story-wall-heading">
-  <h2 id="story-wall-heading" class="wall-title">Our Impact</h2>
+{# Our Impact: two-row polaroid story wall (rope + clothespins) #}
+<section class="impact-wall full-width-section" aria-labelledby="impact-title">
+  <div class="impact-head">
+    <h2 id="impact-title">Our Impact</h2>
+    <p>Moments from our community — strung up on our story wall.</p>
+  </div>
 
-  <!-- Example tiles (replace with dynamic loop if desired) -->
-  <article class="tile size-m tape-yellow">
-    <img src="{% static 'images/1.jpg' %}" alt="Mentor supporting a young person" />
-    <p class="scrap">“This place changed my life.” — A.</p>
-  </article>
+  <!-- ROW 1 -->
+  <div class="rope-row rope-row--top">
+    <div class="rope" aria-hidden="true"></div>
 
-  <article class="tile size-l tape-sky">
-    <img src="{% static 'images/2.jpg' %}" alt="Family resources corner" />
-    <p class="scrap">“We finally felt heard.” — J &amp; K</p>
-  </article>
+    <!-- track is duplicated to create seamless loop -->
+    <div class="track" data-speed="32">  {# seconds per loop #}
+      <ul class="polaroids">
+        {% for item in impact_images %}
+        <li class="polaroid">
+          <figure>
+            <img src="{{ item.src }}" alt="{{ item.alt|default:'Geeza Break moment' }}">
+            {% if item.caption %}<figcaption>{{ item.caption }}</figcaption>{% endif %}
+          </figure>
+          <img class="pin" src="{% static 'img/clothespin.svg' %}" alt="" aria-hidden="true">
+        </li>
+        {% endfor %}
+      </ul>
+      <!-- duplicate for seamless loop -->
+      <ul class="polaroids" aria-hidden="true">
+        {% for item in impact_images %}
+        <li class="polaroid" aria-hidden="true">
+          <figure>
+            <img src="{{ item.src }}" alt="">
+            {% if item.caption %}<figcaption>{{ item.caption }}</figcaption>{% endif %}
+          </figure>
+          <img class="pin" src="{% static 'img/clothespin.svg' %}" alt="">
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
 
-  <article class="tile size-s tape-green">
-    <img src="{% static 'images/3.jpg' %}" alt="Children engaged in creative play" />
-    <p class="scrap">“Ideas for when they said ‘I’m bored!’” — Parent</p>
-  </article>
+  <!-- ROW 2 (reverse direction, offset start) -->
+  <div class="rope-row rope-row--bottom">
+    <div class="rope" aria-hidden="true"></div>
 
-  <article class="tile size-m tape-sky">
-    <img src="{% static 'images/4.jpg' %}" alt="Meal support during school holidays" />
-    <p class="scrap">“Holiday hunger help made a real difference.” — Carer</p>
-  </article>
-
-  <article class="tile size-l tape-yellow">
-    <img src="{% static 'images/1.jpg' %}" alt="Volunteer smiling with family" />
-    <p class="scrap">“Together we’re building a stronger story.” — Volunteer</p>
-  </article>
-
-  <article class="tile size-m tape-green">
-    <img src="{% static 'images/2.jpg' %}" alt="Parent finding resources online" />
-    <p class="scrap">“Resources empowered me to support my child better.” — Parent</p>
-  </article>
-
-  <!-- Newly added impact photo tiles -->
-  <article class="tile size-s tape-yellow">
-    {# Ensure the source image is placed in main/static/images not only in collected staticfiles #}
-    <img src="{% static 'images/IMG-20250822-WA0032.jpg' %}" alt="Community engagement scene" />
-    <p class="scrap">“Moments like these show the power of support.”</p>
-  </article>
-
-  <article class="tile size-m tape-sky">
-    <img src="{% static 'images/IMG-20250822-WA0028.jpg' %}" alt="Interactive learning display" />
-    <p class="scrap">“Exploring, learning, growing together.”</p>
-  </article>
-
-  {# Example dynamic loop
-  {% comment %}
-  {% for s in stories %}
-    <article class="tile {{ s.size }} tape-{{ s.brand_tape }}">
-      {% if s.video %}
-        <video src="{{ s.video.url }}" muted playsinline loop></video>
-      {% else %}
-        <img src="{{ s.image.url }}" alt="{{ s.alt }}" />
-      {% endif %}
-      <p class="scrap">{{ s.quote }}</p>
-    </article>
-  {% endfor %}
-  {% endcomment %}
-  #}
+    <div class="track track--reverse" data-speed="38" data-offset="0.35">
+      <ul class="polaroids">
+        {% for item in impact_images_bottom %}
+        <li class="polaroid">
+          <figure>
+            <img src="{{ item.src }}" alt="{{ item.alt|default:'Geeza Break moment' }}">
+            {% if item.caption %}<figcaption>{{ item.caption }}</figcaption>{% endif %}
+          </figure>
+          <img class="pin" src="{% static 'img/clothespin.svg' %}" alt="" aria-hidden="true">
+        </li>
+        {% endfor %}
+      </ul>
+      <ul class="polaroids" aria-hidden="true">
+        {% for item in impact_images_bottom %}
+        <li class="polaroid" aria-hidden="true">
+          <figure>
+            <img src="{{ item.src }}" alt="">
+            {% if item.caption %}<figcaption>{{ item.caption }}</figcaption>{% endif %}
+          </figure>
+          <img class="pin" src="{% static 'img/clothespin.svg' %}" alt="">
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
 </section>
 
 <!-- Testimonials (updated styling) -->

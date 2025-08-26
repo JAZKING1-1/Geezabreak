@@ -10,6 +10,7 @@ from django.conf import settings
 from django.views import View
 from .models_comment import Comment
 import logging
+from django.templatetags.static import static
 
 # Set up logging for email issues
 logger = logging.getLogger(__name__)
@@ -19,7 +20,40 @@ def home(request):
         request.session['visited_home'] = True
         request.session.save()
     comments = Comment.objects.filter(approved=True).order_by('-created_at')[:10]
-    return render(request, 'main/home.html', {'comments': comments})
+    # Provide default impact images for the story wall if view doesn't pass them
+    available = [
+        'images/1.jpg', 'images/2.jpg', 'images/3.jpg', 'images/4.jpg',
+        'images/i3.jpg', 'images/i5.jpg', 'images/i7.jpg'
+    ]
+    testimonials = [
+        "Geeza Break gave us the breathing space we truly needed as a family.",
+        "The kids always look forward to their playtime with Geeza Break staff.",
+        "Having someone to trust made all the difference for us.",
+        "They don't just support the children – they support the whole family.",
+        "Geeza Break helped us find joy in the little moments again.",
+        "The team always makes us feel valued and understood.",
+        "Our home feels lighter and happier since Geeza Break stepped in.",
+        "Consistent, caring, and always ready to listen – that's Geeza Break.",
+        "My child's confidence has grown so much thanks to the positive play sessions.",
+        "Geeza Break turned a very stressful time into a hopeful journey."
+    ]
+
+    def make_list(n, offset=0):
+        out = []
+        for i in range(n):
+            p = available[i % len(available)]
+            caption = testimonials[(i + offset) % len(testimonials)]
+            out.append({'src': static(p), 'alt': 'Geeza Break moment', 'caption': caption})
+        return out
+
+    impact_top = make_list(10)
+    impact_bottom = make_list(10, offset=5) # Use different testimonials for bottom row
+
+    return render(request, 'main/home.html', {
+        'comments': comments,
+        'impact_images': impact_top,
+        'impact_images_bottom': impact_bottom,
+    })
 
 def landing(request):
     return render(request, 'main/landing.html')
