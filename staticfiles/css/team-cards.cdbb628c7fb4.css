@@ -1,0 +1,184 @@
+/* Team Cards Styling */
+
+:root {
+    --gb-green: #a6ce39;
+    --gb-aqua: #5ce1e6;
+    --gb-sky: #20b4ef;
+    --gb-blue: #0275e2;
+    --gb-yellow: #fcd92b;
+    --gb-text-dark: #073642;
+}
+
+/* Card base updated to use green -> yellow gradient as requested */
+.team-card {
+    background: linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.85) 8%, rgba(166,206,57,0.18) 40%, rgba(252,217,43,0.08) 100%), linear-gradient(135deg, var(--gb-green) 0%, var(--gb-yellow) 100%);
+    color: var(--gb-text-dark);
+    position: relative;
+    transition: transform 0.28s cubic-bezier(.2,.9,.2,1), box-shadow 0.28s;
+    overflow: hidden;
+    border-radius: 0.75rem;
+    border: none;
+    box-shadow: 0 6px 18px rgba(2,31,73,0.06);
+}
+
+/* Subtle top accent stripe that shows full palette when present */
+.team-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 8px;
+    background: linear-gradient(90deg, var(--gb-green), var(--gb-aqua), var(--gb-sky), var(--gb-blue), var(--gb-yellow));
+    opacity: 0.95;
+}
+
+.team-card .card-body { z-index: 2; position: relative; }
+
+.team-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 45px rgba(2,31,73,0.12);
+}
+
+/* keep image area light so faces remain clear */
+.team-image-wrapper {
+    padding: 18px 0 6px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+}
+.team-image-wrapper img {
+    width: 170px;
+    height: 170px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 6px solid rgba(255,255,255,0.95);
+    box-shadow: 0 6px 16px rgba(2,31,73,0.09);
+    transition: transform 0.35s ease, box-shadow 0.35s ease, filter 0.35s ease;
+    object-position: center 30%; /* lift faces into view */
+    background: white;
+}
+.team-card:hover .team-image-wrapper img { transform: scale(1.03); filter: saturate(1.05); }
+
+/* Use palette accents for subtitles and small UI bits */
+.team-card .card-subtitle { color: rgba(3,48,58,0.85); }
+.team-card p strong { color: rgba(3,48,58,0.95); }
+
+/* Alternate palettes for special cards if needed */
+.team-card.palette-aqua { background: linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.85) 8%, rgba(92,225,230,0.18) 40%, rgba(32,180,239,0.08) 100%), linear-gradient(135deg, var(--gb-aqua), var(--gb-sky)); }
+.team-card.palette-sky { background: linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.85) 8%, rgba(32,180,239,0.18) 40%, rgba(2,117,226,0.08) 100%), linear-gradient(135deg, var(--gb-sky), var(--gb-blue)); }
+.team-card.palette-blue { background: linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.85) 8%, rgba(2,117,226,0.18) 40%, rgba(252,217,43,0.06) 100%), linear-gradient(135deg, var(--gb-blue), var(--gb-yellow)); }
+
+/* ensure relative for pseudo element */
+.about-highlights .highlight-card { position: relative; }
+
+/* Make cards responsive */
+@media (max-width: 767px) {
+    .about-highlights .highlight-card { padding: 1.25rem; }
+    .team-card::before { height: 6px; }
+    .team-image-wrapper img { width: 150px; height: 150px; }
+}
+
+/* About-page specific overrides: yellow page background + green bio cards */
+
+body.about-page {
+    background: var(--gb-yellow) !important; /* page-wide yellow */
+}
+
+/* Let sections and bootstrap bg helpers be transparent on the about page so yellow shows through */
+body.about-page section,
+body.about-page .container,
+body.about-page .bg-white,
+body.about-page .bg-light {
+    background: transparent !important;
+}
+
+/* Make the bio cards a solid exact green color */
+body.about-page .team-card {
+    background: var(--gb-green) !important; /* exact green requested */
+    color: var(--gb-text-dark);
+    border: 1px solid rgba(0,0,0,0.06);
+    box-shadow: 0 12px 36px rgba(2,31,73,0.08);
+}
+
+/* Remove the rainbow accent stripe on cards for the about page */
+body.about-page .team-card::before { display: none !important; }
+
+/* Make the image wrapper a blue shade for clarity, keep the circular photo white-bordered */
+body.about-page .team-image-wrapper { background: var(--gb-sky); padding-top: 18px; padding-bottom: 8px; }
+body.about-page .team-image-wrapper img {
+    border: 6px solid rgba(255,255,255,0.95);
+    box-shadow: 0 8px 22px rgba(2,31,73,0.12);
+}
+
+/* Abstract avatar (SVG) used when no photo available */
+.abstract-avatar {
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 22px rgba(2,31,73,0.12);
+}
+.abstract-avatar svg { width: 92px; height: 92px; display: block; }
+
+/* Ensure text inside cards is readable on green */
+body.about-page .team-card .card-title,
+body.about-page .team-card .card-subtitle,
+body.about-page .team-card p { color: var(--gb-text-dark); }
+
+/* Slight hover lift to match overall feel */
+body.about-page .team-card:hover { transform: translateY(-8px); box-shadow: 0 28px 60px rgba(2,31,73,0.14); }
+
+/* Responsive tweaks */
+@media (max-width: 767px) {
+    body.about-page .team-image-wrapper img { width: 150px; height: 150px; }
+    .abstract-avatar { width: 150px; height: 150px; }
+}
+
+/* end of about-page overrides */
+
+/* About page hero text color adjustments */
+body.about-page .hero .display-4,
+body.about-page .hero .lead { color: var(--gb-green) !important; text-shadow: none !important; }
+
+/* Blue information card used on About page for Mission/Impact/Values */
+.info-blue-card {
+    background: linear-gradient(180deg, #eaf6ff 0%, #d6efff 100%);
+    border-left: 6px solid var(--gb-blue);
+    color: #073642;
+}
+.info-blue-card h3 { color: var(--gb-blue); }
+.info-blue-card p { color: #073642; }
+.info-blue-card ul { margin-left: 1rem; }
+
+/* Highlight card used when mirroring Services cards on About page */
+/* Primary blue highlight card variant (solid brand blue) */
+.highlight-card {
+    background: var(--gb-blue); /* flat solid blue */
+    border-left: 6px solid var(--gb-aqua);
+    border-radius: 1rem;
+    box-shadow: 0 10px 28px -8px rgba(0,0,0,0.35), 0 4px 12px rgba(0,0,0,0.25);
+    border: 0;
+    color: #ffffff;
+}
+/* remove previous sheen */
+.highlight-card::after { display:none !important; }
+.highlight-card .card-body { padding: 1.9rem 1.9rem 2.1rem; color: #f5faff; }
+.highlight-card h2.services-section-title{color:#ffffff;}
+.highlight-card h3{color:#ffffff;}
+.highlight-card p, .highlight-card li { color:#f5faff; }
+.highlight-card strong { color:#ffffff; }
+
+/* Force blue highlight card on About page to override generic services-grid yellow */
+body.about-page .services-grid .card.highlight-card {
+    background: var(--gb-blue) !important;
+    background-image: none !important; /* strip any gradient */
+    border-left: 6px solid var(--gb-aqua) !important;
+    color: #ffffff !important;
+}
+body.about-page .services-grid .card.highlight-card:before { display:none !important; content:none !important; background:none !important; }
+

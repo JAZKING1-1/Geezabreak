@@ -142,8 +142,12 @@ body.about-page .team-card:hover { transform: translateY(-8px); box-shadow: 0 28
 /* end of about-page overrides */
 
 /* About page hero text color adjustments */
+/* About page hero text color adjustments (override previous green) */
 body.about-page .hero .display-4,
-body.about-page .hero .lead { color: var(--gb-green) !important; text-shadow: none !important; }
+body.about-page .hero .lead { color:#000 !important; text-shadow:none !important; }
+
+/* Final enforcement: if any other stylesheet loads later and overrides, boost specificity */
+body.about-page .hero h1.display-4, body.about-page .hero p.lead { color:#000 !important; -webkit-text-fill-color:#000; }
 
 /* Blue information card used on About page for Mission/Impact/Values */
 .info-blue-card {

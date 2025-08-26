@@ -60,8 +60,77 @@ def landing(request):
 
 def about(request):
     from .models import TeamMember
-    team_members = TeamMember.objects.filter().order_by('order', 'name')
-    return render(request, 'main/about.html', {'team_members': team_members})
+    from datetime import date
+    import re
+
+    today = date.today()
+
+    month_map = {m.lower(): i for i, m in enumerate([
+        '', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
+    ])}
+
+    def parse_joined(s: str):
+        if not s:
+            return date(today.year, 1, 1)
+        # Try patterns like '7 October 2024', 'October 2024', 'Jan 2024', '2020', 'January 2024'
+        # Normalize double spaces
+        s_norm = re.sub(r"\s+", " ", s.strip())
+        # Full day month year
+        m = re.match(r"^(?P<day>\d{1,2})\s+(?P<month>[A-Za-z]+)\s+(?P<year>\d{4})$", s_norm)
+        if m:
+            day = int(m.group('day'))
+            month = month_map.get(m.group('month').lower(), 1)
+            year = int(m.group('year'))
+            return date(year, month, min(day, 28))
+        # Month year
+        m = re.match(r"^(?P<month>[A-Za-z]+)\s+(?P<year>\d{4})$", s_norm)
+        if m:
+            month = month_map.get(m.group('month').lower(), 1)
+            year = int(m.group('year'))
+            return date(year, month, 1)
+        # Year only
+        m = re.search(r"(\d{4})", s_norm)
+        if m:
+            year = int(m.group(1))
+            return date(year, 1, 1)
+        return date(today.year, 1, 1)
+
+    def tenure_string(join_dt: date):
+        # Compute years with 1 decimal; if under 1 year show months
+        delta_days = (today - join_dt).days
+        if delta_days < 30:
+            return "Joined recently"
+        years = delta_days / 365.25
+        if years < 1:
+            months = int(delta_days / 30.44)
+            return f"{months} months since {join_dt.year}"
+        # 1 decimal
+        years_fmt = f"{years:.1f}".rstrip('0').rstrip('.')
+        return f"{years_fmt} years since {join_dt.year}"
+
+    raw_members = list(TeamMember.objects.all())
+    enriched = []
+    for m in raw_members:
+        jd = parse_joined(m.joined_date)
+        # attach helper attrs (no leading underscore so Django template allows access)
+        m.join_date_parsed = jd
+        m.tenure_display = tenure_string(jd)
+        m.display_name = 'Nancy Ross' if m.name == 'Jane Wilson' else m.name
+        # Explicit overrides as requested
+        if m.display_name == 'Nancy Ross':
+            m.tenure_display = 'January 2024'
+        elif m.display_name == 'Elaine Mitchell':
+            m.tenure_display = '6 years since 2020'
+        elif m.display_name == 'Mark Mulholland':
+            m.tenure_display = '15 years'
+        enriched.append(m)
+
+    # Sort ascending by join date then display name
+    enriched.sort(key=lambda x: (x.join_date_parsed, x.display_name.lower()))
+
+    return render(request, 'main/about.html', {
+        'team_members': enriched,
+    })
 
 def services(request):
     return render(request, 'main/services.html')

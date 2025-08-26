@@ -8,8 +8,8 @@
 {% block content %}
 <section class="hero text-center py-5 fade-in">
     <div class="container">
-        <h1 class="display-4" style="color:#4caf50;">About Geeza Break</h1>
-        <p class="lead" style="color:#4caf50;">30+ Years of Supporting Glasgow Families</p>
+    <h1 class="display-4" style="color:#000;font-size:4.25rem;line-height:1.1;">About Geeza Break</h1>
+    <p class="lead" style="color:#000;font-size:1.9rem;font-weight:600;">30+ Years of Supporting Glasgow Families</p>
     </div>
 </section>
 
@@ -43,9 +43,33 @@
                         </ul>
                         <p class="small text-muted">Geeza Break staff are provided weekly updates to legislation and guidance so we can provide the right people, in the right place, with the right skills, at the right time.</p>
 
-                        <h3 class="mt-3">Our Community Flat</h3>
-                        <p>Our community flat is multi-purpose and unique to Geeza Break enabling families to receive the benefit from the right support at the right time in the right way. We consider whether the venue for assessment and support best suits the family's needs and can provide support at the organisation's community flat.</p>
-                        <p>Children have access to a playroom, arts &amp; crafts, a fully functioning kitchen for cooking and baking opportunities, and a sensory room adapted for children with additional support needs. Benefits of a sensory environment include stress reduction, sensory stimulation, enhanced learning through play, improved balance and movement, improved communication skills and improved focus and socialisation.</p>
+                        {# Removed Community Flat section per request #}
+
+                        <!-- Duty of Candour (moved into blue card) -->
+                        <h3 class="mt-4">Duty of Candour</h3>
+                        <p>
+                            As a registered care provider in Scotland, Geeza Break is committed to the
+                            principles of the <strong>Duty of Candour</strong>. This legal duty, in place
+                            since April 2019, ensures openness and transparency by requiring organisations
+                            to inform individuals of serious adverse events, offer support, and reflect on
+                            lessons learned to improve future practice.
+                        </p>
+                        <p>
+                            We are pleased to report that during 2024–25, <strong>no Duty of Candour
+                            notifications</strong> were required across our services. All staff receive
+                            training through the Scottish Social Services Council to maintain awareness
+                            and compliance with this duty.
+                        </p>
+                        <p>
+                            For further information, please visit the
+                            <a href="https://www.gov.scot/policies/healthcare-standards/duty-of-candour" target="_blank" rel="noopener" style="color:#fff;text-decoration:underline;">
+                                Scottish Government Duty of Candour policy
+                            </a>
+                            or the
+                            <a href="https://www.careinspectorate.com/" target="_blank" rel="noopener" style="color:#fff;text-decoration:underline;">
+                                Care Inspectorate
+                            </a>.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -59,46 +83,24 @@
     </div>
 </section>
 
+<!-- (Standalone Duty of Candour section removed; content now inside blue card) -->
+
 <!-- Removed the simple three-card 'Our Team' panels as requested -->
 <!-- (Leadership / Support Workers / Volunteers cards removed) -->
 
 <!-- Meet Our Team - Trustee Cards Section -->
 <section class="py-5 bg-light section-animate">
     <div class="container">
-        <h2 class="text-center mb-5 fade-in">Board Members</h2>
+    <h2 class="text-center mb-5 fade-in">Board Members</h2>
         <div class="row">
+                {# Static Mark Mulholland card removed; data should come from dynamic team_members. Ensure his record in DB has:
+                    Name: Mark Mulholland | Role: Treasurer | Tenure display: 15 years since 2011 #}
 
-            <!-- Hard-coded Board Members to appear first -->
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card team-card h-100">
-                    <div class="team-image-wrapper">
-                        <img src="{% static 'images/staff/m_kknrmlw8_img_2539.jpg' %}" alt="Gillian Middleton">
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">Gillian Middleton</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Chief Executive Officer</h6>
-                        <p><strong>Started:</strong> 7 October 2024</p>
-                        <p>A bit of everything really! Strategic, operational, and organisational leadership and progression of the charity, supporting staff development, safeguarding &amp; developing good practice as a registered, regulated health and social care organisation. Income generation, representing the organisation to external stakeholders, financial stewardship, service development, recruitment and working alongside the board of directors to support ongoing good governance.</p>
-                        <p><strong>Why I joined:</strong> Contributing to positive health, care and wellbeing outcomes of precious children, young people, and their families. Providing a service that is relied upon, valued, nurturing and person centred that makes a real difference.</p>
-                        <p><strong>For a break:</strong> I love live music — you can often find me singing and dancing along at a gig like nobody’s watching!</p>
-                    </div>
-                </div>
-            </div>
+            <!-- Gillian Middleton moved to Geezabreak Staff section -->
 
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card team-card h-100">
-                    <div class="team-image-wrapper">
-                        <img src="{% static 'images/staff/l_e51z28ys_img_3207.jpg' %}" alt="David Greenwood">
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">David Greenwood</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Finance Officer</h6>
-                        <p><strong>Length of service:</strong> 6.5 years in post</p>
-                        <p>All things finance — making a difference every day.</p>
-                        <p><strong>For a break:</strong> I like to read when I get the chance; Agatha Christie is my favourite.</p>
-                    </div>
-                </div>
-            </div>
+            {# David Greenwood moved to Geezabreak Staff section below #}
+
+            {# Placeholder for former 'Jane Wilson' now 'Nancy Ross' moved to staff section - if she was a board member remove from here #}
 
             {% for member in team_members %}
             <div class="col-lg-4 col-md-6 mb-4">
@@ -118,9 +120,9 @@
                     {% endif %}
 
                     <div class="card-body">
-                        <h5 class="card-title">{{ member.name }}</h5>
+                        <h5 class="card-title">{{ member.display_name }}</h5>
                         <h6 class="card-subtitle mb-2 text-muted">{{ member.role_title }}</h6>
-                        <p><strong>Joined:</strong> {{ member.joined_date }}</p>
+                        <p><strong>{{ member.tenure_display }}</strong></p>
 
                         {% if member.reason_for_joining %}
                         <p><strong>Why I got involved:</strong> {{ member.reason_for_joining }}</p>
@@ -151,8 +153,40 @@
 
 <section class="py-5 bg-white section-animate">
     <div class="container">
-        <h2 class="text-center mb-5 fade-in">Respite Sitters &amp; Family Support</h2>
+        <h2 class="text-center mb-5 fade-in">Geezabreak Staff</h2>
         <div class="row">
+            <!-- Gillian first -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card team-card h-100">
+                    <div class="team-image-wrapper">
+                        <img src="{% static 'images/staff/m_kknrmlw8_img_2539.jpg' %}" alt="Gillian Middleton">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Gillian Middleton</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Chief Executive Officer</h6>
+                        <p><strong>Started:</strong> 7 October 2024</p>
+                        <p>A bit of everything really! Strategic, operational, and organisational leadership and progression of the charity, supporting staff development, safeguarding &amp; developing good practice as a registered, regulated health and social care organisation. Income generation, representing the organisation to external stakeholders, financial stewardship, service development, recruitment and working alongside the board of directors to support ongoing good governance.</p>
+                        <p><strong>Why I joined:</strong> Contributing to positive health, care and wellbeing outcomes of precious children, young people, and their families. Providing a service that is relied upon, valued, nurturing and person centred that makes a real difference.</p>
+                        <p><strong>For a break:</strong> I love live music — you can often find me singing and dancing along at a gig like nobody’s watching!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- David second -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card team-card h-100">
+                    <div class="team-image-wrapper">
+                        <img src="{% static 'images/staff/l_e51z28ys_img_3207.jpg' %}" alt="David Greenwood">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">David Greenwood</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Finance Officer</h6>
+                        <p><strong>6 years since 2018</strong></p>
+                        <p>All things finance — making a difference every day.</p>
+                        <p><strong>For a break:</strong> I like to read when I get the chance; Agatha Christie is my favourite.</p>
+                    </div>
+                </div>
+            </div>
             <div class="col-lg-4 col-md-6 mb-4">
                 <div class="card team-card h-100">
                     <div class="team-image-wrapper">
@@ -161,7 +195,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Emily Drummond</h5>
                         <h6 class="card-subtitle mb-2 text-muted">Respite Sitter &amp; Sleep Counsellor</h6>
-                        <p><strong>12 years at Geeza Break</strong></p>
+                        <p><strong>12 years since 2013</strong></p>
                         <p>My role is to support families within the community. I work with the parents within the family home and group settings. I support the young children by giving them positive play experiences and also one to one support and guidance.</p>
                         <p><strong>For a break:</strong> I enjoy taking my border collie Shadow to the dog park.</p>
                     </div>
@@ -176,7 +210,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Maureen Connor</h5>
                         <h6 class="card-subtitle mb-2 text-muted">Respite Carer</h6>
-                        <p><strong>10 years in total (5 volunteer, 5 paid)</strong></p>
+                        <p><strong>10 years since 2015</strong></p>
                         <p>I help and support families by providing overnight care in my home for children from ages 0 to 16 years. I spend quality one-to-one time with the children, do activities, and provide routine and stability during their respite stay.</p>
                         <p><strong>Hobbies &amp; fun facts:</strong> I enjoy spending time with my four grandchildren, walking, swimming, World War II history and cowboy movies.</p>
                     </div>
@@ -191,7 +225,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Samantha Melrose</h5>
                         <h6 class="card-subtitle mb-2 text-muted">Senior Family Support Worker</h6>
-                        <p><strong>Approaching 9 years</strong></p>
+                        <p><strong>9 years since 2016</strong></p>
                         <p>Working alongside families helping them navigate the challenges of day-to-day life and parenthood, helping them get back on track. I also support other staff and assist the CEO with organisational needs.</p>
                         <p><strong>For a break:</strong> When I'm not at work or being a mum I go to the gym.</p>
                     </div>
@@ -206,7 +240,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Zaida Ahmed</h5>
                         <h6 class="card-subtitle mb-2 text-muted">Respite Sitter / Family Support Worker</h6>
-                        <p><strong>Respite sitter 11 years; Family Support just over 1 year</strong></p>
+                        <p><strong>11 years since 2014 (Respite Sitting); 1+ year in Family Support</strong></p>
                         <p>I provide weekly four-hour respite sessions, taking children into the local community for positive play, museums, arts &amp; crafts and activities planned around what the child wants. Family Support involves building relationships with the whole family.</p>
                         <p><strong>Fun fact:</strong> I am a Certified IAIM Infant Massager.</p>
                         <p><strong>For a break:</strong> I like spending time outside walking and with family.</p>
@@ -222,7 +256,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Trisha Swan</h5>
                         <h6 class="card-subtitle mb-2 text-muted">Family Support Worker</h6>
-                        <p><strong>At Geeza Break since May 2023</strong></p>
+                        <p><strong>2 years since May 2023</strong></p>
                         <p>I support families to deal with challenges affecting wellbeing and stability, assessing needs and providing appropriate support and guidance.</p>
                         <p><strong>For a break:</strong> I often book overnight stays somewhere new in the UK or abroad when I can.</p>
                     </div>
@@ -237,7 +271,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Michele Moran</h5>
                         <h6 class="card-subtitle mb-2 text-muted">Family Support / Respite Sitter / Sleep Counsellor</h6>
-                        <p><strong>12 years at Geeza Break</strong></p>
+                        <p><strong>12 years since 2013</strong></p>
                         <p>I provide family support (visiting homes and helping with budgeting, applications and practical support), respite sitting (weekly/fortnightly 4-hour sessions) and sleep counselling (creating sleep plans from diaries).</p>
                         <p><strong>Fun fact:</strong> I'm a huge Harry Potter fan and read all the books in 4 days.</p>
                     </div>
@@ -252,7 +286,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Cathy McInally</h5>
                         <h6 class="card-subtitle mb-2 text-muted">P/T Senior Family Support Worker</h6>
-                        <p><strong>With Geeza Break for 20 years</strong></p>
+                        <p><strong>20 years since 2005</strong></p>
                         <p>My role has included family support and overseeing the family support / respite team and service delivery. Recently I reduced hours to part-time which gives me time for walking and climbing the odd hill.</p>
                     </div>
                 </div>
@@ -275,7 +309,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Jack Anderson</h5>
                         <h6 class="card-subtitle mb-2 text-muted">Project Coordinator</h6>
-                        <p><strong>Length of service:</strong> 2 years</p>
+                        <p><strong>3 years since 2022</strong></p>
                         <p>Work closely with the Family Support team and Respite Team to coordinate the right support for each family. Day-to-day oversight of support provided and administrative support for services. Monitor and track support, provide stats for reports, support vetting and onboarding and sit on Health &amp; Safety and Fundraising sub-groups.</p>
                         <p><strong>What I like best:</strong> Seeing the difference the organisation makes.</p>
                         <p><strong>For a break:</strong> Watch the 80s sitcom “Cheers”.</p>
@@ -286,20 +320,14 @@
             <div class="col-lg-4 col-md-6 mb-4">
                 <div class="card team-card h-100">
                     <div class="team-image-wrapper">
-                        <div class="abstract-avatar" aria-hidden="true">
-                            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Avatar">
-                                <g fill="none" fill-rule="evenodd">
-                                    <circle cx="32" cy="20" r="12" fill="#20b4ef" />
-                                    <path d="M8 56c0-13.255 10.745-24 24-24s24 10.745 24 24" fill="#0275e2" />
-                                    <circle cx="32" cy="20" r="6" fill="#fff" opacity="0.08" />
-                                </g>
-                            </svg>
-                        </div>
+                        <!-- Updated image per request -->
+                        <img src="{% static 'images/IMG_2891.jpg' %}" alt="Brenda Crawford">
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">Brenda Crawford</h5>
                         <h6 class="card-subtitle mb-2 text-muted">Respite Sitter</h6>
-                        <p><strong>Length of service:</strong> 3 years</p>
+                        <!-- Updated tenure per request (assumed intention: 15 years since 2011) -->
+                        <p><strong>3 years since 2022</strong></p>
                         <p>Provide a 4 hour respite service taking children out for positive play — parks, soft play, museums or our community flat with sensory and toy rooms. Activities are planned around the child’s needs.</p>
                         <p><strong>What I like best:</strong> Knowing I'm making a difference and seeing children play and make new friends.</p>
                         <p><strong>For a break:</strong> I enjoy long walks with my dog and spending time with family.</p>
@@ -323,7 +351,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Gerry (Geraldine)</h5>
                         <h6 class="card-subtitle mb-2 text-muted">Respite Carer</h6>
-                        <p><strong>Length of service:</strong> Volunteering for several months</p>
+                        <p><strong>1 year since 2024</strong></p>
                         <p>Provide overnight respite care in my home for children under 4, including dinner, playtime, bathtime and bedtime stories. Carers sometimes meet so children can play together.</p>
                         <p><strong>What I like best:</strong> Helping families, building trust with parents and seeing children thrive.</p>
                         <p><strong>For a break:</strong> I enjoy travelling and exploring new experiences — heading to Italy soon!</p>

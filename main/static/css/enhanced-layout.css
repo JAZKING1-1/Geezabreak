@@ -17,92 +17,23 @@
   color: #f0f0f0 !important;
 }
 
-/* Footer styling */
-.gb-footer {
-  background-color: #212121;
-  color: #ffffff;
-  padding: 3rem 0 1.5rem;
-  margin-top: 3rem;
-}
+/* Legacy footer styles removed (replaced with new grid footer) */
 
-.gb-footer-content {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 15px;
-}
+/* New Footer Component */
+.gb-footer { background:#1f1f1f; color:#e6e6e6; font-size:15px; line-height:1.6; margin-top:3rem; }
+.gb-footer a { color:#e6e6e6; text-decoration:none; }
+.gb-footer a:hover,.gb-footer a:focus { text-decoration:underline; }
+.gb-footer__inner { max-width:1200px; margin:0 auto; padding:32px 16px 20px; display:grid; grid-template-columns:1.1fr 1fr 1fr; gap:40px; align-items:start; }
+.gb-footer h3 { font-size:20px; margin:0 0 14px; color:#fff; font-weight:600; }
+.gb-footer__brand { display:grid; gap:16px; }
+.gb-footer__logo { width:90px; height:auto; max-width:100%; filter:grayscale(100%); opacity:.9; }
+.gb-footer__about { list-style:none; padding:0; margin:0; }
+.gb-footer__about li { margin:2px 0; }
+.gb-footer__links { list-style:none; padding:0; margin:0; }
+.gb-footer__links li { margin:8px 0; }
+.gb-footer__contact { font-style:normal; }
+.gb-footer__bar { border-top:1px solid rgba(255,255,255,0.15); margin-top:32px; padding:14px 20px; text-align:center; color:#d0d0d0; font-size:14px; }
+@media (max-width:960px){ .gb-footer__inner { grid-template-columns:1fr; gap:24px; padding:28px 16px 16px; } .gb-footer__logo { width:70px; } }
 
-.gb-footer-logo {
-  width: 150px;
-  margin-bottom: 1.5rem;
-}
-
-.gb-footer-column {
-  flex: 1;
-  min-width: 200px;
-  margin-bottom: 1.5rem;
-}
-
-.gb-footer h3 {
-  font-size: 1.3rem;
-  margin-bottom: 1rem;
-  color: #ffffff;
-  font-weight: 600;
-}
-
-.gb-footer ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.gb-footer li {
-  margin-bottom: 0.5rem;
-}
-
-.gb-footer a {
-  color: #ffffff;
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-.gb-footer a:hover {
-  color: #5ce1e6;
-}
-
-.gb-footer-bottom {
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding-top: 1.5rem;
-  text-align: center;
-  font-size: 0.9rem;
-  color: #aaaaaa;
-  margin-top: 1rem;
-}
-
-.gb-footer-address {
-  margin-bottom: 0.5rem;
-  line-height: 1.5;
-}
-
-.gb-footer-contact {
-  margin-bottom: 1rem;
-}
-
-.care-inspectorate {
-  display: inline-block;
-  margin-top: 1rem;
-}
-
-.care-inspectorate img {
-  height: 60px;
-  width: auto;
-}
-
-@media (max-width: 768px) {
-  .gb-footer-column {
-    flex: 100%;
-    margin-right: 0;
-  }
-}
+/* Forced clamp to prevent any external overrides inflating badge sizes */
+/* badges removed */
