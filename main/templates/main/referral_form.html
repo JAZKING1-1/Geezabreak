@@ -112,6 +112,11 @@
             <small class="hint">Where possible, Geeza Break will ask the referring agency to provide the interpreter so support can take place.</small>
             {% include "main/partials/field_errors.html" with field=form.interpreter_required %}
           </div>
+          <div class="field check">
+            <label>{{ form.joint_visit_required }} Joint visit required?</label>
+            <small class="hint">Select if another professional needs to attend the first visit with Geeza Break.</small>
+            {% include "main/partials/field_errors.html" with field=form.joint_visit_required %}
+          </div>
         </div>
       </section>
       
@@ -131,6 +136,12 @@
             <small class="hint">Month/Year is fine (e.g. 05/2024)</small>
             {% include "main/partials/field_errors.html" with field=form.last_support_when %}
           </div>
+        </div>
+        <div class="notice" style="margin-top:1rem; background:#fff9e6; border:1px solid #f1d48a; padding:0.8rem 1rem; border-radius:6px;">
+          <p style="margin:0; font-size:0.95rem; line-height:1.35;">
+            <strong>Important:</strong> Due to high demand for our services, please note that we are currently prioritising first-time referrals.<br>
+            If you feel your situation is urgent or involves a safeguarding concern, please contact the office on <strong>0141 573 2900</strong>.
+          </p>
         </div>
       </section>
       
@@ -307,6 +318,6 @@
   </div>
 </main>
 
-<script src="{% static 'js/referral-a11y.js' %}"></script>
-<script src="{% static 'js/referral-dynamic.js' %}"></script>
+<script src="{% static 'js/referral-a11y.js' %}?v=3"></script>
+<script src="{% static 'js/referral-dynamic.js' %}?v=3"></script>
 {% endblock %}

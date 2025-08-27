@@ -57,6 +57,10 @@ class Referral(models.Model):
     # Language / interpreter
     interpreter_required = models.BooleanField(default=False)
     preferred_language = models.CharField(max_length=80, blank=True)
+    joint_visit_required = models.BooleanField(
+        default=False,
+        help_text="Tick if a joint visit with another professional is required."
+    )
 
     # Re-referral
     is_rereferral = models.BooleanField(default=False)
