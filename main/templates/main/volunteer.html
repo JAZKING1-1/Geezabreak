@@ -1,0 +1,594 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Volunteering & Student Placements - Geeza Break{% endblock %}
+
+{% block body_class %}volunteer{% endblock %}
+
+{% block content %}
+<style>
+body {
+    background: linear-gradient(135deg, #f0f8ff 0%, #e6f3ff 25%, #d1e7ff 50%, #b3d9ff 75%, #9ec7ff 100%);
+    min-height: 100vh;
+}
+.volunteer-hero {
+    background: linear-gradient(135deg, #007bbe 0%, #005a8f 50%, #004080 100%);
+    color: white;
+    padding: 4rem 0;
+    text-align: center;
+}
+
+.volunteer-hero h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.volunteer-hero p {
+    font-size: 1.25rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.stories-section {
+    padding: 4rem 0;
+    background: linear-gradient(135deg, #f0f8ff 0%, #e6f3ff 100%);
+}
+
+.stories-section h2 {
+    text-align: center;
+    color: #007bbe;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    font-weight: 600;
+}
+
+.story-card {
+    background: linear-gradient(135deg, #a6ce39 0%, #95bd30 100%);
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    overflow: hidden;
+    margin-bottom: 2rem;
+    transition: transform 0.3s ease;
+    border: 1px solid rgba(166, 206, 57, 0.3);
+}
+
+.story-card:hover {
+    transform: translateY(-5px);
+}
+
+.story-image {
+    height: 250px;
+    background-size: cover;
+    background-position: center;
+}
+
+.story-content {
+    padding: 2rem;
+}
+
+.story-content h3 {
+    color: white;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+.story-content p {
+    color: rgba(255, 255, 255, 0.95);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.story-quote {
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.9);
+    border-left: 4px solid rgba(250, 206, 3, 0.8);
+    padding-left: 1rem;
+    margin: 1.5rem 0;
+}
+
+.roles-section {
+    padding: 4rem 0;
+    background: linear-gradient(135deg, #e6f3ff 0%, #d1e7ff 100%);
+}
+
+.roles-section h2 {
+    text-align: center;
+    color: #007bbe;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    font-weight: 600;
+}
+
+.role-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.role-card {
+    background: linear-gradient(135deg, #a6ce39 0%, #9ec235 100%);
+    border: 2px solid rgba(166, 206, 57, 0.4);
+    border-radius: 15px;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.role-card:hover {
+    border-color: #007bbe;
+    box-shadow: 0 5px 20px rgba(0,123,187,0.1);
+}
+
+.role-icon {
+    width: 80px;
+    height: 80px;
+    background: #007bbe;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    color: white;
+    font-size: 2rem;
+}
+
+.role-card h3 {
+    color: white;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+.role-card p {
+    color: rgba(255, 255, 255, 0.95);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.role-commitment {
+    background: #face03;
+    color: #007bbe;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.student-section {
+    padding: 4rem 0;
+    background: linear-gradient(135deg, #d1e7ff 0%, #b3d9ff 100%);
+}
+
+.student-section h2 {
+    text-align: center;
+    color: #007bbe;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    font-weight: 600;
+}
+
+.student-info {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.student-info p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #666;
+    margin-bottom: 2rem;
+}
+
+.student-benefits {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin: 3rem 0;
+}
+
+.benefit-item {
+    background: linear-gradient(135deg, #a6ce39 0%, #8db52b 100%);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    border: 1px solid rgba(166, 206, 57, 0.3);
+}
+
+.benefit-item h4 {
+    color: white;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+.benefit-item p {
+    color: rgba(255, 255, 255, 0.95);
+    line-height: 1.6;
+}
+
+.form-section {
+    padding: 4rem 0;
+    background: linear-gradient(135deg, #b3d9ff 0%, #9ec7ff 100%);
+}
+
+.form-section h2 {
+    text-align: center;
+    color: #007bbe;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    font-weight: 600;
+}
+
+.interest-form {
+    max-width: 600px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, #a6ce39 0%, #7da924 100%);
+    padding: 3rem;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    border: 1px solid rgba(166, 206, 57, 0.3);
+}
+
+.form-group {
+    margin-bottom: 2rem;
+}
+
+.form-group label {
+    display: block;
+    color: white;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #007bbe;
+}
+
+.checkbox-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.checkbox-group .checkbox-item {
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-group .checkbox-item input[type="checkbox"] {
+    width: auto;
+    margin-right: 0.5rem;
+}
+
+/* Django form styling */
+.interest-form ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.interest-form li {
+    margin-bottom: 0.5rem;
+}
+
+.interest-form input[type="checkbox"] {
+    width: auto;
+    margin-right: 0.5rem;
+}
+
+.submit-btn {
+    background: #007bbe;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    width: 100%;
+}
+
+.submit-btn:hover {
+    background: #005a8f;
+}
+
+.alert {
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+}
+
+.alert-success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alert-error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+@media (max-width: 768px) {
+    .volunteer-hero h1 {
+        font-size: 2rem;
+    }
+
+    .volunteer-hero p {
+        font-size: 1rem;
+    }
+
+    .stories-section h2,
+    .roles-section h2,
+    .student-section h2,
+    .form-section h2 {
+        font-size: 2rem;
+    }
+
+    .role-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .interest-form {
+        padding: 2rem;
+    }
+}
+</style>
+
+<section class="volunteer-hero">
+    <div class="container">
+        <h1>Make a Difference</h1>
+        <p>Join our community of volunteers and help create positive change in the lives of children and families in our local area.</p>
+    </div>
+</section>
+
+<section class="stories-section">
+    <div class="container">
+        <h2>Volunteer Stories</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="story-card">
+                    <div class="story-image" style="background-image: url('{% static 'images/volunteer1.jpg' %}');"></div>
+                    <div class="story-content">
+                        <h3>Sarah's Journey</h3>
+                        <p>Sarah started volunteering with us 3 years ago as a play session helper. Today, she's one of our most valued team members, coordinating volunteer activities and mentoring new volunteers.</p>
+                        <div class="story-quote">
+                            "Volunteering with Geeza Break has given me so much more than I could ever give. The children, the families, and the amazing team have become my extended family."
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="story-card">
+                    <div class="story-image" style="background-image: url('{% static 'images/volunteer2.jpg' %}');"></div>
+                    <div class="story-content">
+                        <h3>Mike's Impact</h3>
+                        <p>Mike brings his IT skills to help us maintain our website and develop new digital tools. His technical expertise has helped us reach more families and streamline our operations.</p>
+                        <div class="story-quote">
+                            "I wanted to use my skills for something meaningful. Geeza Break gave me that opportunity and showed me how technology can make a real difference in people's lives."
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="story-card">
+                    <div class="story-image" style="background-image: url('{% static 'images/volunteer3.jpg' %}');"></div>
+                    <div class="story-content">
+                        <h3>Emma's Passion</h3>
+                        <p>Emma volunteers as a respite carer, providing overnight support for families who need a break. Her compassionate nature and dedication make her an invaluable part of our team.</p>
+                        <div class="story-quote">
+                            "Being able to give families the breathing space they need is incredibly rewarding. Seeing the difference it makes in their lives keeps me coming back."
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="story-card">
+                    <div class="story-image" style="background-image: url('{% static 'images/volunteer4.jpg' %}');"></div>
+                    <div class="story-content">
+                        <h3>James's Commitment</h3>
+                        <p>James helps with our fundraising events and community outreach. His enthusiasm and organizational skills have helped us raise thousands for our services.</p>
+                        <div class="story-quote">
+                            "Every pound raised means more support for families. It's amazing to see how our community comes together to help those who need it most."
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="roles-section">
+    <div class="container">
+        <h2>Volunteer Roles Available</h2>
+        <div class="role-grid">
+            <div class="role-card">
+                <div class="role-icon">
+                    <i class="fas fa-child"></i>
+                </div>
+                <h3>Play Session Helper</h3>
+                <p>Support our play sessions by helping children with activities, games, and crafts. No special skills required - just enthusiasm and patience!</p>
+                <div class="role-commitment">2-4 hours/week</div>
+            </div>
+            <div class="role-card">
+                <div class="role-icon">
+                    <i class="fas fa-home"></i>
+                </div>
+                <h3>Respite Carer</h3>
+                <p>Provide overnight or weekend respite care for families. Help with bedtime routines, morning care, and light household tasks.</p>
+                <div class="role-commitment">Flexible hours</div>
+            </div>
+            <div class="role-card">
+                <div class="role-icon">
+                    <i class="fas fa-laptop"></i>
+                </div>
+                <h3>Admin Support</h3>
+                <p>Help with administrative tasks like data entry, filing, organizing events, and maintaining our volunteer database.</p>
+                <div class="role-commitment">4-8 hours/week</div>
+            </div>
+            <div class="role-card">
+                <div class="role-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3>Fundraising Coordinator</h3>
+                <p>Organize fundraising events, manage social media campaigns, and help us reach more people in our community.</p>
+                <div class="role-commitment">6-10 hours/week</div>
+            </div>
+            <div class="role-card">
+                <div class="role-icon">
+                    <i class="fas fa-tools"></i>
+                </div>
+                <h3>Maintenance Helper</h3>
+                <p>Help with basic maintenance tasks around our facilities, gardening, and keeping our play areas safe and clean.</p>
+                <div class="role-commitment">Flexible hours</div>
+            </div>
+            <div class="role-card">
+                <div class="role-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h3>Mentor</h3>
+                <p>Mentor new volunteers, share your experience, and help build our volunteer community through training and support.</p>
+                <div class="role-commitment">2-6 hours/week</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="student-section">
+    <div class="container">
+        <h2>Student Placements</h2>
+        <div class="student-info">
+            <p>We welcome students from various disciplines who are looking to gain valuable experience in child care, community work, and charity management. Our placements offer hands-on learning opportunities and the chance to make a real difference.</p>
+
+            <div class="student-benefits">
+                <div class="benefit-item">
+                    <h4><i class="fas fa-book-open text-primary"></i> Learning Experience</h4>
+                    <p>Gain practical experience in child care, community engagement, and charity operations while earning academic credits.</p>
+                </div>
+                <div class="benefit-item">
+                    <h4><i class="fas fa-users text-primary"></i> Professional Development</h4>
+                    <p>Develop transferable skills in communication, teamwork, and project management that will benefit your future career.</p>
+                </div>
+                <div class="benefit-item">
+                    <h4><i class="fas fa-heart text-primary"></i> Making a Difference</h4>
+                    <p>Contribute to meaningful work that directly improves the lives of children and families in our community.</p>
+                </div>
+                <div class="benefit-item">
+                    <h4><i class="fas fa-handshake text-primary"></i> Networking</h4>
+                    <p>Build connections with professionals in the charity sector and expand your professional network.</p>
+                </div>
+            </div>
+
+            <p><strong>Suitable for students in:</strong> Social Work, Psychology, Education, Business, IT, Health & Social Care, and other related fields.</p>
+            <p><strong>Placement Duration:</strong> From 1 week work experience to 12-month placements depending on your course requirements.</p>
+        </div>
+    </div>
+</section>
+
+<section class="form-section">
+    <div class="container">
+        <h2>Express Your Interest</h2>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="post" class="interest-form">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="{{ form.full_name.id_for_label }}">Full Name *</label>
+                {{ form.full_name }}
+                {% if form.full_name.errors %}
+                    <div class="text-danger">{{ form.full_name.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.email.id_for_label }}">Email Address *</label>
+                {{ form.email }}
+                {% if form.email.errors %}
+                    <div class="text-danger">{{ form.email.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.phone.id_for_label }}">Phone Number *</label>
+                {{ form.phone }}
+                {% if form.phone.errors %}
+                    <div class="text-danger">{{ form.phone.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label>I'm interested in these roles: *</label>
+                {{ form.roles }}
+                {% if form.roles.errors %}
+                    <div class="text-danger">{{ form.roles.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.availability.id_for_label }}">Availability</label>
+                {{ form.availability }}
+            </div>
+
+            <div class="form-group">
+                {{ form.is_student }}
+                <label for="{{ form.is_student.id_for_label }}">I'm a student</label>
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.course_or_discipline.id_for_label }}">Course / Discipline</label>
+                {{ form.course_or_discipline }}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.message.id_for_label }}">Tell us about yourself and why you'd like to volunteer</label>
+                {{ form.message }}
+            </div>
+
+            <div class="form-group">
+                {{ form.consent_contact }}
+                <label for="{{ form.consent_contact.id_for_label }}">I consent to Geeza Break contacting me about volunteering/placements. *</label>
+                {% if form.consent_contact.errors %}
+                    <div class="text-danger">{{ form.consent_contact.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="submit-btn">Submit Interest</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

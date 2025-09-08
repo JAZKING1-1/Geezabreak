@@ -3,7 +3,9 @@
 
 {% block title %}Home | Geeza Break{% endblock %}
 {% block body_class %}home{% endblock %}
+
 {% block content %}
+
 <!-- Header Section -->
 <section class="hero text-center py-5 fade-in section-1">
   <div class="container">
@@ -25,7 +27,7 @@
 </section>
 
 <!-- About Geeza Break Section -->
-<section class="container py-5 section-animate" id="about" style="background-color: #d0f4de">
+<section class="container py-5 section-animate" id="about">
   <div class="row align-items-center">
     <div class="col-md-6">
       <img src="{% static 'images/thumbnail_LOGO.png' %}" alt="Geeza Break Logo" class="img-fluid mb-3" style="max-width: 300px;">
@@ -119,15 +121,114 @@
   </div>
 </section>
 
-<!-- Testimonials (updated styling) -->
-<section class="testimonials reveal" id="testimonials">
-  <h2>Testimonials</h2>
-  <blockquote class="reveal">“Geeza Break helped us when we felt hopeless. Their care and consistency changed everything.”<br><span>– Lisa</span></blockquote>
-  <blockquote class="reveal">“I never thought I’d get support like this. They’re truly a blessing to families.”<br><span>– Ahmed</span></blockquote>
+<!-- Hear From the People We've Helped Section -->
+<section class="testimonials-section py-5" id="stories">
+  <div class="container">
+    <h2 class="text-center section-title">Hear from the People We Helped</h2>
+    <p class="text-center section-subtitle">Stories of impact from families, carers, and young people</p>
+
+    <!-- Swiper Container -->
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper">
+
+        <!-- Testimonial Card -->
+        <div class="swiper-slide">
+          <div class="testimonial-card">
+            <p>"The Service is really amazing for the kids. It gave me a bit of time to spend with my eldest son and study for my new college course. Emily was great with both children and has a lot of patience… Emily is a credit to the service."</p>
+            <span class="author">— Parent</span>
+          </div>
+        </div>
+
+        <div class="swiper-slide">
+          <div class="testimonial-card">
+            <p>"My son has shown more confidence since going out with Michele… The time spent with my son has been invaluable as I am not fit enough at times to do these activities."</p>
+            <span class="author">— Parent</span>
+          </div>
+        </div>
+
+        <div class="swiper-slide">
+          <div class="testimonial-card">
+            <p>"Trisha was very proactive, and the support given has been great. She spent time researching information and visiting us regularly."</p>
+            <span class="author">— Parent</span>
+          </div>
+        </div>
+
+        <div class="swiper-slide">
+          <div class="testimonial-card">
+            <p>"Can't fault anyone who has worked with me and my family. Everyone went above and beyond… the fruit & veg at Christmas and fuel vouchers really helped."</p>
+            <span class="author">— Caregiver</span>
+          </div>
+        </div>
+
+        <div class="swiper-slide">
+          <div class="testimonial-card">
+            <p>"Our son coming to respite has made a huge difference… he is now sleeping in his own bed and getting himself ready… a wake-up call to encourage independence."</p>
+            <span class="author">— Parents</span>
+          </div>
+        </div>
+
+        <div class="swiper-slide">
+          <div class="testimonial-card">
+            <p>"I look forward to having the service again… helpful for my birth children to have time away… lots of experiences I am unable to provide at the moment."</p>
+            <span class="author">— Foster Carer</span>
+          </div>
+        </div>
+
+        <div class="swiper-slide">
+          <div class="testimonial-card">
+            <p>"Danielle has been very supportive… emotional wellbeing as well as practical matters like applying for funding… before Danielle's help I didn't see the light at the end of the tunnel."</p>
+            <span class="author">— Parent</span>
+          </div>
+        </div>
+
+        <div class="swiper-slide">
+          <div class="testimonial-card">
+            <p>"I can't fault the service… my partner and I got time together and the mental break was great… the children loved Zaida and looked forward to going out each week."</p>
+            <span class="author">— Parent</span>
+          </div>
+        </div>
+
+        <div class="swiper-slide">
+          <div class="testimonial-card">
+            <p>"I had a good time on respite with Zaida… Swimming and Roller-skating… I got to choose what to bake and that was fun."</p>
+            <span class="author">— Young Person</span>
+          </div>
+        </div>
+
+        <div class="swiper-slide">
+          <div class="testimonial-card">
+            <p>"I had great fun being out with my sister and brother… Michele and Emily did lots of fun things with us… I really enjoyed arts and crafts."</p>
+            <span class="author">— Sibling Group</span>
+          </div>
+        </div>
+
+        <div class="swiper-slide">
+          <div class="testimonial-card">
+            <p>"Loved going to Jan's and playing with her grandchildren too… enjoyed going to PEEK outdoor play."</p>
+            <span class="author">— Young Person</span>
+          </div>
+        </div>
+
+        <div class="swiper-slide">
+          <div class="testimonial-card">
+            <p>"Cathie has been amazing… showed me there are nice people out there… helped me learn to trust and speak up… even supported me to get my own bank account."</p>
+            <span class="author">— Young Person</span>
+          </div>
+        </div>
+
+        <!-- Add as many slides as needed -->
+
+      </div>
+      <!-- Pagination + Navigation -->
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+    </div>
+  </div>
 </section>
 
 <!-- Comment Section -->
-<section class="container py-5 section-animate" style="background-color: #ffffff;">
+<section id="feedback" class="feedback-section container py-5 section-animate">
   <div class="row">
     <div class="col-md-12">
       <h2 class="text-center mb-4">We Value Your Feedback</h2>
@@ -169,6 +270,7 @@
 
 {% block extra_scripts %}
 <script src="{% static 'js/comment.js' %}"></script>
+<script src="{% static 'js/stories.js' %}"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
       const readMore = document.getElementById("about-read-more");

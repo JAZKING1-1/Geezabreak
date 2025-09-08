@@ -11,6 +11,9 @@ from django.views import View
 from .models_comment import Comment
 import logging
 from django.templatetags.static import static
+from django.contrib import messages
+from .forms import VolunteerInterestForm
+from .models import ROLE_CHOICES
 
 # Set up logging for email issues
 logger = logging.getLogger(__name__)
@@ -134,6 +137,9 @@ def about(request):
 
 def services(request):
     return render(request, 'main/services.html')
+
+def extra_support(request):
+    return render(request, "main/extra_support.html")
 
 def get_help(request):
     return render(request, 'main/get_help.html')
@@ -420,9 +426,6 @@ def impact(request):
 def news(request):
     return render(request, 'main/news.html')
 
-def volunteer(request):
-    return render(request, 'main/volunteer.html')
-
 def fundraise(request):
     return render(request, 'main/fundraise.html')
 
@@ -431,6 +434,36 @@ def partners(request):
 
 def donate(request):
     return render(request, 'main/donate.html')
+
+def news(request):
+    return render(request, 'main/news.html')
+
+def impact(request):
+    return render(request, 'main/impact.html')
+
+def get_help(request):
+    return render(request, 'main/get_help.html')
+
+def volunteer(request):
+    if request.method == "POST":
+        form = VolunteerInterestForm(request.POST)
+        if form.is_valid():
+            entry = form.save(commit=False)
+            # store roles as comma-separated keys
+            entry.roles = ",".join(form.cleaned_data["roles"])
+            entry.save()
+            messages.success(request, "Thanks! We’ve received your interest and will be in touch.")
+            return redirect("volunteer")
+        else:
+            messages.error(request, "Please fix the errors below.")
+    else:
+        form = VolunteerInterestForm()
+
+    role_map = dict(ROLE_CHOICES)
+    return render(request, "main/volunteer.html", {
+        "form": form,
+        "role_map": role_map,
+    })
 
 def email_status(request):
     """

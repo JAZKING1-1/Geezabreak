@@ -123,3 +123,34 @@ ReferralChildFormSet = inlineformset_factory(
     fields=["full_name", "dob", "relationship", "has_asn", "school_nursery"],
     extra=1, can_delete=True
 )
+
+
+from .models import VolunteerInterest, ROLE_CHOICES
+
+class VolunteerInterestForm(forms.ModelForm):
+    roles = forms.MultipleChoiceField(
+        choices=ROLE_CHOICES,
+        widget=forms.CheckboxSelectMultiple,
+        label="I’m interested in"
+    )
+    consent_contact = forms.BooleanField(
+        required=True,
+        label="I consent to Geeza Break contacting me about volunteering/placements."
+    )
+
+    class Meta:
+        model = VolunteerInterest
+        fields = [
+            "full_name", "email", "phone", "roles", "availability",
+            "is_student", "course_or_discipline", "message", "consent_contact"
+        ]
+        widgets = {
+            "availability": forms.TextInput(attrs={"placeholder": "e.g., Weekday mornings / Evenings / Weekends"}),
+            "course_or_discipline": forms.TextInput(attrs={"placeholder": "e.g., Social Work (Hons), Year 3"}),
+            "message": forms.Textarea(attrs={"rows": 4, "placeholder": "Tell us anything helpful (experience, start date, etc.)"}),
+        }
+        labels = {
+            "full_name": "Full name",
+            "is_student": "I’m a student",
+            "course_or_discipline": "Course / Discipline",
+        }

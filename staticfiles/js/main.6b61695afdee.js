@@ -111,18 +111,35 @@ document.addEventListener('DOMContentLoaded', () => {
   const anonBtn = document.getElementById('anonymousBtn');
   const nameInput = document.getElementById('commentName');
   if (anonBtn && nameInput) {
+    // Ensure button starts in correct state
+    anonBtn.textContent = 'Anonymous';
+    anonBtn.classList.remove('active');
+
     anonBtn.addEventListener('click', () => {
       nameInput.value = '';
       nameInput.placeholder = 'Anonymous';
       nameInput.disabled = true;
       anonBtn.classList.add('active');
       anonBtn.textContent = 'Anonymous ✓';
+      // Ensure only one button is visible
+      anonBtn.style.display = 'inline-flex';
     });
+
     nameInput.addEventListener('focus', () => {
       nameInput.disabled = false;
       nameInput.placeholder = 'Your Name';
       anonBtn.classList.remove('active');
       anonBtn.textContent = 'Anonymous';
+      // Ensure button remains visible
+      anonBtn.style.display = 'inline-flex';
+    });
+
+    // Prevent any potential duplication from form resets
+    nameInput.addEventListener('input', () => {
+      if (nameInput.value.trim() !== '') {
+        anonBtn.classList.remove('active');
+        anonBtn.textContent = 'Anonymous';
+      }
     });
   }
 

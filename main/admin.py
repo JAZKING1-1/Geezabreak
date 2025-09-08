@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Feedback, Referral, ReferralChild, Criterion, TeamMember
+from .models import Feedback, Referral, ReferralChild, Criterion, TeamMember, VolunteerInterest
 
 @admin.register(Feedback)
 class FeedbackAdmin(admin.ModelAdmin):
@@ -31,3 +31,10 @@ class TeamMemberAdmin(admin.ModelAdmin):
 	list_editable = ("order",)
 	search_fields = ("name", "role_title")
 	ordering = ("order", "name")
+
+@admin.register(VolunteerInterest)
+class VolunteerInterestAdmin(admin.ModelAdmin):
+	list_display = ("full_name", "email", "phone", "submitted_at")
+	search_fields = ("full_name", "email", "phone")
+	list_filter = ("roles", "availability", "is_student")
+	ordering = ("-submitted_at",)
