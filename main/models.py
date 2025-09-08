@@ -162,3 +162,27 @@ class TeamMember(models.Model):
         
     def __str__(self):
         return f"{self.name} - {self.role_title}"
+
+
+ROLE_CHOICES = [
+    ("creche", "Group work crèche volunteer"),
+    ("sitter", "Volunteer respite sitter"),
+    ("carer", "Volunteer respite carer"),
+    ("office", "Office-based (reception/admin/fundraising/group work/events)"),
+    ("student", "Student placement enquiry"),
+]
+
+class VolunteerInterest(models.Model):
+    full_name = models.CharField(max_length=120)
+    email = models.EmailField()
+    phone = models.CharField(max_length=40, blank=True)
+    roles = models.CharField(max_length=200, help_text="Comma-separated role keys from ROLE_CHOICES")
+    availability = models.CharField(max_length=200, blank=True, help_text="e.g., weekdays, evenings")
+    is_student = models.BooleanField(default=False)
+    course_or_discipline = models.CharField(max_length=160, blank=True)
+    message = models.TextField(blank=True)
+    consent_contact = models.BooleanField(default=False)
+    submitted_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.full_name} ({self.email})"
