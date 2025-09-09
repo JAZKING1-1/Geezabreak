@@ -141,7 +141,16 @@ html.scrolled .gb-navbar{box-shadow:0 8px 20px rgba(0,0,0,.12);}
 .hero .kicker{color:var(--gb-yellow-10);font-weight:700;letter-spacing:.5px;text-transform:uppercase;font-size:.85rem;display:block;margin-bottom:.6rem;}
 
 /* Cards */
-.card{background:var(--gb-paper);color:var(--gb-ink);transition:transform .3s;box-shadow:var(--gb-shadow);border:1px solid rgba(166,206,57,.25);border-radius:20px;padding:1.25rem;}
+.card{background:#a6ce39;color:#000000;transition:transform .3s;box-shadow:var(--gb-shadow);border:1px solid rgba(166,206,57,.25);border-radius:20px;padding:1.25rem;}
+.card .card-title,
+.card .card-body,
+.card .card-body h3,
+.card .card-body h4,
+.card .card-body p,
+.card .card-body ul,
+.card .card-body li {
+  color: #000000 !important;
+}
 
 /* Hero Typography Enhancement */
 .hero .container{max-width:1200px;}
@@ -922,8 +931,6 @@ section.info p{font-size:1em;color:var(--warm-brown-text);}
 .feedback-trigger:active{transform:translateY(0);} 
 
 /* Footer warm accent (only footer.warm-foot to avoid overriding existing dark footer) */
-footer.warm-foot{background-color:var(--warm-amber-light);padding:20px;text-align:center;color:var(--warm-brown-dark);font-size:.9em;} 
-footer.warm-foot a{color:var(--warm-brown-dark);} 
 
 /* Accessibility contrast adjustments */
 @media (prefers-contrast: more){
@@ -948,7 +955,7 @@ body.services-page{background:linear-gradient(180deg,#5ce1e6 0%, #20b4ef 1400px,
 .services-hero .lead{color:rgba(255,255,255,.95);} 
 
 /* Card gradient borders + soft elevation */
-.services-grid .card{position:relative;border:0;padding:0;background:#fcd92b;border-radius:26px;box-shadow:0 10px 28px -8px rgba(2,117,226,.25),0 2px 6px rgba(0,0,0,.08);color:#0b2330;}
+.services-grid .card{position:relative;border:0;padding:0;background:#fff;border-radius:26px;box-shadow:0 10px 28px -8px rgba(2,117,226,.25),0 2px 6px rgba(0,0,0,.08);color:#0b2330;}
 /* subtle texture/gradient for depth */
 .services-grid .card:before{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(145deg,rgba(255,255,255,.55),rgba(255,255,255,0) 50%),repeating-linear-gradient(45deg,rgba(255,255,255,.08) 0 8px,rgba(255,255,255,.02) 8px 16px);mix-blend-mode:overlay;pointer-events:none;}
 .services-grid .card-body{padding:1.9rem 1.9rem 2.1rem;} 
@@ -991,7 +998,7 @@ body.services-page{background:linear-gradient(180deg,#5ce1e6 0%, #20b4ef 1400px,
 
 /* ==== REFERRAL CTA PILL (section 2) ==== */
 .referral-cta-wrap{background:transparent;padding:0 1rem 3rem;display:flex;justify-content:center;}
-.referral-pill{background:#fcd92b;border-radius:120px;max-width:920px;width:100%;padding:2.4rem 2rem 2.65rem;position:relative;text-align:center;box-shadow:0 8px 30px -6px rgba(0,0,0,.18);display:flex;flex-direction:column;align-items:center;gap:1.4rem;}
+.referral-pill{background:#fcd92b;border:1px solid rgba(2,117,226,.12);border-radius:120px;max-width:920px;width:100%;padding:2.4rem 2rem 2.65rem;position:relative;text-align:center;box-shadow:0 8px 30px -6px rgba(0,0,0,.18);display:flex;flex-direction:column;align-items:center;gap:2rem;}
 /* remove decorative gradient ring */
 .referral-pill:before{content:none;}
 .referral-pill h2{font-weight:800;font-size:clamp(1.6rem,1.8vw,2.2rem);color:#0b2330;}
@@ -1977,314 +1984,885 @@ body.extra-support-page{background:linear-gradient(135deg, #007bbe, #99dfef) !im
     .gb-grid{grid-template-columns:1fr;gap:1rem}
     .gb-card{padding:1.2rem 1rem}
 }
-/ *   = = = = = = = = = = = = = = = = = = = = = = = = = 
-       H E A R   F R O M   T H E   P E O P L E   S E C T I O N 
-       = = = = = = = = = = = = = = = = = = = = = = = = =   * / 
- . s t o r i e s - s e c t i o n   { 
-     b a c k g r o u n d :   # f d f d f d ; 
-     p a d d i n g :   4 r e m   1 r e m ; 
- } 
- 
- . s t o r i e s - s e c t i o n   . s e c t i o n - h e a d i n g   { 
-     t e x t - a l i g n :   c e n t e r ; 
-     c o l o r :   # 0 0 7 b b e ; 
-     f o n t - s i z e :   c l a m p ( 2 r e m ,   2 . 5 v w ,   2 . 8 r e m ) ; 
-     m a r g i n - b o t t o m :   0 . 5 r e m ; 
- } 
- 
- . s t o r i e s - s e c t i o n   . s e c t i o n - s u b t i t l e   { 
-     t e x t - a l i g n :   c e n t e r ; 
-     c o l o r :   # 4 4 4 ; 
-     m a r g i n - b o t t o m :   3 r e m ; 
- } 
- 
- . s t o r i e s - g r i d   { 
-     d i s p l a y :   g r i d ; 
-     g r i d - t e m p l a t e - c o l u m n s :   r e p e a t ( a u t o - f i t ,   m i n m a x ( 2 8 0 p x ,   1 f r ) ) ; 
-     g a p :   2 r e m ; 
-     m a x - w i d t h :   1 1 0 0 p x ; 
-     m a r g i n :   0   a u t o ; 
- } 
- 
- . s t o r y - c a r d   { 
-     b a c k g r o u n d :   # f f f ; 
-     b o r d e r - l e f t :   6 p x   s o l i d   # f a c e 0 3 ; 
-     p a d d i n g :   1 . 5 r e m ; 
-     b o r d e r - r a d i u s :   1 0 p x ; 
-     b o x - s h a d o w :   0   6 p x   1 6 p x   r g b a ( 0 , 0 , 0 , 0 . 0 8 ) ; 
-     t r a n s i t i o n :   t r a n s f o r m   0 . 2 s   e a s e ,   b o x - s h a d o w   0 . 2 s   e a s e ; 
- } 
- 
- . s t o r y - c a r d : h o v e r   { 
-     t r a n s f o r m :   t r a n s l a t e Y ( - 5 p x ) ; 
-     b o x - s h a d o w :   0   1 0 p x   2 0 p x   r g b a ( 0 , 0 , 0 , 0 . 1 2 ) ; 
- } 
- 
- . s t o r y - c a r d   . q u o t e   { 
-     f o n t - s i z e :   1 . 1 r e m ; 
-     f o n t - s t y l e :   i t a l i c ; 
-     c o l o r :   # 3 3 3 ; 
-     m a r g i n - b o t t o m :   1 r e m ; 
- } 
- 
- . s t o r y - c a r d   . a u t h o r   { 
-     f o n t - w e i g h t :   b o l d ; 
-     c o l o r :   # 0 0 7 b b e ; 
- } 
- 
- . s t o r y - c a r d . c h i l d   { 
-     b o r d e r - l e f t - c o l o r :   # a 6 c e 3 9 ; 
- } 
- 
- / *   = = = = = = = = = = = = = = = = = = = = = = = = = 
-       H E A R   F R O M   T H E   P E O P L E   S E C T I O N 
-       = = = = = = = = = = = = = = = = = = = = = = = = =   * / 
- . s t o r i e s - s e c t i o n   { 
-     b a c k g r o u n d :   # f 9 f 9 f 9 ; 
- } 
- 
- . t a b s   { 
-     d i s p l a y :   f l e x ; 
-     j u s t i f y - c o n t e n t :   c e n t e r ; 
-     g a p :   1 r e m ; 
- } 
- 
- . t a b - b t n   { 
-     p a d d i n g :   0 . 5 r e m   1 . 2 r e m ; 
-     b o r d e r :   n o n e ; 
-     b o r d e r - r a d i u s :   2 0 p x ; 
-     b a c k g r o u n d :   # e e e ; 
-     f o n t - w e i g h t :   b o l d ; 
-     c u r s o r :   p o i n t e r ; 
-     t r a n s i t i o n :   0 . 3 s ; 
- } 
- . t a b - b t n . a c t i v e   { 
-     b a c k g r o u n d :   # 0 0 7 b b e ; 
-     c o l o r :   w h i t e ; 
- } 
- 
- . c a r o u s e l   { 
-     d i s p l a y :   n o n e ; 
-     o v e r f l o w :   h i d d e n ; 
- } 
- . c a r o u s e l . a c t i v e   { 
-     d i s p l a y :   b l o c k ; 
- } 
- 
- . c a r o u s e l - t r a c k   { 
-     d i s p l a y :   f l e x ; 
-     g a p :   1 r e m ; 
-     a n i m a t i o n :   s c r o l l   3 0 s   l i n e a r   i n f i n i t e ; 
- } 
- 
- . s t o r y - c a r d   { 
-     f l e x :   0   0   3 0 0 p x ; 
-     b a c k g r o u n d :   w h i t e ; 
-     b o r d e r - r a d i u s :   1 5 p x ; 
-     p a d d i n g :   1 . 5 r e m ; 
-     b o x - s h a d o w :   0   4 p x   1 2 p x   r g b a ( 0 , 0 , 0 , 0 . 1 ) ; 
-     t r a n s i t i o n :   t r a n s f o r m   0 . 3 s ; 
- } 
- . s t o r y - c a r d : h o v e r   { 
-     t r a n s f o r m :   t r a n s l a t e Y ( - 5 p x )   s c a l e ( 1 . 0 3 ) ; 
- } 
- 
- . s t o r y - c a r d   p   { 
-     f o n t - s t y l e :   i t a l i c ; 
- } 
- . s t o r y - c a r d   . a u t h o r   { 
-     d i s p l a y :   b l o c k ; 
-     m a r g i n - t o p :   0 . 5 r e m ; 
-     f o n t - w e i g h t :   b o l d ; 
-     c o l o r :   # 5 5 5 ; 
- } 
- 
- @ k e y f r a m e s   s c r o l l   { 
-     0 %   {   t r a n s f o r m :   t r a n s l a t e X ( 0 ) ;   } 
-     1 0 0 %   {   t r a n s f o r m :   t r a n s l a t e X ( - 5 0 % ) ;   } 
- } 
- 
- @ m e d i a   ( m a x - w i d t h :   7 6 8 p x )   { 
-     . c a r o u s e l - t r a c k   { 
-         a n i m a t i o n :   n o n e ; 
-         o v e r f l o w - x :   a u t o ; 
-         s c r o l l - s n a p - t y p e :   x   m a n d a t o r y ; 
-     } 
-     . s t o r y - c a r d   { 
-         s c r o l l - s n a p - a l i g n :   c e n t e r ; 
-     } 
- } 
- 
- . h o m e   {   b a c k g r o u n d - c o l o r :   # a 6 c e 3 9   ! i m p o r t a n t ;   } 
- 
- . v o l u n t e e r   {   b a c k g r o u n d - c o l o r :   # a 6 c e 3 9   ! i m p o r t a n t ;   } 
- 
- b o d y . h o m e   {   b a c k g r o u n d - c o l o r :   # a 6 c e 3 9   ! i m p o r t a n t ;   } 
- 
- b o d y . v o l u n t e e r   {   b a c k g r o u n d - c o l o r :   # a 6 c e 3 9   ! i m p o r t a n t ;   } 
- 
- 
 
- 
- 
- / *   = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
-       H o m e p a g e   B a c k g r o u n d   C l e a n u p 
-       = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =   * / 
- 
- / *   G e n e r a l   p a g e   b a c k g r o u n d   f a l l b a c k   * / 
- b o d y   { 
-     b a c k g r o u n d :   # f 5 f a f f ;   / *   v e r y   l i g h t   b l u e   f a l l b a c k   * / 
- } 
- 
- / *   H e r o   s e c t i o n   ( t o p   h e a d l i n e   a r e a )   * / 
- . h e r o   { 
-     b a c k g r o u n d :   l i n e a r - g r a d i e n t ( 1 8 0 d e g ,   # 0 0 7 b b e   0 % ,   # 9 9 d f e f   1 0 0 % ) ; 
-     c o l o r :   # f f f ; 
- } 
- 
- / *   B r i c k   w a l l   s e c t i o n   s t a y s   a s   i s   * / 
- 
- / *   T e s t i m o n i a l s   /   H e a r   f r o m   t h e   P e o p l e   W e   H e l p e d   * / 
- # t e s t i m o n i a l s ,   . t e s t i m o n i a l - s e c t i o n   { 
-     b a c k g r o u n d :   l i n e a r - g r a d i e n t ( 1 8 0 d e g ,   # 9 9 d f e f   0 % ,   # a 6 c e 3 9   1 0 0 % ) ; 
-     p a d d i n g :   3 r e m   0 ; 
-     c o l o r :   # 2 2 2 ; 
- } 
- 
- / *   F e e d b a c k   s e c t i o n   * / 
- # f e e d b a c k . f e e d b a c k - s e c t i o n   { 
-     b a c k g r o u n d :   # e a f 9 f f ;     / *   l i g h t   b l u e ,   e a s y   o n   t h e   e y e s   * / 
-     b o r d e r - t o p :   4 p x   s o l i d   # f a c e 0 3 ;     / *   y e l l o w   a c c e n t   s t r i p   * / 
-     b o r d e r - b o t t o m :   4 p x   s o l i d   # f a c e 0 3 ; 
-     p a d d i n g :   3 r e m   0 ; 
- } 
- 
- / *   C a r d s   i n s i d e   f e e d b a c k   s e c t i o n   p o p   o f f   t h e   p a l e   b g   * / 
- # f e e d b a c k   . c a r d   { 
-     b a c k g r o u n d :   # f f f ; 
- } 
- 
- / *   F o o t e r   r e m a i n s   d a r k   * / 
- f o o t e r   { 
-     b a c k g r o u n d :   # 2 2 2   ! i m p o r t a n t ; 
-     c o l o r :   # f f f   ! i m p o r t a n t ; 
- } 
- 
- 
+/* ==== HOME PAGE RESTORE (scoped to .home-page) ==== */
 
- 
- 
- / *   = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
-       V o l u n t e e r   P a g e   B l u e   B a c k g r o u n d   S y s t e m 
-       = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =   * / 
- 
- / *   V o l u n t e e r   p a g e   b o d y   b a c k g r o u n d   -   l i g h t   b l u e   * / 
- b o d y . v o l u n t e e r   { 
-     b a c k g r o u n d :   l i n e a r - g r a d i e n t ( 1 8 0 d e g ,   # f 0 f 8 f f   0 % ,   # e 6 f 3 f f   1 0 0 % )   ! i m p o r t a n t ; 
- } 
- 
- / *   V o l u n t e e r   p a g e   s e c t i o n s   -   a l t e r n a t i n g   b l u e   t o n e s   * / 
- b o d y . v o l u n t e e r   . s t o r i e s - s e c t i o n   { 
-     b a c k g r o u n d :   l i n e a r - g r a d i e n t ( 1 3 5 d e g ,   # e 6 f 3 f f   0 % ,   # d 4 e 8 f f   1 0 0 % )   ! i m p o r t a n t ; 
- } 
- 
- b o d y . v o l u n t e e r   . r o l e s - s e c t i o n   { 
-     b a c k g r o u n d :   l i n e a r - g r a d i e n t ( 1 3 5 d e g ,   # d 4 e 8 f f   0 % ,   # c 2 d d f f   1 0 0 % )   ! i m p o r t a n t ; 
- } 
- 
- b o d y . v o l u n t e e r   . s t u d e n t - s e c t i o n   { 
-     b a c k g r o u n d :   l i n e a r - g r a d i e n t ( 1 3 5 d e g ,   # c 2 d d f f   0 % ,   # b 0 d 2 f f   1 0 0 % )   ! i m p o r t a n t ; 
- } 
- 
- b o d y . v o l u n t e e r   . f o r m - s e c t i o n   { 
-     b a c k g r o u n d :   l i n e a r - g r a d i e n t ( 1 3 5 d e g ,   # b 0 d 2 f f   0 % ,   # 9 e c 7 f f   1 0 0 % )   ! i m p o r t a n t ; 
- } 
- 
- / *   V o l u n t e e r   p a g e   c a r d s   a n d   e l e m e n t s   -   w h i t e   b a c k g r o u n d s   f o r   c o n t r a s t   * / 
- b o d y . v o l u n t e e r   . s t o r y - c a r d , 
- b o d y . v o l u n t e e r   . r o l e - c a r d , 
- b o d y . v o l u n t e e r   . b e n e f i t - i t e m , 
- b o d y . v o l u n t e e r   . i n t e r e s t - f o r m   { 
-     b a c k g r o u n d :   # f f f f f f   ! i m p o r t a n t ; 
-     b o x - s h a d o w :   0   8 p x   2 5 p x   r g b a ( 0 , 1 2 3 , 1 8 7 , 0 . 1 5 )   ! i m p o r t a n t ; 
- } 
- 
- / *   V o l u n t e e r   p a g e   t e x t   c o l o r s   f o r   b e t t e r   c o n t r a s t   o n   b l u e   b a c k g r o u n d s   * / 
- b o d y . v o l u n t e e r   . s t o r i e s - s e c t i o n   h 2 , 
- b o d y . v o l u n t e e r   . r o l e s - s e c t i o n   h 2 , 
- b o d y . v o l u n t e e r   . s t u d e n t - s e c t i o n   h 2 , 
- b o d y . v o l u n t e e r   . f o r m - s e c t i o n   h 2   { 
-     c o l o r :   # 0 0 7 b b e   ! i m p o r t a n t ; 
- } 
- 
- b o d y . v o l u n t e e r   . s t o r y - c o n t e n t   p , 
- b o d y . v o l u n t e e r   . r o l e - c a r d   p , 
- b o d y . v o l u n t e e r   . b e n e f i t - i t e m   p , 
- b o d y . v o l u n t e e r   . s t u d e n t - i n f o   p   { 
-     c o l o r :   # 2 c 5 2 8 2   ! i m p o r t a n t ; 
- } 
- 
- / *   V o l u n t e e r   p a g e   a c c e n t   c o l o r s   * / 
- b o d y . v o l u n t e e r   . s t o r y - q u o t e   { 
-     b o r d e r - l e f t - c o l o r :   # 0 0 7 b b e   ! i m p o r t a n t ; 
-     c o l o r :   # 0 0 7 b b e   ! i m p o r t a n t ; 
- } 
- 
- b o d y . v o l u n t e e r   . r o l e - c o m m i t m e n t   { 
-     b a c k g r o u n d :   # f a c e 0 3   ! i m p o r t a n t ; 
-     c o l o r :   # 0 0 7 b b e   ! i m p o r t a n t ; 
- } 
- 
- b o d y . v o l u n t e e r   . b e n e f i t - i t e m   h 4   { 
-     c o l o r :   # 0 0 7 b b e   ! i m p o r t a n t ; 
- } 
- 
- b o d y . v o l u n t e e r   . s u b m i t - b t n   { 
-     b a c k g r o u n d :   l i n e a r - g r a d i e n t ( 1 3 5 d e g ,   # 0 0 7 b b e   0 % ,   # 0 0 5 a 8 f   1 0 0 % )   ! i m p o r t a n t ; 
- } 
- 
- b o d y . v o l u n t e e r   . s u b m i t - b t n : h o v e r   { 
-     b a c k g r o u n d :   l i n e a r - g r a d i e n t ( 1 3 5 d e g ,   # 0 0 5 a 8 f   0 % ,   # 0 0 4 0 8 0   1 0 0 % )   ! i m p o r t a n t ; 
- } 
- 
- / *   O v e r r i d e   a n y   c o n f l i c t i n g   i n l i n e   s t y l e s   * / 
- b o d y . v o l u n t e e r   . s t o r i e s - s e c t i o n , 
- b o d y . v o l u n t e e r   . s t u d e n t - s e c t i o n   { 
-     b a c k g r o u n d :   l i n e a r - g r a d i e n t ( 1 3 5 d e g ,   # e 6 f 3 f f   0 % ,   # d 4 e 8 f f   1 0 0 % )   ! i m p o r t a n t ; 
- } 
- 
- b o d y . v o l u n t e e r   . r o l e s - s e c t i o n , 
- b o d y . v o l u n t e e r   . f o r m - s e c t i o n   { 
-     b a c k g r o u n d :   l i n e a r - g r a d i e n t ( 1 3 5 d e g ,   # d 4 e 8 f f   0 % ,   # c 2 d d f f   1 0 0 % )   ! i m p o r t a n t ; 
- }  
- / *   V o l u n t e e r   P a g e   B l u e   B a c k g r o u n d   S y s t e m   * / 
- b o d y . v o l u n t e e r   { 
-         b a c k g r o u n d :   l i n e a r - g r a d i e n t ( 1 3 5 d e g ,   # f 0 f 8 f f   0 % ,   # e 6 f 3 f f   2 5 % ,   # d 1 e 7 f f   5 0 % ,   # b 3 d 9 f f   7 5 % ,   # 9 e c 7 f f   1 0 0 % ) ; 
-         m i n - h e i g h t :   1 0 0 v h ; 
- } 
- 
- b o d y . v o l u n t e e r   . s t o r i e s - s e c t i o n   { 
-         b a c k g r o u n d :   l i n e a r - g r a d i e n t ( 1 3 5 d e g ,   # f 0 f 8 f f   0 % ,   # e 6 f 3 f f   1 0 0 % )   ! i m p o r t a n t ; 
- } 
- 
- b o d y . v o l u n t e e r   . r o l e s - s e c t i o n   { 
-         b a c k g r o u n d :   l i n e a r - g r a d i e n t ( 1 3 5 d e g ,   # e 6 f 3 f f   0 % ,   # d 1 e 7 f f   1 0 0 % )   ! i m p o r t a n t ; 
- } 
- 
- b o d y . v o l u n t e e r   . s t u d e n t - s e c t i o n   { 
-         b a c k g r o u n d :   l i n e a r - g r a d i e n t ( 1 3 5 d e g ,   # d 1 e 7 f f   0 % ,   # b 3 d 9 f f   1 0 0 % )   ! i m p o r t a n t ; 
- } 
- 
- b o d y . v o l u n t e e r   . f o r m - s e c t i o n   { 
-         b a c k g r o u n d :   l i n e a r - g r a d i e n t ( 1 3 5 d e g ,   # b 3 d 9 f f   0 % ,   # 9 e c 7 f f   1 0 0 % )   ! i m p o r t a n t ; 
- } 
- 
- b o d y . v o l u n t e e r   . s t o r y - c a r d , 
- b o d y . v o l u n t e e r   . r o l e - c a r d , 
- b o d y . v o l u n t e e r   . b e n e f i t - i t e m , 
- b o d y . v o l u n t e e r   . i n t e r e s t - f o r m   { 
-         b a c k g r o u n d :   r g b a ( 2 5 5 ,   2 5 5 ,   2 5 5 ,   0 . 9 5 )   ! i m p o r t a n t ; 
-         b a c k d r o p - f i l t e r :   b l u r ( 1 0 p x ) ; 
-         b o r d e r :   1 p x   s o l i d   r g b a ( 0 ,   1 2 3 ,   1 8 7 ,   0 . 1 )   ! i m p o r t a n t ; 
- }  
- 
+/* Neutral page background (stop any green/yellow carryover) */
+.home-page {
+  background: #f5faff !important;
+}
+
+/* Navbar look (light glass gradient blues) */
+.home-page .gb-navbar.navbar{
+  background: linear-gradient(90deg, #5ce1e6 0%, #0d9cd0 100%) !important;
+  border-bottom: 1px solid rgba(255,255,255,.25);
+  box-shadow: 0 4px 12px rgba(0,0,0,.1) !important;
+}
+
+/* HERO — teal→blue gradient + large type + "Thrive" highlight */
+.home-page .hero{
+  background: linear-gradient(135deg, #5ce1e6 0%, #0d9cd0 90%) !important;
+  color:#fff;
+  padding: 6rem 1rem 4rem;
+  text-align: center;
+}
+.home-page .hero .container{ max-width: 1200px; }
+.home-page .hero h1{
+  font-weight: 900;
+  line-height: 1.05;
+  font-size: clamp(2rem, 3vw + 1.4rem, 4.5rem);
+  color: #fff;
+  text-shadow: 0 3px 8px rgba(0,0,0,.25);
+  margin: 0 0 .75rem;
+  letter-spacing: -.5px;
+}
+.home-page .hero .lead{
+  font-size: clamp(1rem, .6vw + .9rem, 1.5rem);
+  color: rgba(255,255,255,.92);
+  font-weight: 600;
+  letter-spacing: .3px;
+  max-width: 840px;
+  margin: 0 auto;
+}
+.home-page .hero .highlight{
+  background: linear-gradient(90deg, #face03 0%, #ffe778 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* REFERRAL CTA — big yellow "pill" with inner button */
+.home-page .referral-cta-wrap{
+  padding: 0 1rem 2.5rem;
+  display: flex;
+  justify-content: center;
+}
+.home-page .referral-pill{
+  background: #fcd92b;
+  border: 0;
+  border-radius: 120px;
+  max-width: 920px;
+  width: 100%;
+  padding: 2.4rem 2rem 2.65rem;
+  text-align: center;
+  box-shadow: 0 8px 30px -6px rgba(0,0,0,.18);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+.home-page .referral-pill h2{
+  margin: 0 0 1rem;
+  font-weight: 800;
+  font-size: clamp(1.6rem, 1.8vw, 2.2rem);
+  color: #0b2330;
+}
+.home-page .referral-pill .inner-referral-btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .4rem;
+  background: #a6ce39;
+  color: #0b2330;
+  border: 0;
+  border-radius: 50px;
+  padding: .9rem 2rem;
+  font-weight: 800;
+  letter-spacing: .2px;
+  text-decoration: none;
+  box-shadow: 0 6px 16px rgba(0,0,0,.18);
+}
+.home-page .referral-pill .inner-referral-btn:hover{
+  background: #6ea821;
+  color:#fff;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0,0,0,.22);
+}
+
+/* "About" band spacing (match first image proportions) */
+.home-page .about-section{
+  max-width: 1100px;
+  margin: 2.5rem auto 3rem;
+  padding: 0 1rem;
+}
+
+/* Safety: neutralise any old global overrides that painted pages */
+.home-page.home, .home-page.volunteer, .home-page .section--yellow { background: initial !important; }
+
+/* ==========================================================================
+   REFERRAL FORM ACCESSIBLE THEME
+   ========================================================================== */
+
+/* Referral Form Theme Variables */
+:root {
+  --rf-primary: #1e3a8a; /* Deep blue */
+  --rf-secondary: #3b82f6; /* Bright blue */
+  --rf-accent: #f59e0b; /* Amber */
+  --rf-success: #10b981; /* Emerald */
+  --rf-warning: #f59e0b; /* Amber */
+  --rf-error: #ef4444; /* Red */
+  --rf-text: #1f2937; /* Gray-800 */
+  --rf-text-light: #6b7280; /* Gray-500 */
+  --rf-bg: #ffffff; /* White */
+  --rf-bg-alt: #f9fafb; /* Gray-50 */
+  --rf-border: #d1d5db; /* Gray-300 */
+  --rf-border-focus: #3b82f6; /* Blue-500 */
+  --rf-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --rf-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Base Referral Form Styles */
+.referral-form {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.5;
+  color: var(--rf-text);
+  background: var(--rf-bg);
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  border-radius: 0.75rem;
+  box-shadow: var(--rf-shadow-lg);
+}
+
+/* Form Header */
+.referral-form__header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.referral-form__title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--rf-primary);
+  margin-bottom: 0.5rem;
+}
+
+.referral-form__subtitle {
+  font-size: 1.125rem;
+  color: var(--rf-text-light);
+  margin-bottom: 0;
+}
+
+/* Form Groups */
+.referral-form__group {
+  margin-bottom: 1.5rem;
+}
+
+.referral-form__label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--rf-text);
+  margin-bottom: 0.5rem;
+}
+
+.referral-form__label--required::after {
+  content: ' *';
+  color: var(--rf-error);
+}
+
+/* Form Controls */
+.referral-form__control {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 1px solid var(--rf-border);
+  border-radius: 0.375rem;
+  background: var(--rf-bg);
+  color: var(--rf-text);
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.referral-form__control:focus {
+  outline: 0;
+  border-color: var(--rf-border-focus);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.referral-form__control::placeholder {
+  color: var(--rf-text-light);
+}
+
+/* Textarea specific styles */
+.referral-form__control--textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* Select specific styles */
+.referral-form__control--select {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 0.75rem center;
+  background-repeat: no-repeat;
+  background-size: 1rem;
+  padding-right: 2.5rem;
+}
+
+/* Checkbox and Radio Styles */
+.referral-form__checkbox-group,
+.referral-form__radio-group {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.referral-form__checkbox-group:last-child,
+.referral-form__radio-group:last-child {
+  margin-bottom: 0;
+}
+
+.referral-form__checkbox,
+.referral-form__radio {
+  width: 1.125rem;
+  height: 1.125rem;
+  margin: 0;
+  flex-shrink: 0;
+  accent-color: var(--rf-primary);
+}
+
+.referral-form__checkbox-label,
+.referral-form__radio-label {
+  font-size: 0.875rem;
+  color: var(--rf-text);
+  margin-bottom: 0;
+  line-height: 1.25rem;
+}
+
+/* Fieldset and Legend */
+.referral-form__fieldset {
+  border: 1px solid var(--rf-border);
+  border-radius: 0.375rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.referral-form__legend {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--rf-primary);
+  padding: 0 0.5rem;
+  margin-bottom: 1rem;
+  width: auto;
+  float: none;
+}
+
+/* Form Actions */
+.referral-form__actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--rf-border);
+}
+
+.referral-form__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 0.375rem;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+  text-decoration: none;
+}
+
+.referral-form__button:focus {
+  outline: 2px solid var(--rf-border-focus);
+  outline-offset: 2px;
+}
+
+.referral-form__button--primary {
+  background: var(--rf-primary);
+  color: white;
+}
+
+.referral-form__button--primary:hover {
+  background: #1d4ed8;
+}
+
+.referral-form__button--primary:active {
+  background: #1e40af;
+}
+
+.referral-form__button--secondary {
+  background: var(--rf-bg);
+  color: var(--rf-text);
+  border-color: var(--rf-border);
+}
+
+.referral-form__button--secondary:hover {
+  background: var(--rf-bg-alt);
+}
+
+.referral-form__button--secondary:active {
+  background: #e5e7eb;
+}
+
+/* Form Messages */
+.referral-form__message {
+  padding: 1rem;
+  border-radius: 0.375rem;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.referral-form__message--success {
+  background: #d1fae5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
+.referral-form__message--error {
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+.referral-form__message--warning {
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fde68a;
+}
+
+/* Error States */
+.referral-form__group--error .referral-form__control {
+  border-color: var(--rf-error);
+}
+
+.referral-form__group--error .referral-form__control:focus {
+  border-color: var(--rf-error);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.referral-form__error-message {
+  font-size: 0.75rem;
+  color: var(--rf-error);
+  margin-top: 0.25rem;
+  display: block;
+}
+
+/* Loading States */
+.referral-form__button--loading {
+  position: relative;
+  color: transparent;
+}
+
+.referral-form__button--loading::after {
+  content: '';
+  position: absolute;
+  width: 1rem;
+  height: 1rem;
+  top: 50%;
+  left: 50%;
+  margin-left: -0.5rem;
+  margin-top: -0.5rem;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  .referral-form {
+    padding: 1.5rem;
+    margin: 0 1rem;
+  }
+
+  .referral-form__title {
+    font-size: 1.5rem;
+  }
+
+  .referral-form__actions {
+    flex-direction: column;
+  }
+
+  .referral-form__button {
+    width: 100%;
+  }
+}
+
+/* ==========================================================================
+   HOMEPAGE RESTORE STYLES
+   ========================================================================== */
+
+/* Homepage Hero Section */
+.home-page .hero {
+  background: linear-gradient(135deg, #0d9488 0%, #3b82f6 100%);
+  color: white;
+  padding: 4rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.home-page .hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.1)"/><circle cx="10" cy="50" r="0.5" fill="rgba(255,255,255,0.1)"/><circle cx="90" cy="50" r="0.5" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="90" r="0.5" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.home-page .hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.home-page .hero h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.home-page .hero p {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+}
+
+.home-page .hero .highlight {
+  color: #fbbf24;
+  font-weight: 700;
+  position: relative;
+}
+
+.home-page .hero .highlight::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: #fbbf24;
+  border-radius: 2px;
+}
+
+/* Homepage Referral CTA */
+.home-page .referral-cta {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 2rem;
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 600px;
+  text-align: center;
+}
+
+.home-page .referral-cta h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.home-page .referral-cta p {
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  opacity: 0.9;
+}
+
+.home-page .referral-pill {
+  display: inline-block;
+  background: #fcd92b;
+  color: #1f2937;
+  padding: 0.75rem 2rem;
+  border-radius: 2rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.home-page .referral-pill:hover {
+  background: #f59e0b;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Homepage About Section */
+.home-page .about-section {
+  background: #f9fafb;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.home-page .about-section h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 2rem;
+}
+
+.home-page .about-section p {
+  font-size: 1.125rem;
+  color: #6b7280;
+  max-width: 800px;
+  margin: 0 auto 2rem;
+  line-height: 1.7;
+}
+
+.home-page .about-section .read-more {
+  display: inline-block;
+  color: #3b82f6;
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.3s ease;
+}
+
+.home-page .about-section .read-more:hover {
+  border-bottom-color: #3b82f6;
+}
+
+/* Homepage Navbar */
+.home-page .navbar {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 1rem 2rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.home-page .navbar.scrolled {
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.home-page .navbar-brand {
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: #1f2937;
+}
+
+.home-page .navbar-nav .nav-link {
+  font-weight: 600;
+  color: #4b5563;
+  margin: 0 1rem;
+  transition: color 0.3s ease;
+}
+
+.home-page .navbar-nav .nav-link:hover {
+  color: #3b82f6;
+}
+
+.home-page .navbar-toggler {
+  border: none;
+  color: #4b5563;
+}
+
+/* Homepage Footer */
+.home-page .footer {
+  background: #1f2937;
+  color: white;
+  padding: 3rem 2rem 2rem;
+  text-align: center;
+}
+
+.home-page .footer h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.home-page .footer p {
+  color: #9ca3af;
+  margin-bottom: 1rem;
+}
+
+.home-page .footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.home-page .footer-link {
+  color: #9ca3af;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.home-page .footer-link:hover {
+  color: #3b82f6;
+}
+
+.home-page .footer-bottom {
+  border-top: 1px solid #374151;
+  padding-top: 2rem;
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+/* Responsive adjustments for homepage */
+@media (max-width: 768px) {
+  .home-page .hero {
+    padding: 3rem 1rem;
+  }
+
+  .home-page .hero h1 {
+    font-size: 2rem;
+  }
+
+  .home-page .hero p {
+    font-size: 1rem;
+  }
+
+  .home-page .referral-cta {
+    padding: 1.5rem;
+    margin: 1.5rem 1rem;
+  }
+
+  .home-page .about-section {
+    padding: 3rem 1rem;
+  }
+
+  .home-page .about-section h2 {
+    font-size: 2rem;
+  }
+
+  .home-page .navbar {
+    padding: 0.75rem 1rem;
+  }
+
+  .home-page .footer {
+    padding: 2rem 1rem 1.5rem;
+  }
+}
+
+/* ==========================================================================
+   ADDITIONAL THEME COMPONENTS
+   ========================================================================== */
+
+/* Brand Colors */
+:root {
+  --gb-primary: #0d9488;
+  --gb-secondary: #3b82f6;
+  --gb-accent: #fbbf24;
+  --gb-success: #10b981;
+  --gb-warning: #f59e0b;
+  --gb-error: #ef4444;
+  --gb-text: #1f2937;
+  --gb-text-light: #6b7280;
+  --gb-bg: #ffffff;
+  --gb-bg-alt: #f9fafb;
+  --gb-border: #d1d5db;
+}
+
+/* Button Styles */
+.btn-primary {
+  background: var(--gb-primary);
+  border-color: var(--gb-primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #0b7c6f;
+  border-color: #0b7c6f;
+}
+
+.btn-secondary {
+  background: var(--gb-secondary);
+  border-color: var(--gb-secondary);
+  color: white;
+}
+
+.btn-secondary:hover {
+  background: #2563eb;
+  border-color: #2563eb;
+}
+
+.btn-accent {
+  background: var(--gb-accent);
+  border-color: var(--gb-accent);
+  color: var(--gb-text);
+}
+
+.btn-accent:hover {
+  background: #f59e0b;
+  border-color: #f59e0b;
+}
+
+/* Card Styles */
+.card {
+  border: none;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.card-header {
+  background: var(--gb-bg-alt);
+  border-bottom: 1px solid var(--gb-border);
+  font-weight: 600;
+  color: var(--gb-text);
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+/* Form Styles */
+.form-control {
+  border: 1px solid var(--gb-border);
+  border-radius: 0.375rem;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-control:focus {
+  border-color: var(--gb-secondary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form-label {
+  font-weight: 600;
+  color: var(--gb-text);
+  margin-bottom: 0.5rem;
+}
+
+/* Alert Styles */
+.alert {
+  border: none;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.alert-success {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.alert-danger {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.alert-warning {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.alert-info {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+/* Utility Classes */
+.text-primary { color: var(--gb-primary) !important; }
+.text-secondary { color: var(--gb-secondary) !important; }
+.text-accent { color: var(--gb-accent) !important; }
+.text-success { color: var(--gb-success) !important; }
+.text-warning { color: var(--gb-warning) !important; }
+.text-error { color: var(--gb-error) !important; }
+
+.bg-primary { background: var(--gb-primary) !important; }
+.bg-secondary { background: var(--gb-secondary) !important; }
+.bg-accent { background: var(--gb-accent) !important; }
+.bg-success { background: var(--gb-success) !important; }
+.bg-warning { background: var(--gb-warning) !important; }
+.bg-error { background: var(--gb-error) !important; }
+
+/* ==========================================================================
+   ACCESSIBILITY IMPROVEMENTS
+   ========================================================================== */
+
+/* Focus indicators */
+*:focus {
+  outline: 2px solid var(--gb-secondary);
+  outline-offset: 2px;
+}
+
+/* Skip links */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: var(--gb-primary);
+  color: white;
+  padding: 8px;
+  text-decoration: none;
+  z-index: 1000;
+  transition: top 0.3s;
+}
+
+.skip-link:focus {
+  top: 6px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --gb-border: #000000;
+    --gb-text-light: #000000;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ==========================================================================
+   PRINT STYLES
+   ========================================================================== */
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  .referral-form {
+    box-shadow: none;
+    border: 1px solid #000;
+  }
+
+  .home-page .hero {
+    background: white !important;
+    color: black !important;
+  }
+
+  .home-page .referral-pill {
+    background: #fcd92b !important;
+    color: #0b2330 !important;
+  }
+}
