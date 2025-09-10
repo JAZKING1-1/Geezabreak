@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
-from .models import Feedback, Referral, Criterion
+from .models import Feedback, Referral, Criterion, VolunteerInterest
 from .forms import ReferralForm, ReferralChildFormSet
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView
@@ -156,27 +156,20 @@ def submit_feedback(request):
                 message=request.POST.get('message')
             )
             feedback.save()
-            # Send feedback to email using EmailMessage with Reply-To
-            subject = f"New Feedback from {feedback.name}"
-            message = (
-                f"Name: {feedback.name}\n"
-                f"Contact Number: {feedback.contact_number}\n"
-                f"Email: {feedback.email}\n"
-                f"Service Used: {feedback.get_service_used_display()}\n"
-                f"Message:\n{feedback.message}"
-            )
+            
+            # Send feedback email using Mailjet
+            from core.emails import send_form_email
             try:
-                email = EmailMessage(
-                    subject,
-                    message,
-                    'Geeza Break <ds16022004@gmail.com>',
-                    ['ds16022004@gmail.com'],
-                    headers={'Reply-To': feedback.email}
+                send_form_email(
+                    subject=f"New Feedback from {feedback.name}",
+                    template_name="emails/feedback.html",
+                    context={"feedback": feedback}
                 )
-                email.send(fail_silently=False)
+                print(f"Feedback email sent successfully for {feedback.name}")
             except Exception as e:
                 print("EMAIL ERROR:", str(e))
                 return JsonResponse({'status': 'error', 'message': f'Email error: {str(e)}'})
+            
             return JsonResponse({'status': 'success', 'message': 'Thank you for your feedback!'})
         except Exception as e:
             return JsonResponse({'status': 'error', 'message': str(e)})
@@ -255,85 +248,22 @@ class ReferralCreateView(CreateView):
 
     def _send_emails(self, referral: Referral):
         """
-        Send email notification about a new referral.
-        Now with enhanced logging and error handling.
+        Send email notification about a new referral using Mailjet.
         """
+        from core.emails import send_form_email
+        
         logger.info(f"Preparing email notification for referral ID: {referral.id}")
         
-        # Get active services
-        services = [lbl for lbl,flag in [
-            ("Family Support", referral.srv_family_support),
-            ("Respite Sitting", referral.srv_respite_sitting),
-            ("Respite Care", referral.srv_respite_care),
-            ("Geeza Chance", referral.srv_geezachance),
-            ("Kinship Care", referral.srv_kinship_care),
-        ] if flag]
-        
-        # Get criteria and child information
-        crits = list(referral.criteria.values_list('label', flat=True))
-        child_lines = [
-            f" - {c.full_name} ({c.dob:%d/%m/%Y}) {c.get_relationship_display()} ASN:{'Y' if c.has_asn else 'N'}"
-            for c in referral.children.all()
-        ] or [' (No children listed)']
-        
-        # Format email body
-        body = (
-            f"New referral received\n\n"
-            f"Parent/Carer: {referral.primary_carer_name}\n"
-            f"Postcode: {referral.postcode}\n"
-            f"HSCP: {referral.get_hscp_locality_display()} | Ward: {referral.get_ward_display()}\n"
-            f"Services: {', '.join(services) or '-'}\n"
-            f"Criteria: {', '.join(crits) or '-'}\n"
-            f"Reason/Notes:\n{referral.reason}\n\n"
-            f"Children:\n" + "\n".join(child_lines) + "\n\n" +
-            f"Referrer Information:\n" +
-            f"Name: {referral.referrer_name}\n" +
-            f"Agency: {referral.referrer_agency}\n" +
-            f"Email: {referral.referrer_email}\n" +
-            f"Phone: {referral.referrer_phone}\n\n" +
-            f"This notification was sent to: {', '.join(getattr(settings, 'REFERRAL_NOTIFICATION_RECIPIENTS', []))}"
-        )
-        
-        # Get email settings
-        from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', 'no-reply@geezabreak.org.uk')
-        to_admin = getattr(settings, 'REFERRAL_NOTIFICATION_RECIPIENTS', [])
-        
-        # Always print to console for debugging
-        print("\n" + "="*80)
-        print("REFERRAL NOTIFICATION")
-        print("="*80)
-        print(f"Email backend: {settings.EMAIL_BACKEND}")
-        print(f"From: {from_email}")
-        print(f"To: {to_admin}")
-        print(f"Subject: Referral: {referral.primary_carer_name} ({referral.postcode})")
-        print("-"*80)
-        print(body)
-        print("="*80 + "\n")
-        
-        # Check if we have recipients
-        if not to_admin:
-            print("WARNING: No email recipients configured. Please check REFERRAL_NOTIFICATION_RECIPIENTS in settings.")
-            logger.warning("No email recipients configured for referral notifications")
-            return
-            
         try:
-            print(f"Attempting to send email notification to {to_admin}")
-            logger.info(f"Sending referral notification to {to_admin}")
-            
-            # Create email message with all necessary headers
-            email = EmailMessage(
+            # Send email using Mailjet
+            send_form_email(
                 subject=f"Referral: {referral.primary_carer_name} ({referral.postcode})",
-                body=body,
-                from_email=from_email,
-                to=to_admin,
-                reply_to=[referral.referrer_email] if referral.referrer_email else None,
+                template_name="emails/referral.html",
+                context={"referral": referral}
             )
             
-            # Send email with error reporting
-            email.send(fail_silently=False)
-            
             # Log success
-            print(f"Email notification sent successfully to {to_admin}")
+            print(f"Referral email notification sent successfully for {referral.primary_carer_name}")
             logger.info(f"Email notification sent successfully for referral ID: {referral.id}")
             
             # Save a record of the sent email to database
@@ -342,12 +272,16 @@ class ReferralCreateView(CreateView):
             
         except Exception as e:
             # Detailed error logging
-            print(f"ERROR sending email notification: {str(e)}")
+            error_msg = f"ERROR sending email notification: {str(e)}"
+            print(error_msg)
             logger.error(f"Failed to send email notification for referral ID: {referral.id}, Error: {str(e)}")
-            import traceback
-            traceback.print_exc()
-            print(f"Email backend: {settings.EMAIL_BACKEND}")
-            print(f"Check that the email backend is correctly configured in settings.py")
+            
+            # Ensure email_sent is set to False if sending failed
+            referral.email_sent = False
+            referral.save(update_fields=['email_sent'])
+            
+            # Don't re-raise the exception to avoid breaking the form submission
+            # The referral is still saved to the database, just the email failed
 
 class ReferralReviewView(View):
     template_name = 'main/referral_review.html'
@@ -582,7 +516,7 @@ def test_email(request):
         logger.info(f"Attempting to send test email to {recipient_list}")
         print(f"\n{'='*40}\nSending test email to {recipient_list}\n{'='*40}")
         
-        # For better diagnostics, try both methods separately
+        # For better diagnostics, try all methods separately
         send_results = []
         
         # Method 1: Using send_mail
@@ -619,6 +553,31 @@ def test_email(request):
             print(err_msg)
             logger.exception("EmailMessage failed in test_email view")
         
+        # Method 3: Using Mailjet
+        try:
+            from core.emails import send_form_email
+            send_form_email(
+                subject=f"{subject} (Mailjet method)",
+                template_name="emails/feedback.html",  # Using feedback template for test
+                context={
+                    "feedback": type('TestFeedback', (), {
+                        'name': 'Test User',
+                        'contact_number': '01234567890',
+                        'email': 'test@example.com',
+                        'service_used': 'test',
+                        'get_service_used_display': lambda: 'Test Service',
+                        'message': message
+                    })()
+                }
+            )
+            send_results.append("Mailjet: SUCCESS")
+            print("Mailjet method: SUCCESS")
+        except Exception as e3:
+            err_msg = f"Mailjet method failed: {str(e3)}"
+            send_results.append(err_msg)
+            print(err_msg)
+            logger.exception("Mailjet failed in test_email view")
+        
         # Check if at least one method worked
         success = any("SUCCESS" in result for result in send_results)
         
@@ -649,3 +608,65 @@ def test_email(request):
         response_data['error_details'] = traceback.format_exc()
         
         return JsonResponse(response_data)
+
+def terms(request):
+    """Display terms and conditions page"""
+    return render(request, 'main/terms.html')
+
+def privacy_policy(request):
+    """Display privacy policy page"""
+    return render(request, 'main/privacy_policy.html')
+
+def news(request):
+    """Display news page"""
+    return render(request, 'main/news.html')
+
+def volunteer(request):
+    """Handle volunteer interest form display and submission"""
+    from .forms import VolunteerInterestForm
+    from .models import VolunteerInterest
+    from core.emails import send_form_email
+
+    if request.method == 'POST':
+        form = VolunteerInterestForm(request.POST)
+        if form.is_valid():
+            # Save the volunteer interest
+            volunteer_interest = form.save()
+
+            # Send email notification using Mailjet
+            try:
+                send_form_email(
+                    subject=f"New Volunteer Interest from {volunteer_interest.full_name}",
+                    template_name="emails/volunteer.html",
+                    context={"volunteer": volunteer_interest}
+                )
+                print(f"Volunteer interest email sent successfully for {volunteer_interest.full_name}")
+                messages.success(request, 'Thank you for your interest! We will be in touch soon.')
+            except Exception as e:
+                print(f"EMAIL ERROR for volunteer interest: {str(e)}")
+                messages.error(request, 'Your interest was recorded but there was an issue sending the email. Please try again later.')
+
+            return redirect('main:volunteer')
+        else:
+            print("Volunteer form is invalid")
+            print(form.errors)
+    else:
+        form = VolunteerInterestForm()
+
+    return render(request, 'main/volunteer.html', {'form': form})
+
+def fundraise(request):
+    """Display fundraise page"""
+    return render(request, 'main/fundraise.html')
+
+def partners(request):
+    """Display partners page"""
+    return render(request, 'main/partners.html')
+
+def donate(request):
+    """Display donate page"""
+    return render(request, 'main/donate.html')
+
+def community_flat(request):
+    """Display community flat page"""
+    return render(request, 'main/community_flat.html')

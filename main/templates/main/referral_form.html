@@ -300,7 +300,7 @@
         </div>
         <div class="card__body">
           <div class="field check">
-            <label>{{ form.consent_privacy }} I agree to Geeza Break's privacy notice.</label>
+            <label>{{ form.consent_privacy }} I agree to Geeza Break's <a href="{% url 'main:privacy' %}" target="_blank" rel="noopener" class="underline text-primary">privacy policy</a>.</label>
             {% include "main/partials/field_errors.html" with field=form.consent_privacy %}
           </div>
           <div class="field check">
@@ -312,12 +312,75 @@
       
       <div class="actions action-buttons">
         <button class="btn btn-secondary btn--light" name="action" value="review">Review your answers</button>
-        <button class="btn btn-primary" name="action" value="submit">Submit referral</button>
+        <button id="submitBtn" class="btn btn-primary" name="action" value="submit">Submit referral</button>
       </div>
     </form>
   </div>
 </main>
 
+<script>
+  // Disable submit button until privacy policy is agreed to
+  (function () {
+    const cb = document.getElementById('id_consent_privacy');
+    const btn = document.getElementById('submitBtn');
+    if (cb && btn) {
+      const toggle = () => { btn.disabled = !cb.checked; };
+      cb.addEventListener('change', toggle);
+      toggle(); // Initial check
+    }
+  })();
+
+  // Basic form validation before submission
+  document.getElementById('referral-form').addEventListener('submit', function(e) {
+    const requiredFields = [
+      'id_referrer_name',
+      'id_referrer_email', 
+      'id_primary_carer_name',
+      'id_address_line1',
+      'id_city',
+      'id_postcode',
+      'id_hscp_locality',
+      'id_ward',
+      'id_consent_privacy'
+    ];
+
+    let hasErrors = false;
+    let firstErrorField = null;
+
+    requiredFields.forEach(fieldId => {
+      const field = document.getElementById(fieldId);
+      if (field) {
+        // Check if field is empty
+        let isEmpty = false;
+        if (field.type === 'checkbox') {
+          isEmpty = !field.checked;
+        } else {
+          isEmpty = !field.value.trim();
+        }
+
+        if (isEmpty) {
+          field.style.borderColor = 'red';
+          hasErrors = true;
+          if (!firstErrorField) {
+            firstErrorField = field;
+          }
+        } else {
+          field.style.borderColor = '';
+        }
+      }
+    });
+
+    if (hasErrors) {
+      e.preventDefault();
+      alert('Please fill in all required fields marked with *');
+      if (firstErrorField) {
+        firstErrorField.focus();
+        firstErrorField.scrollIntoView({behavior: 'smooth', block: 'center'});
+      }
+      return false;
+    }
+  });
+</script>
 <script src="{% static 'js/referral-a11y.js' %}?v=3"></script>
 <script src="{% static 'js/referral-dynamic.js' %}?v=3"></script>
 {% endblock %}

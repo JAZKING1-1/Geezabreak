@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>New Referral Form Submission</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .header { background: #007bbe; color: white; padding: 20px; text-align: center; }
+        .content { padding: 20px; }
+        .field { margin-bottom: 15px; }
+        .field strong { display: inline-block; min-width: 150px; }
+        .footer { background: #f8f9fa; padding: 15px; font-size: 12px; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🆕 New Referral Form Submission</h1>
+        <p>Geeza Break - Referral Notification</p>
+    </div>
+
+    <div class="content">
+        <h2>Referral Details</h2>
+
+        <div class="field">
+            <strong>Referrer Name:</strong> {{ ref.referrer_name }}
+        </div>
+
+        <div class="field">
+            <strong>Referrer Email:</strong> {{ ref.referrer_email }}
+        </div>
+
+        <div class="field">
+            <strong>Referrer Agency:</strong> {{ ref.referrer_agency|default:"Not specified" }}
+        </div>
+
+        <div class="field">
+            <strong>Primary Carer:</strong> {{ ref.primary_carer_name }}
+        </div>
+
+        <div class="field">
+            <strong>Address:</strong><br>
+            {{ ref.address_line1 }}<br>
+            {% if ref.address_line2 %}{{ ref.address_line2 }}<br>{% endif %}
+            {{ ref.city }}<br>
+            {{ ref.postcode }}
+        </div>
+
+        <div class="field">
+            <strong>HSCP Locality:</strong> {{ ref.get_hscp_locality_display }}
+        </div>
+
+        <div class="field">
+            <strong>Ward:</strong> {{ ref.get_ward_display }}
+        </div>
+
+        {% if ref.reason %}
+        <div class="field">
+            <strong>Reason/Notes:</strong><br>
+            {{ ref.reason|linebreaksbr }}
+        </div>
+        {% endif %}
+
+        <h3>Services Requested</h3>
+        <ul>
+            {% if ref.srv_family_support %}<li>Family Support</li>{% endif %}
+            {% if ref.srv_respite_sitting %}<li>Respite Sitting</li>{% endif %}
+            {% if ref.srv_respite_care %}<li>Respite Care</li>{% endif %}
+            {% if ref.srv_geezachance %}<li>Geeza Chance</li>{% endif %}
+            {% if ref.srv_kinship_care %}<li>Kinship Care</li>{% endif %}
+        </ul>
+
+        {% if ref.children.all %}
+        <h3>Children Details</h3>
+        {% for child in ref.children.all %}
+        <div style="border-left: 3px solid #007bbe; padding-left: 10px; margin-bottom: 10px;">
+            <strong>{{ child.full_name }}</strong> ({{ child.dob }}, {{ child.get_relationship_display }})
+            {% if child.has_asn %} - Has Additional Support Needs{% endif %}
+        </div>
+        {% endfor %}
+        {% endif %}
+
+        <div class="field">
+            <strong>Submitted:</strong> {{ ref.created_at|date:"D, d M Y H:i" }}
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>This email was automatically sent from the Geeza Break website referral form.</p>
+        <p>Please respond to the referrer at: {{ ref.referrer_email }}</p>
+    </div>
+</body>
+</html>

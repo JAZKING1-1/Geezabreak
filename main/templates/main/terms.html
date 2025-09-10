@@ -1,0 +1,36 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block title %}Terms and Conditions - Geeza Break{% endblock %}
+
+{% block content %}
+<section class="container my-5">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="text-center mb-5">Terms and Conditions</h1>
+
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+                    <h2 class="h4 mb-4">Disclaimer</h2>
+
+                    <p>The information contained on this Web Site is provided by Geeza Break in good faith on an "as is" basis. The information is believed to be accurate and current at the date the information was placed on this Web Site.</p>
+
+                    <p>No one at Geeza Break, its related bodies corporate, any of their directors, officers, employees, agents and consultants makes any representation or warranty as to the reliability, accuracy or completeness of the information contained on this Web Site (including in relation to any products or services) and none of them accept any responsibility arising in any way (including negligence) for errors in, or omissions from, the information contained on this Web Site. You should make your own enquiries prior to entering into any transaction based on the contents of this Web Site.</p>
+
+                    <p>To the fullest extent permitted by applicable law, Geeza Break disclaims all representations and warranties, express or implied, including but not limited to, implied warranties of merchantability and fitness for a particular purpose and non-infringement. Geeza Break makes no warranty that the Web Site or any products or services advertised on the Web Site will meet your requirements, or that the Web Site will be uninterrupted, timely, secure or error free. Furthermore, to the fullest extent permitted by any applicable law, Geeza Break and its directors, officers, employees, agents and consultants exclude all liability for any loss or damage (including indirect, special or consequential loss or damage) arising from the use of, or reliance on, that information contained on this website, whether or not caused by any negligent act or omission. If any law prohibits the exclusion of such liability, Geeza Break limits its liability to the extent permitted by law, to the re-supply of the information. You expressly acknowledge and agree that Geeza Break does not control other users of this Web Site or the suppliers of goods and services and Geeza Break is therefore not liable for their opinions or their behaviour, including any information or advice provided by them or any defamatory statements made by them or any offensive conduct on their part.</p>
+
+                    <p>Geeza Break's website has links to other sites. Geeza Break is not responsible for the privacy, information or content of those sites as they are not under Geeza Break's control. The links to those sites are provided for your convenience only, and are not any express or implied endorsement by Geeza Break, of those sites, or the products and services provided on those sites.</p>
+
+                    <p>No advice or information, whether oral or written, obtained by you from or through this Web Site creates any warranty not expressly made in these Terms and Conditions.</p>
+
+                    <p>Information on this Web Site has been prepared in accordance with UK law for use in the UK only. This information may not satisfy the laws of any other country. To the extent that it does not satisfy the laws of the country in which you reside or from which you are accessing this Web Site, it is not directed at you and cannot be relied upon by. In any event, if you do rely on the information on this Web Site, then you agree to indemnify Geeza Break for any losses, costs (including legal costs on a solicitor-client basis), expenses or damages Geeza Break may suffer as a consequence of your reliance on the information or content of this Web Site.</p>
+
+                    <div class="alert alert-info mt-4">
+                        <h5>If you require more information, please <a href="{% url 'main:contact' %}" class="alert-link">contact one of our team members</a>.</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

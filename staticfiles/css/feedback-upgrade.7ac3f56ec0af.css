@@ -1,0 +1,162 @@
+/* ================================
+   FEEDBACK SECTION — VISUAL UPGRADE
+   (scoped with #feedback to avoid side-effects)
+   ================================ */
+
+/* section frame */
+#feedback.feedback-section {
+  --gb-blue: #2bb6f0;     /* lighter, readable blue */
+  --gb-blue-700: #0f8ec6; /* hover */
+  --gb-yellow: #face03;
+  --gb-shadow: 0 10px 28px rgba(0,0,0,.08);
+  --gb-radius: 16px;
+  --gb-padding: 1.25rem;
+}
+
+/* center and widen the lane a bit on desktop */
+#feedback .row { gap: 1rem; }
+#feedback .col-md-12 { max-width: 980px; margin-inline: auto; }
+
+/* form bar */
+#feedback #commentForm .form-control {
+  height: 52px;
+  font-size: 1rem;
+  border-radius: 999px;
+  padding-inline: 1rem 1.25rem;
+  border: 2px solid #e6f4fb;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,.03);
+}
+#feedback #commentForm .form-control:focus {
+  outline: none;
+  border-color: var(--gb-blue) !important;
+  box-shadow: 0 0 0 4px rgba(43,182,240,.18) !important;
+}
+
+/* Ensure button container doesn't cause layout issues */
+#feedback #commentForm .d-flex {
+  flex-wrap: nowrap !important; /* Prevent wrapping */
+  gap: 0.5rem !important; /* Consistent spacing */
+  align-items: stretch !important; /* Align items properly */
+}
+
+/* anonymous pill */
+#feedback #anonymousBtn {
+  border-radius: 999px !important;
+  border: 2px solid var(--gb-blue) !important;
+  color: var(--gb-blue) !important;
+  background: #f0fbff !important;
+  font-weight: 700 !important;
+  padding: 0.75rem 1.25rem !important; /* Increased padding for better visibility */
+  font-size: 1rem !important; /* Explicit font size */
+  line-height: 1.2 !important; /* Better line height */
+  height: auto !important; /* Let content determine height */
+  min-height: 52px !important; /* Minimum height for touch targets */
+  white-space: nowrap !important; /* Prevent text wrapping */
+  overflow: visible !important; /* Ensure content is visible */
+  text-overflow: clip !important; /* Prevent text truncation */
+  display: inline-flex !important; /* Better button layout */
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important; /* Include padding/border in dimensions */
+}
+#feedback #anonymousBtn:focus-visible {
+  outline: 3px solid rgba(43,182,240,.35) !important;
+  outline-offset: 2px !important;
+}
+
+/* Ensure no duplication by adding specific styles */
+#feedback #anonymousBtn::before,
+#feedback #anonymousBtn::after {
+  display: none !important; /* Hide any pseudo-elements */
+}
+
+/* Active state styling */
+#feedback #anonymousBtn.active {
+  background: var(--gb-blue) !important;
+  color: #fff !important;
+  border-color: var(--gb-blue) !important;
+}
+
+/* primary button – switch to light blue */
+#feedback .btn.btn-primary {
+  background: var(--gb-blue) !important;
+  border-color: var(--gb-blue) !important;
+  color: #fff !important;
+  font-weight: 800;
+  border-radius: 999px;
+  height: 52px;
+  padding-inline: 1.25rem;
+  box-shadow: var(--gb-shadow);
+}
+#feedback .btn.btn-primary:hover,
+#feedback .btn.btn-primary:focus {
+  background: var(--gb-blue-700) !important;
+  border-color: var(--gb-blue-700) !important;
+}
+
+/* comment cards – bigger, bolder, branded */
+#feedback #commentsList .card {
+  border: 3px solid var(--gb-yellow) !important;     /* bolder border */
+  border-radius: var(--gb-radius) !important;
+  box-shadow: var(--gb-shadow);
+  padding: 0 !important;                              /* we'll control via .card-body */
+  background: #fff;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+#feedback #commentsList .card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px rgba(0,0,0,.12);
+}
+#feedback #commentsList .card::before {
+  content: "";
+  display: block;
+  height: 8px;
+  border-radius: var(--gb-radius) var(--gb-radius) 0 0;
+  background: linear-gradient(90deg, #99dfef, #a6ce39);
+}
+
+/* inner spacing + readable text */
+#feedback #commentsList .card .card-body {
+  padding: calc(var(--gb-padding) + .25rem) var(--gb-padding) !important;
+}
+#feedback #commentsList .card strong {
+  font-weight: 800;
+  color: #222;
+}
+#feedback #commentsList .card p {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  margin: .35rem 0 0 0;
+  color: #333;
+}
+
+/* subtle divider between cards on mobile */
+@media (max-width: 768px) {
+  #feedback #commentsList .card { margin-bottom: 1rem; }
+}
+
+/* section heading alignment + color tweak (optional) */
+#feedback h2 {
+  color: var(--gb-blue);
+  font-weight: 900;
+  letter-spacing: 0.2px;
+  margin-bottom: 1.25rem;
+}
+
+/* message feedback (success/error) */
+#feedback #commentMessage {
+  border-radius: 12px;
+  padding: .65rem .9rem;
+  background: #e6f7ff;
+  color: #055a7a;
+  border: 1px solid #bfeafc;
+}
+
+/* Optional: micro-animation for new comment cards */
+#feedback #commentsList .card.is-new {
+  animation: gb-pop .35s ease-out forwards;
+}
+@keyframes gb-pop {
+  from { transform: translateY(8px) scale(.98); opacity: 0; }
+  to   { transform: translateY(0)   scale(1);    opacity: 1; }
+}

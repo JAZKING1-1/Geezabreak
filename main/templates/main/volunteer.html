@@ -138,15 +138,15 @@ body {
 }
 
 .role-card h3 {
-    color: white;
+    color: black;
     font-size: 1.5rem;
     margin-bottom: 1rem;
     font-weight: 600;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    text-shadow: none;
 }
 
 .role-card p {
-    color: rgba(255, 255, 255, 0.95);
+    color: black;
     line-height: 1.6;
     margin-bottom: 1.5rem;
 }
@@ -257,6 +257,8 @@ body {
     border-radius: 8px;
     font-size: 1rem;
     transition: border-color 0.3s ease;
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
 }
 
 .form-group input:focus,
@@ -264,6 +266,7 @@ body {
 .form-group textarea:focus {
     outline: none;
     border-color: #007bbe;
+    box-shadow: 0 0 0 3px rgba(0, 123, 187, 0.1);
 }
 
 .checkbox-group {
@@ -300,8 +303,8 @@ body {
 }
 
 .submit-btn {
-    background: #007bbe;
-    color: white;
+    background: #face03;
+    color: black;
     border: none;
     padding: 1rem 2rem;
     border-radius: 8px;
@@ -313,7 +316,27 @@ body {
 }
 
 .submit-btn:hover {
-    background: #005a8f;
+    background: #f5c002;
+}
+
+/* Ensure yellow button styling takes precedence */
+.interest-form .submit-btn,
+#volunteerSubmitBtn {
+    background: #face03 !important;
+    color: black !important;
+    border: none !important;
+    padding: 1rem 2rem !important;
+    border-radius: 8px !important;
+    font-size: 1.1rem !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: background 0.3s ease !important;
+    width: 100% !important;
+}
+
+.interest-form .submit-btn:hover,
+#volunteerSubmitBtn:hover {
+    background: #f5c002 !important;
 }
 
 .alert {
@@ -354,10 +377,20 @@ body {
         grid-template-columns: 1fr;
     }
 
-    .interest-form {
-        padding: 2rem;
-    }
-}
+        /* 4-line clamp for previews (no plugin needed) */
+        .clamp-4 {
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        /* subtle load-in animation */
+        @keyframes cardIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .animate-cardIn { animation: cardIn .5s ease-out both; }
 </style>
 
 <section class="volunteer-hero">
@@ -369,57 +402,110 @@ body {
 
 <section class="stories-section">
     <div class="container">
-        <h2>Volunteer Stories</h2>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="story-card">
-                    <div class="story-image" style="background-image: url('{% static 'images/volunteer1.jpg' %}');"></div>
-                    <div class="story-content">
-                        <h3>Sarah's Journey</h3>
-                        <p>Sarah started volunteering with us 3 years ago as a play session helper. Today, she's one of our most valued team members, coordinating volunteer activities and mentoring new volunteers.</p>
-                        <div class="story-quote">
-                            "Volunteering with Geeza Break has given me so much more than I could ever give. The children, the families, and the amazing team have become my extended family."
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="story-card">
-                    <div class="story-image" style="background-image: url('{% static 'images/volunteer2.jpg' %}');"></div>
-                    <div class="story-content">
-                        <h3>Mike's Impact</h3>
-                        <p>Mike brings his IT skills to help us maintain our website and develop new digital tools. His technical expertise has helped us reach more families and streamline our operations.</p>
-                        <div class="story-quote">
-                            "I wanted to use my skills for something meaningful. Geeza Break gave me that opportunity and showed me how technology can make a real difference in people's lives."
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="text-center mb-5">
+            <h2 class="text-3xl md:text-4xl font-extrabold text-blue-700">Volunteer Stories</h2>
+            <p class="text-gray-700 mt-2">Real journeys from our community — why they volunteer, what they've learned, and the difference it makes.</p>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="story-card">
-                    <div class="story-image" style="background-image: url('{% static 'images/volunteer3.jpg' %}');"></div>
-                    <div class="story-content">
-                        <h3>Emma's Passion</h3>
-                        <p>Emma volunteers as a respite carer, providing overnight support for families who need a break. Her compassionate nature and dedication make her an invaluable part of our team.</p>
-                        <div class="story-quote">
-                            "Being able to give families the breathing space they need is incredibly rewarding. Seeing the difference it makes in their lives keeps me coming back."
+
+        <div class="row g-4">
+            <!-- Card: Gerry -->
+            <div class="col-md-6 mb-4">
+                <article
+                    class="animate-cardIn rounded-3 shadow-lg p-4 transition-all duration-300 hover:shadow-xl"
+                    style="background:#a6ce39; color:#000; border: none;"
+                    id="story-gerry"
+                >
+                    <div class="d-flex align-items-center gap-3 mb-4">
+                        <div class="rounded-circle d-flex align-items-center justify-content-center bg-white bg-opacity-75 text-dark fw-bold" style="width: 56px; height: 56px; font-size: 1.25rem;">G</div>
+                        <div>
+                            <h3 class="fw-bold mb-1" style="font-size: 1.25rem;">Gerry (Geraldine) — Respite Carer</h3>
+                            <p class="opacity-75 mb-0" style="font-size: 0.875rem;">Volunteer since Dec 2023</p>
                         </div>
                     </div>
-                </div>
+
+                    <!-- PREVIEW (4 lines) -->
+                    <p class="clamp-4 mb-4" style="line-height: 1.6; font-size: 1.02rem;" data-preview="gerry">
+                        Geeza Break Marks Volunteers' week 2025. I have been a volunteer with Geeza break as a Respite Carer since December 2023.
+                        Prior to this I worked in the Social Housing sector for 43 years, retiring in 2023. This allowed me to look at voluntary opportunities.
+                        I learned about Geeza break through a friend who is employed by Geeza break, and the great work they do in the community.
+                        Coming from the East end of Glasgow and my work experience in the area, I am also aware of the need for such a support service in that area.
+                        I have found my time providing respite care very enjoyable and rewarding… (read full story below)
+                    </p>
+
+                    <!-- FULL TEXT (hidden until expanded) -->
+                    <div class="d-none" style="line-height: 1.6; font-size: 1.02rem;" data-full="gerry">
+                        <div class="mb-3">
+                            <p><strong>Geeza Break Marks Volunteers' week 2025</strong></p>
+                            <p>I have been a volunteer with Geeza break as a Respite Carer since December 2023.</p>
+                            <p>Prior to this I worked in the Social Housing sector for 43 years, retiring in 2023. This allowed me to look at voluntary opportunities.</p>
+                            <p>I learned about Geeza break through a friend who is employed by Geeza break, and the great work they do in the community.</p>
+                            <p>Coming from the East end of Glasgow and my work experience in the area, I am also aware of the need for such a support service in that area.</p>
+                            <p><strong>Geeza Break Marks Volunteers' week 2025</strong></p>
+                            <p>I have found my time providing respite care very enjoyable and rewarding. It is a bit daunting to start with as with all new experiences. However, given the support of Geeza break, and other carers I know, advice and support are always a phone call away at any time.</p>
+                            <p>Prior to the first respite session, I always meet the parent along with the Geeza break worker, including a visit to my home, which allows them to get to know me and see where their child will be staying etc., which gives them reassurance.</p>
+                            <p>During the respite, especially for preschoolers, I often take them to a soft play or park, which lets them have some outdoor play time and burn off some energy. (This is always agreed in advance with the parent) I also sometimes meet up with another respite carer there which allows for peer play for the child.</p>
+                            <p><strong>Geeza Break Marks Volunteers' week 2025</strong></p>
+                            <p>During the sessions with the children, I am also mindful of the GIRFEC principles.</p>
+                            <p>An example of this was a 4-year-old child who was quite nervous and withdrawn at the start of the respite sessions. By the end she was really looking forward to coming along and standing on the verandah waiting on me and waving when I picked her up on a Friday.</p>
+                            <p>During the sessions the child got so used to their routine and would 'prompt' me after dinner for her bath and after playing with the toys and games, watching cartoons etc., she would choose a book and get herself cosy on the couch for stories.</p>
+                            <p>It is really rewarding to see positive behavioral signs from the child as the respite progresses, however small, and to see them get to know and trust you.</p>
+                        </div>
+                    </div>
+
+                    <button
+                        type="button"
+                        class="btn bg-white bg-opacity-80 text-dark fw-semibold px-3 py-2 rounded shadow-sm hover-bg-white transition"
+                        onclick="toggleStory('gerry', this)"
+                        aria-expanded="false"
+                        style="border: none;"
+                    >
+                        Read more
+                    </button>
+                </article>
             </div>
-            <div class="col-md-6">
-                <div class="story-card">
-                    <div class="story-image" style="background-image: url('{% static 'images/volunteer4.jpg' %}');"></div>
-                    <div class="story-content">
-                        <h3>James's Commitment</h3>
-                        <p>James helps with our fundraising events and community outreach. His enthusiasm and organizational skills have helped us raise thousands for our services.</p>
-                        <div class="story-quote">
-                            "Every pound raised means more support for families. It's amazing to see how our community comes together to help those who need it most."
+
+            <!-- Card: Nathen -->
+            <div class="col-md-6 mb-4">
+                <article
+                    class="animate-cardIn rounded-3 shadow-lg p-4 transition-all duration-300 hover:shadow-xl"
+                    style="background:#a6ce39; color:#000; border: none;"
+                    id="story-nathen"
+                >
+                    <div class="d-flex align-items-center gap-3 mb-4">
+                        <div class="rounded-circle d-flex align-items-center justify-content-center bg-white bg-opacity-75 text-dark fw-bold" style="width: 56px; height: 56px; font-size: 1.25rem;">N</div>
+                        <div>
+                            <h3 class="fw-bold mb-1" style="font-size: 1.25rem;">Nathen — Volunteer at Geeza Break</h3>
+                            <p class="opacity-75 mb-0" style="font-size: 0.875rem;">Volunteer story</p>
                         </div>
                     </div>
-                </div>
+
+                    <!-- PREVIEW (4 lines) -->
+                    <p class="clamp-4 mb-4" style="line-height: 1.6; font-size: 1.02rem;" data-preview="nathen">
+                        Geeza Break marks Volunteers' Week 2025. "After attending a Geeza Chance group as a participant, starting to volunteer
+                        alongside Geeza Chance has been the best experience I've ever had in my life… I had low self-esteem and was not very confident.
+                        Taking part slowly gave me confidence and showed me there were a lot of young people experiencing the same situation…"
+                    </p>
+
+                    <!-- FULL TEXT (hidden until expanded) -->
+                    <div class="d-none" style="line-height: 1.6; font-size: 1.02rem;" data-full="nathen">
+                        <div class="mb-3">
+                            <p><strong>Geeza Break marks Volunteers' Week 2025.</strong></p>
+                            <p>"After attending a Geeza Chance group as a participant, starting to volunteer alongside Geeza Chance has been the best experience I've ever had in my life. It all started from being a young person in Kinship Care myself. I had low self-esteem and was not very confident. I was about 12 when I started a group for the first time, and taking part in the group slowly gave me confidence and showed me that there were a lot of young people experiencing the same situation I was in. I didn't feel so alone anymore as they could understand me. I gained more confidence and started to feel better about myself.</p>
+                            <p>Over the years I've gotten to work alongside all different types of personalities and all different type of situations that have taught me many skills that help me in my day-to-day life. For example, my first aid training, defibrillator training and my volunteering role helped me get my Duke of Edinburgh whilst I was in school. I'm committed to my volunteering and enjoy being part of the team supporting the young person's support worker and other staff. I am helping others, and I see a lot of quiet young people come to the groups and see their confidence grow and they are more comfortable being there and taking part. I get to see them take steps forward, which is amazing. We take them on trips to experience something new and see how they push themselves to always try new things. I still learn new things from the young people all the time! Like me years before, I can see after all the sessions that it's made a difference in everyone's lives. They have made new friends, gained new skills and had a better understanding of themselves, their emotions, and the others in the groups. The group has given us all a safe, encouraging place to flourish with support always being there to guide us."</p>
+                            <p>– Nathen, Volunteer at Geeza Break</p>
+                        </div>
+                    </div>
+
+                    <button
+                        type="button"
+                        class="btn bg-white bg-opacity-80 text-dark fw-semibold px-3 py-2 rounded shadow-sm hover-bg-white transition"
+                        onclick="toggleStory('nathen', this)"
+                        aria-expanded="false"
+                        style="border: none;"
+                    >
+                        Read more
+                    </button>
+                </article>
             </div>
         </div>
     </div>
@@ -433,23 +519,23 @@ body {
                 <div class="role-icon">
                     <i class="fas fa-child"></i>
                 </div>
-                <h3>Play Session Helper</h3>
-                <p>Support our play sessions by helping children with activities, games, and crafts. No special skills required - just enthusiasm and patience!</p>
-                <div class="role-commitment">2-4 hours/week</div>
+                <h3>Play Session Helper – Volunteer Respite Provider</h3>
+                <p>Support our group creche sessions by helping children with activities, games, and crafts. No special skills are required—just enthusiasm and patience! (PVG scheme membership is required.)</p>
+                <div class="role-commitment">2-4 hours</div>
             </div>
             <div class="role-card">
                 <div class="role-icon">
                     <i class="fas fa-home"></i>
                 </div>
                 <h3>Respite Carer</h3>
-                <p>Provide overnight or weekend respite care for families. Help with bedtime routines, morning care, and light household tasks.</p>
+                <p>Provide overnight respite care for families by supporting bedtime routines and promoting positive wellbeing outcomes.</p>
                 <div class="role-commitment">Flexible hours</div>
             </div>
             <div class="role-card">
                 <div class="role-icon">
                     <i class="fas fa-laptop"></i>
                 </div>
-                <h3>Admin Support</h3>
+                <h3>Admin/ Reception Support</h3>
                 <p>Help with administrative tasks like data entry, filing, organizing events, and maintaining our volunteer database.</p>
                 <div class="role-commitment">4-8 hours/week</div>
             </div>
@@ -458,24 +544,24 @@ body {
                     <i class="fas fa-users"></i>
                 </div>
                 <h3>Fundraising Coordinator</h3>
-                <p>Organize fundraising events, manage social media campaigns, and help us reach more people in our community.</p>
+                <p>Participate in fundraising events and help us reach more people in our community.</p>
                 <div class="role-commitment">6-10 hours/week</div>
             </div>
             <div class="role-card">
                 <div class="role-icon">
-                    <i class="fas fa-tools"></i>
+                    <i class="fas fa-users"></i>
                 </div>
-                <h3>Maintenance Helper</h3>
-                <p>Help with basic maintenance tasks around our facilities, gardening, and keeping our play areas safe and clean.</p>
-                <div class="role-commitment">Flexible hours</div>
+                <h3>Respite Sitter</h3>
+                <p>Support existing respite sitters to offer a supportive 2-1 adult ratio for our community-based respite.</p>
+                <div class="role-commitment">4hrs</div>
             </div>
             <div class="role-card">
                 <div class="role-icon">
                     <i class="fas fa-graduation-cap"></i>
                 </div>
-                <h3>Mentor</h3>
-                <p>Mentor new volunteers, share your experience, and help build our volunteer community through training and support.</p>
-                <div class="role-commitment">2-6 hours/week</div>
+                <h3>Work Experience</h3>
+                <p>A nurturing introduction into the world of work for high school aged young people in Glasgow.</p>
+                <div class="role-commitment">flexible</div>
             </div>
         </div>
     </div>
@@ -494,11 +580,11 @@ body {
                 </div>
                 <div class="benefit-item">
                     <h4><i class="fas fa-users text-primary"></i> Professional Development</h4>
-                    <p>Develop transferable skills in communication, teamwork, and project management that will benefit your future career.</p>
+                    <p>Develop transferable skills in communication, teamwork, and project management that will benefit your future career and practice.</p>
                 </div>
                 <div class="benefit-item">
                     <h4><i class="fas fa-heart text-primary"></i> Making a Difference</h4>
-                    <p>Contribute to meaningful work that directly improves the lives of children and families in our community.</p>
+                    <p>Contribute to meaningful work that directly supports the lives of children and their families in our community.</p>
                 </div>
                 <div class="benefit-item">
                     <h4><i class="fas fa-handshake text-primary"></i> Networking</h4>
@@ -524,12 +610,16 @@ body {
             {% endfor %}
         {% endif %}
 
-        <form method="post" class="interest-form">
+        <form method="post" class="interest-form" novalidate>
             {% csrf_token %}
 
             <div class="form-group">
                 <label for="{{ form.full_name.id_for_label }}">Full Name *</label>
-                {{ form.full_name }}
+                <input type="text" name="full_name" id="{{ form.full_name.id_for_label }}"
+                       value="{{ form.full_name.value|default:'' }}"
+                       placeholder="e.g. Emily Drummond"
+                       class="w-full border rounded-lg px-4 py-2 focus:ring focus:ring-blue-300"
+                       required>
                 {% if form.full_name.errors %}
                     <div class="text-danger">{{ form.full_name.errors.0 }}</div>
                 {% endif %}
@@ -537,7 +627,11 @@ body {
 
             <div class="form-group">
                 <label for="{{ form.email.id_for_label }}">Email Address *</label>
-                {{ form.email }}
+                <input type="email" name="email" id="{{ form.email.id_for_label }}"
+                       value="{{ form.email.value|default:'' }}"
+                       placeholder="e.g. emily@example.com"
+                       class="w-full border rounded-lg px-4 py-2 focus:ring focus:ring-blue-300"
+                       required>
                 {% if form.email.errors %}
                     <div class="text-danger">{{ form.email.errors.0 }}</div>
                 {% endif %}
@@ -545,7 +639,13 @@ body {
 
             <div class="form-group">
                 <label for="{{ form.phone.id_for_label }}">Phone Number *</label>
-                {{ form.phone }}
+                <input type="tel" name="phone" id="{{ form.phone.id_for_label }}"
+                       value="{{ form.phone.value|default:'' }}"
+                       placeholder="+44 7700 900123"
+                       pattern="^\+44\s?\d{9,10}$"
+                       class="w-full border rounded-lg px-4 py-2 focus:ring focus:ring-blue-300"
+                       required>
+                <small class="text-white/80 text-sm">Format: +44 followed by 9–10 digits</small>
                 {% if form.phone.errors %}
                     <div class="text-danger">{{ form.phone.errors.0 }}</div>
                 {% endif %}
@@ -553,7 +653,17 @@ body {
 
             <div class="form-group">
                 <label>I'm interested in these roles: *</label>
-                {{ form.roles }}
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
+                    {% for role_value, role_label in form.roles.field.choices %}
+                    <div class="flex items-center">
+                        <input type="checkbox" name="roles" value="{{ role_value }}"
+                               id="id_roles_{{ forloop.counter }}"
+                               class="mr-2"
+                               {% if role_value in form.roles.value %}checked{% endif %}>
+                        <label for="id_roles_{{ forloop.counter }}" class="text-white">{{ role_label }}</label>
+                    </div>
+                    {% endfor %}
+                </div>
                 {% if form.roles.errors %}
                     <div class="text-danger">{{ form.roles.errors.0 }}</div>
                 {% endif %}
@@ -561,34 +671,137 @@ body {
 
             <div class="form-group">
                 <label for="{{ form.availability.id_for_label }}">Availability</label>
-                {{ form.availability }}
+                <input type="text" name="availability" id="{{ form.availability.id_for_label }}"
+                       value="{{ form.availability.value|default:'' }}"
+                       placeholder="e.g. Mondays & Wednesdays, afternoons"
+                       class="w-full border rounded-lg px-4 py-2 focus:ring focus:ring-blue-300">
             </div>
 
             <div class="form-group">
-                {{ form.is_student }}
-                <label for="{{ form.is_student.id_for_label }}">I'm a student</label>
+                <div class="flex items-center">
+                    <input type="checkbox" name="is_student" id="{{ form.is_student.id_for_label }}"
+                           {% if form.is_student.value %}checked{% endif %}
+                           class="mr-2">
+                    <label for="{{ form.is_student.id_for_label }}" class="text-white">I'm a student</label>
+                </div>
             </div>
 
             <div class="form-group">
                 <label for="{{ form.course_or_discipline.id_for_label }}">Course / Discipline</label>
-                {{ form.course_or_discipline }}
+                <input type="text" name="course_or_discipline" id="{{ form.course_or_discipline.id_for_label }}"
+                       value="{{ form.course_or_discipline.value|default:'' }}"
+                       placeholder="e.g. BA in Social Work"
+                       class="w-full border rounded-lg px-4 py-2 focus:ring focus:ring-blue-300">
             </div>
 
             <div class="form-group">
                 <label for="{{ form.message.id_for_label }}">Tell us about yourself and why you'd like to volunteer</label>
-                {{ form.message }}
+                <textarea name="message" id="{{ form.message.id_for_label }}"
+                          placeholder="e.g. I enjoy working with children and helping families..."
+                          class="w-full border rounded-lg px-4 py-2 focus:ring focus:ring-blue-300"
+                          rows="4">{{ form.message.value|default:'' }}</textarea>
             </div>
 
             <div class="form-group">
-                {{ form.consent_contact }}
-                <label for="{{ form.consent_contact.id_for_label }}">I consent to Geeza Break contacting me about volunteering/placements. *</label>
+                <div class="flex items-center">
+                    <input type="checkbox" name="consent_contact" id="{{ form.consent_contact.id_for_label }}"
+                           {% if form.consent_contact.value %}checked{% endif %}
+                           class="mr-2" required>
+                    <label for="{{ form.consent_contact.id_for_label }}" class="text-white">I consent to Geeza Break contacting me about volunteering/placements. *</label>
+                </div>
                 {% if form.consent_contact.errors %}
                     <div class="text-danger">{{ form.consent_contact.errors.0 }}</div>
                 {% endif %}
             </div>
 
-            <button type="submit" class="submit-btn">Submit Interest</button>
+            <button type="submit" class="bg-blue-600 text-white font-semibold px-6 py-2 rounded-lg shadow hover:bg-blue-700 w-full" id="volunteerSubmitBtn">Submit Interest</button>
         </form>
+
+        <script>
+        // Story toggle function
+        function toggleStory(key, btn) {
+            const full = document.querySelector(`[data-full="${key}"]`);
+            const preview = document.querySelector(`[data-preview="${key}"]`);
+            const expanded = full.classList.contains('d-none') === false;
+
+            if (expanded) {
+                // Collapse
+                full.classList.add('d-none');
+                preview.classList.add('clamp-4');
+                btn.textContent = 'Read more';
+                btn.setAttribute('aria-expanded', 'false');
+            } else {
+                // Expand
+                full.classList.remove('d-none');
+                preview.classList.remove('clamp-4');
+                btn.textContent = 'Show less';
+                btn.setAttribute('aria-expanded', 'true');
+            }
+        }
+
+        // Basic form validation before submission
+        document.querySelector('.interest-form').addEventListener('submit', function(e) {
+            const requiredFields = [
+                'id_full_name',
+                'id_email',
+                'id_phone',
+                'id_consent_contact'
+            ];
+
+            let hasErrors = false;
+            let firstErrorField = null;
+
+            requiredFields.forEach(fieldId => {
+                const field = document.getElementById(fieldId);
+                if (field) {
+                    // Check if field is empty
+                    let isEmpty = false;
+                    if (field.type === 'checkbox') {
+                        isEmpty = !field.checked;
+                    } else {
+                        isEmpty = !field.value.trim();
+                    }
+
+                    if (isEmpty) {
+                        field.style.borderColor = 'red';
+                        hasErrors = true;
+                        if (!firstErrorField) {
+                            firstErrorField = field;
+                        }
+                    } else {
+                        field.style.borderColor = '';
+                    }
+                }
+            });
+
+            // Check if at least one role is selected
+            const roleCheckboxes = document.querySelectorAll('input[name="roles"]:checked');
+            if (roleCheckboxes.length === 0) {
+                const roleContainer = document.querySelector('.checkbox-group');
+                if (roleContainer) {
+                    roleContainer.style.border = '2px solid red';
+                    roleContainer.style.borderRadius = '8px';
+                    roleContainer.style.padding = '1rem';
+                    hasErrors = true;
+                }
+            } else {
+                const roleContainer = document.querySelector('.checkbox-group');
+                if (roleContainer) {
+                    roleContainer.style.border = '';
+                }
+            }
+
+            if (hasErrors) {
+                e.preventDefault();
+                alert('Please fill in all required fields marked with * and select at least one role');
+                if (firstErrorField) {
+                    firstErrorField.focus();
+                    firstErrorField.scrollIntoView({behavior: 'smooth', block: 'center'});
+                }
+                return false;
+            }
+        });
+        </script>
     </div>
 </section>
 {% endblock %}

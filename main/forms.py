@@ -17,6 +17,16 @@ class ReferralForm(forms.ModelForm):
         widget=forms.TextInput(attrs={"placeholder": "Optional — if not listed"})
     )
 
+    # Override consent_privacy to make it required
+    consent_privacy = forms.BooleanField(
+        required=True,
+        label="I agree to Geeza Break's privacy notice."
+    )
+    consent_media = forms.BooleanField(
+        required=False,
+        label="I consent to photos being taken and used for Geeza Break marketing."
+    )
+
     class Meta:
         model = Referral
         fields = [
@@ -30,7 +40,6 @@ class ReferralForm(forms.ModelForm):
             "hscp_locality","ward","neighbourhood",
             # new criteria fields
             "criteria","criteria_other",
-            "consent_privacy","consent_media",
         ]
         widgets = {
             "referrer_email": forms.EmailInput(attrs={"autocomplete": "email"}),
@@ -90,9 +99,6 @@ class ReferralForm(forms.ModelForm):
         if cleaned.get("is_rereferral") and not (cleaned.get("last_support_when") or "").strip():
             self.add_error("last_support_when", "Please tell us approximately when we last supported this family.")
 
-        if not cleaned.get("consent_privacy"):
-            self.add_error("consent_privacy", "You must accept the privacy notice to submit.")
-
         # Enforce ward restriction regardless of client-side JS
         trigger_on = any(cleaned.get(f) for f in self.RESTRICT_TRIGGER_FIELDS)
         ward_val = cleaned.get('ward')
@@ -131,7 +137,8 @@ class VolunteerInterestForm(forms.ModelForm):
     roles = forms.MultipleChoiceField(
         choices=ROLE_CHOICES,
         widget=forms.CheckboxSelectMultiple,
-        label="I’m interested in"
+        label="I’m interested in",
+        required=True
     )
     consent_contact = forms.BooleanField(
         required=True,
@@ -154,3 +161,17 @@ class VolunteerInterestForm(forms.ModelForm):
             "is_student": "I’m a student",
             "course_or_discipline": "Course / Discipline",
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance and self.instance.pk:
+            # Convert comma-separated string back to list for form display
+            if self.instance.roles:
+                self.initial['roles'] = self.instance.roles.split(',')
+
+    def clean_roles(self):
+        """Convert list of roles to comma-separated string for model storage"""
+        roles = self.cleaned_data.get('roles')
+        if roles:
+            return ','.join(roles)
+        return ''

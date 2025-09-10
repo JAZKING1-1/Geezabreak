@@ -4,7 +4,6 @@
 {% block title %}Contact Us | Geeza Break{% endblock %}
 
 {% block extra_head %}
-<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
 {% endblock %}
 
 {% block content %}
@@ -17,68 +16,99 @@
 
 <section class="container py-5 section-animate">
   <div class="row">
+    <!-- Visit Us -->
     <div class="col-md-6 mb-4">
-      <div class="card h-100">
+      <div class="card h-100 border-warning">
         <div class="card-body">
-          <h3>Visit Us</h3>
-          <p>📍 1284 Duke Street, Glasgow G31 4EB</p>
-          <div id="map" style="height: 300px;" class="mb-3"></div>
-          
+          <h3 class="card-title">Visit Us</h3>
+
+          <p class="mb-3">
+            <i class="fas fa-map-marker-alt text-primary me-2" aria-hidden="true"></i>
+            1450–1456 Gallowgate,<br>
+            Parkhead, Glasgow, G31 4ST
+          </p>
+
+          <p class="mb-2">
+            <i class="fas fa-phone text-primary me-2" aria-hidden="true"></i>
+            <a href="tel:+441415732900" class="text-decoration-none">0141 573 2900</a>
+          </p>
+
+          <p class="mb-4">
+            <i class="fas fa-envelope text-primary me-2" aria-hidden="true"></i>
+            <a href="mailto:info@geezabreak.org.uk" class="text-decoration-none">info@geezabreak.org.uk</a>
+          </p>
+
           <h4 class="mt-4">Opening Hours</h4>
-          <ul class="list-unstyled">
-            <li>Monday - Friday: 9:00 AM - 5:00 PM</li>
-            <li>Saturday - Sunday: Closed</li>
+          <ul class="list-unstyled text-muted mb-4">
+            <li>Mon–Thu: 9:00 AM – 5:00 PM</li>
+            <li>Fri: 9:00 AM – 4:00 PM</li>
+            <li>Sat–Sun: Closed</li>
           </ul>
+
+          <!-- Accessible map embed -->
+          <div class="rounded border">
+            <iframe
+              title="Map to Geeza Break, 1450–1456 Gallowgate, Glasgow"
+              width="100%" height="240" loading="lazy" style="border:0"
+              referrerpolicy="no-referrer-when-downgrade"
+              src="https://www.google.com/maps?q=1450-1456%20Gallowgate%2C%20Glasgow%20G31%204ST&output=embed">
+            </iframe>
+          </div>
         </div>
       </div>
     </div>
-    
+
+    <!-- Get in Touch -->
     <div class="col-md-6 mb-4">
-      <div class="card h-100">
+      <div class="card h-100 border-warning">
         <div class="card-body">
-          <h3>Get in Touch</h3>
-          <ul class="list-unstyled">
-            <li>📞 0141 XXX XXXX</li>
-            <li>📧 info@geezabreak.org.uk</li>
-          </ul>
-          
-          <form id="contact-form" class="mt-4">
+          <h3 class="card-title">Get in Touch</h3>
+
+          <form method="post" action="{% url 'main:contact' %}" novalidate>
+            {% csrf_token %}
+
             <div class="mb-3">
-              <label for="name" class="form-label">Name</label>
-              <input type="text" class="form-control" id="name" required>
+              <label for="name" class="form-label fw-semibold">Name *</label>
+              <input id="name" name="name" type="text" required
+                     placeholder="e.g. Emily Drummond"
+                     class="form-control">
             </div>
+
             <div class="mb-3">
-              <label for="email" class="form-label">Email</label>
-              <input type="email" class="form-control" id="email" required>
+              <label for="email" class="form-label fw-semibold">Email *</label>
+              <input id="email" name="email" type="email" required
+                     placeholder="e.g. emily@example.com"
+                     class="form-control">
             </div>
+
             <div class="mb-3">
-              <label for="message" class="form-label">Message</label>
-              <textarea class="form-control" id="message" rows="4" required></textarea>
+              <label for="phone" class="form-label fw-semibold">Phone</label>
+              <input id="phone" name="phone" type="tel"
+                     placeholder="+44 7700 900123"
+                     pattern="^\+44\s?\d{9,10}$"
+                     class="form-control">
+              <small class="text-muted">Format: +44 followed by 9–10 digits</small>
             </div>
-            <button type="submit" class="btn btn-primary">Send Message</button>
+
+            <div class="mb-3">
+              <label for="message" class="form-label fw-semibold">Message *</label>
+              <textarea id="message" name="message" required
+                        placeholder="Tell us how we can help…"
+                        class="form-control" rows="4"></textarea>
+            </div>
+
+            <button type="submit"
+                    class="btn btn-warning text-dark fw-semibold px-4 py-2">
+              Send Message
+            </button>
+
+            <p class="text-muted mt-3 small">
+              By submitting, you agree to our <a href="{% url 'main:privacy' %}" class="text-decoration-underline">Privacy Policy</a>.
+            </p>
           </form>
         </div>
       </div>
     </div>
   </div>
 </section>
-{% endblock %}
-
-{% block extra_scripts %}
-<script>
-function initMap() {
-    const geezaBreak = { lat: 55.8561, lng: -4.2289 }; // Replace with actual coordinates
-    const map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 15,
-        center: geezaBreak,
-    });
-    const marker = new google.maps.Marker({
-        position: geezaBreak,
-        map: map,
-        title: "Geeza Break"
-    });
-}
-
-document.addEventListener('DOMContentLoaded', initMap);
-</script>
 {% endblock %}

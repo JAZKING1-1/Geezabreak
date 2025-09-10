@@ -19,21 +19,5 @@
 
 /* Legacy footer styles removed (replaced with new grid footer) */
 
-/* New Footer Component */
-.gb-footer { background:#1f1f1f; color:#e6e6e6; font-size:15px; line-height:1.6; margin-top:3rem; }
-.gb-footer a { color:#e6e6e6; text-decoration:none; }
-.gb-footer a:hover,.gb-footer a:focus { text-decoration:underline; }
-.gb-footer__inner { max-width:1200px; margin:0 auto; padding:32px 16px 20px; display:grid; grid-template-columns:1.1fr 1fr 1fr; gap:40px; align-items:start; }
-.gb-footer h3 { font-size:20px; margin:0 0 14px; color:#fff; font-weight:600; }
-.gb-footer__brand { display:grid; gap:16px; }
-.gb-footer__logo { width:90px; height:auto; max-width:100%; filter:grayscale(100%); opacity:.9; }
-.gb-footer__about { list-style:none; padding:0; margin:0; }
-.gb-footer__about li { margin:2px 0; }
-.gb-footer__links { list-style:none; padding:0; margin:0; }
-.gb-footer__links li { margin:8px 0; }
-.gb-footer__contact { font-style:normal; }
-.gb-footer__bar { border-top:1px solid rgba(255,255,255,0.15); margin-top:32px; padding:14px 20px; text-align:center; color:#d0d0d0; font-size:14px; }
-@media (max-width:960px){ .gb-footer__inner { grid-template-columns:1fr; gap:24px; padding:28px 16px 16px; } .gb-footer__logo { width:70px; } }
-
 /* Forced clamp to prevent any external overrides inflating badge sizes */
 /* badges removed */
