@@ -88,19 +88,93 @@
     transform: rotate(90deg);
 }
 
-.feedback-submit {
-    background: var(--primary-color);
-    color: white;
+.feedback-form .feedback-submit {
+    display: inline-block;
+    width: 100%;                /* make it stretch across form */
+    padding: 12px 20px;
+    margin-top: 15px;
+    background-color: #007bbe;  /* Geeza Break brand blue */
+    color: #fff;                /* white text */
+    font-size: 16px;
+    font-weight: bold;
     border: none;
-    padding: 0.75rem;
-    border-radius: 4px;
+    border-radius: 8px;         /* rounded corners */
     cursor: pointer;
-    font-weight: 600;
-    transition: background-color 0.3s ease;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,123,187,0.2);
 }
 
-.feedback-submit:hover {
-    background: var(--secondary-color);
+.feedback-form .feedback-submit:hover {
+    background-color: #005a8d;  /* darker blue on hover */
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,123,187,0.3);
+}
+
+.feedback-form .feedback-submit:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0,123,187,0.2);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .feedback-form .feedback-submit {
+        padding: 14px 16px;
+        font-size: 16px; /* Prevent zoom on iOS */
+    }
+}
+
+/* Thank You Animation */
+.thank-you-animation {
+    text-align: center;
+    padding: 2rem;
+    animation: fadeInUp 0.5s ease;
+}
+
+.thank-you-content {
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.thank-you-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    animation: bounce 0.6s ease;
+}
+
+.thank-you-content h3 {
+    color: #007bbe;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.thank-you-content p {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
 }
 
 .feedback-message {
@@ -141,7 +215,5 @@
 }
 
 .dark-mode .close-feedback {
-    color: white;
-}
     color: white;
 }

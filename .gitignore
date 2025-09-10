@@ -26,6 +26,15 @@ GEEZA BREAK/venv/
 local_settings.py
 media/
 
+# Migrations (optional: ignore if you don’t want them in repo)
+# Comment this out if you *do* want to keep migration history in git
+**/migrations/*.py
+!**/migrations/__init__.py
+
+# Static files (collected via `collectstatic`)
+staticfiles/
+static/
+
 # ======================
 # Build / Packaging
 # ======================
@@ -63,6 +72,9 @@ MANIFEST
 # ======================
 # System files
 # ======================
+# macOS
+.DS_Store
+
 # Windows
 Thumbs.db
 ehthumbs.db

@@ -917,8 +917,8 @@ header.simple-warm-header p{color:#fff3e0;font-size:1.2em;margin:0;}
 /* Referral Section (applied when section.referral class present) */
 section.referral{background-color:var(--warm-amber-light);padding:30px 20px;text-align:center;border-radius:8px;margin:20px auto;max-width:800px;box-shadow:0 4px 12px rgba(0,0,0,.08);} 
 section.referral h2{font-size:1.8em;margin:0 0 15px;color:var(--warm-brown-dark);} 
-section.referral .btn-referral, .btn-referral{background:var(--warm-orange);color:#fff;border:none;padding:12px 24px;font-size:1em;border-radius:6px;font-weight:600;display:inline-block;transition:background-color .3s ease, box-shadow .25s ease;text-decoration:none;} 
-section.referral .btn-referral:hover, .btn-referral:hover{background:var(--warm-orange-hover);box-shadow:0 6px 18px rgba(0,0,0,.18);} 
+section.referral .btn-referral, .btn-referral{background:var(--gb-yellow)!important;color:#000!important;border:none;padding:12px 24px;font-size:1em;border-radius:6px;font-weight:600;display:inline-block;transition:background-color .3s ease, box-shadow .25s ease;text-decoration:none;} 
+section.referral .btn-referral:hover, .btn-referral:hover{background:var(--gb-yellow-90)!important;box-shadow:0 6px 18px rgba(0,0,0,.18);} 
 
 /* Info Section (generic warm info panel) */
 section.info{padding:30px 20px;background-color:#fff3e0;border-radius:8px;margin:20px auto;max-width:800px;text-align:center;box-shadow:0 4px 10px rgba(0,0,0,.06);} 
@@ -926,8 +926,8 @@ section.info h3{font-size:1.6em;color:var(--warm-brown);}
 section.info p{font-size:1em;color:var(--warm-brown-text);} 
 
 /* Feedback Floating Button (reuse existing trigger class) */
-.feedback-trigger, .feedback-button{position:fixed;right:20px;bottom:20px;background:var(--warm-orange);color:#fff;border:none;padding:12px 20px;border-radius:50px;font-weight:700;box-shadow:0 4px 10px rgba(0,0,0,0.2);transition:background-color .3s ease, transform .25s cubic-bezier(.2,.8,.2,1);z-index:1200;} 
-.feedback-trigger:hover, .feedback-button:hover{background:var(--warm-orange-hover);cursor:pointer;transform:translateY(-2px);} 
+.feedback-trigger, .feedback-button{position:fixed;right:20px;bottom:20px;background:var(--gb-yellow)!important;color:#000!important;border:none;padding:12px 20px;border-radius:50px;font-weight:700;box-shadow:0 4px 10px rgba(0,0,0,0.2);transition:background-color .3s ease, transform .25s cubic-bezier(.2,.8,.2,1);z-index:1200;} 
+.feedback-trigger:hover, .feedback-button:hover{background:var(--gb-yellow-90)!important;cursor:pointer;transform:translateY(-2px);} 
 .feedback-trigger:active{transform:translateY(0);} 
 
 /* Footer warm accent (only footer.warm-foot to avoid overriding existing dark footer) */
@@ -2865,4 +2865,80 @@ body.extra-support-page{background:linear-gradient(135deg, #007bbe, #99dfef) !im
     background: #fcd92b !important;
     color: #0b2330 !important;
   }
+}
+
+/* ================================
+   FEEDBACK MODAL FIXES
+   ================================ */
+
+/* Ensure modal form is scrollable and fully visible */
+.feedback-modal {
+    max-height: 90vh;          /* limit modal height */
+    overflow-y: auto;          /* scroll inside modal if too tall */
+    padding-bottom: 20px;      /* avoid cutoff at bottom */
+}
+
+/* Style the submit button consistently */
+.feedback-form button[type="submit"],
+.feedback-form input[type="submit"] {
+    display: block;
+    width: 100%;               /* span the form width */
+    padding: 12px 20px;
+    margin-top: 20px;
+    background-color: #face03; /* Geeza Break yellow */
+    color: #000;               /* black text for contrast */
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2); /* small shadow */
+}
+
+/* Hover effect */
+.feedback-form button[type="submit"]:hover,
+.feedback-form input[type="submit"]:hover {
+    background-color: #e0b800; /* darker yellow */
+    transform: translateY(-2px);
+}
+
+/* Ensure form inputs are spaced well */
+.feedback-form input,
+.feedback-form select,
+.feedback-form textarea {
+    margin-bottom: 12px;
+}
+
+/* Also apply similar styling to volunteer form for consistency */
+.interest-form button[type="submit"],
+.interest-form input[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 12px 20px;
+    margin-top: 20px;
+    background-color: #face03; /* Geeza Break yellow */
+    color: #000;               /* black text for contrast */
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+}
+
+.interest-form button[type="submit"]:hover,
+.interest-form input[type="submit"]:hover {
+    background-color: #e0b800; /* darker yellow */
+    transform: translateY(-2px);
+}
+
+/* Ensure volunteer form is also scrollable if needed */
+.form-section {
+    max-height: 90vh;
+    overflow-y: auto;
+    padding-bottom: 20px;
 }
