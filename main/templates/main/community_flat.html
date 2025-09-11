@@ -1,110 +1,87 @@
 {% extends "main/base.html" %}
-{% block title %}Community Flat | Geeza Break{% endblock %}
+{% load static %}
 
 {% block content %}
-<!-- Page background -->
-<div class="min-h-screen"
-     style="background: radial-gradient(1200px 600px at 20% -10%, #99dfef 0%, #ffffff 50%), linear-gradient(180deg, #eaf7ff 0%, #ffffff 100%);">
+<div class="max-w-5xl mx-auto px-6 py-10 space-y-12">
 
-  <!-- Hero -->
-  <section class="max-w-6xl mx-auto px-4 pt-10">
-    <div class="bg-white/80 backdrop-blur rounded-3xl shadow-xl border border-yellow-200 overflow-hidden">
-      <div class="p-8 md:p-10"
-           style="background: linear-gradient(135deg, #99dfef 0%, #007bbe 60%, #99dfef 100%); color:#000;">
-        <h1 class="text-3xl md:text-4xl font-extrabold text-white drop-shadow">Geeza Break Community Flat</h1>
-        <p class="mt-2 text-white/90">A warm, fully equipped space for respite, learning, and play — exclusively for families we support.</p>
+  <!-- Page Header -->
+  <section class="text-center">
+    <h1 class="text-4xl font-bold text-gray-900 mb-4">Geeza Break Community Flat</h1>
+    <p class="text-lg text-gray-700 max-w-3xl mx-auto">
+      The <strong>Geeza Break Community Flat</strong> is a welcoming and fully equipped space,
+      designed to support families by offering a safe, homely environment. It includes a
+      <strong>kitchen</strong> and a <strong>toy room</strong>, making it perfect for
+      <em>respite care, cooking, arts & crafts, board games, and family support services</em>.
+    </p>
+  </section>
+
+  <!-- Video Section -->
+  <section>
+    <h2 class="text-2xl font-semibold mb-4">🎥 Sensory Room Tour</h2>
+    <div class="video-container">
+      <video autoplay loop muted playsinline controls>
+        <source src="{% static 'images/Sensory room.MP4' %}" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </section>
+
+  <!-- Additional Uses -->
+  <section>
+    <h2 class="text-2xl font-semibold mb-3">✨ How the Community Flat is Used</h2>
+    <ul class="list-disc list-inside space-y-2 text-gray-700">
+      <li><strong>Cooking sessions</strong> – learn, cook, and share meals together.</li>
+      <li><strong>Arts & Crafts</strong> – creative activities for children and families.</li>
+      <li><strong>Board Games</strong> – fun, interactive sessions that encourage bonding.</li>
+      <li><strong>Family Support Services</strong> – safe and supportive environment for families.</li>
+      <li><strong>Contact Visits</strong> – a nurturing space for children in care or those being reunited with family.</li>
+    </ul>
+  </section>
+
+  <!-- Sensory Room Benefits -->
+  <section>
+    <h2 class="text-2xl font-semibold mb-6">🌈 The Sensory Room</h2>
+    <p class="text-gray-700 mb-6">
+      Our Community Flat features a dedicated <strong>Sensory Room</strong> that supports the
+      health and well-being of both children and parents. This calming and interactive space
+      provides opportunities for comfort, play, and personal growth.
+    </p>
+
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="bg-yellow-100 p-6 rounded-2xl shadow">
+        <h3 class="font-bold text-xl mb-2">🧘 De-stress</h3>
+        <p>Helps calm overstimulated minds, providing comfort and refocusing attention.</p>
       </div>
-
-      <div class="p-6 md:p-8 text-black leading-relaxed">
-        <p class="mb-4">
-          <strong>Exclusive to Geeza Break.</strong> Our community flat is a fully equipped, family-friendly space with a
-          <strong>kitchen</strong> and dedicated <strong>toy/sensory room</strong>. It's used to support
-          <em>respites, cooking, arts & crafts, board games, and Family Support services</em>.
-        </p>
-        <p>
-          In addition, the flat is also used to support <strong>contact visits</strong> for children who are in care or are
-          being <strong>rehabilitated within the family home</strong>.
-        </p>
+      <div class="bg-sky-100 p-6 rounded-2xl shadow">
+        <h3 class="font-bold text-xl mb-2">👀 Sensory Stimulation</h3>
+        <p>Encourages exploration and supports understanding of the world through senses.</p>
+      </div>
+      <div class="bg-lime-100 p-6 rounded-2xl shadow">
+        <h3 class="font-bold text-xl mb-2">🎨 Learning Through Play</h3>
+        <p>Montessori-inspired activities build problem-solving, creativity, and brain connections.</p>
+      </div>
+      <div class="bg-blue-100 p-6 rounded-2xl shadow">
+        <h3 class="font-bold text-xl mb-2">⚖️ Balance & Movement</h3>
+        <p>Improves motor skills, coordination, and spatial awareness.</p>
+      </div>
+      <div class="bg-yellow-100 p-6 rounded-2xl shadow">
+        <h3 class="font-bold text-xl mb-2">🗣️ Communication Skills</h3>
+        <p>Encourages verbal and non-verbal interaction, especially supportive for children with autism.</p>
+      </div>
+      <div class="bg-sky-100 p-6 rounded-2xl shadow">
+        <h3 class="font-bold text-xl mb-2">🤝 Socialisation</h3>
+        <p>Provides a safe and calm environment for building relationships and empathy.</p>
       </div>
     </div>
   </section>
 
-  <!-- Quick Feature Cards -->
-  <section class="max-w-6xl mx-auto px-4 py-8">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div class="rounded-2xl p-6 shadow-lg" style="background:#a6ce39; color:#000;">
-        <h3 class="text-xl font-extrabold mb-2">Fully Equipped</h3>
-        <p>Kitchen for cooking sessions, plus a toy/sensory room designed for safe, engaging play.</p>
-      </div>
-      <div class="rounded-2xl p-6 shadow-lg" style="background:#a6ce39; color:#000;">
-        <h3 class="text-xl font-extrabold mb-2">Family-Centred</h3>
-        <p>Supports respites, arts & crafts, board games, and our Family Support services.</p>
-      </div>
-      <div class="rounded-2xl p-6 shadow-lg" style="background:#a6ce39; color:#000;">
-        <h3 class="text-xl font-extrabold mb-2">Contact Visits</h3>
-        <p>Used to facilitate positive contact for children in care or returning to the family home.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Image Gallery placeholders -->
-  <section class="max-w-6xl mx-auto px-4 pb-8">
-    <h2 class="text-2xl md:text-3xl font-extrabold text-blue-700 mb-4">Take a Look Inside</h2>
-    <p class="text-gray-700 mb-6">We've kept space for photos of the flat. Replace the blocks below with your images when ready.</p>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-      <!-- Replace each placeholder with: <img src="{% static 'path/to/image.jpg' %}" alt="Community Flat kitchen" class="w-full h-full object-cover rounded-2xl shadow-lg"> -->
-      <div class="aspect-[4/3] rounded-2xl bg-white/70 border border-yellow-200 shadow-lg flex items-center justify-center">
-        <span class="text-sm text-gray-600">Image Placeholder — Kitchen</span>
-      </div>
-      <div class="aspect-[4/3] rounded-2xl bg-white/70 border border-yellow-200 shadow-lg flex items-center justify-center">
-        <span class="text-sm text-gray-600">Image Placeholder — Toy/Sensory Room</span>
-      </div>
-      <div class="aspect-[4/3] rounded-2xl bg-white/70 border border-yellow-200 shadow-lg flex items-center justify-center">
-        <span class="text-sm text-gray-600">Image Placeholder — Family Area</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- Benefits (exact text, structured) -->
-  <section class="max-w-6xl mx-auto px-4 pb-14">
-    <h2 class="text-2xl md:text-3xl font-extrabold text-blue-700 mb-6">Why a Sensory Environment Helps</h2>
-
-    <div class="space-y-6">
-      <div class="rounded-2xl p-6 shadow-lg bg-white/80 border border-yellow-200">
-        <h3 class="text-xl font-bold mb-2">De-stress</h3>
-        <p>Engaging sensory processes can help calm an overstimulated mind by providing a moment of comfort and calm where the mind is absorbing and refocusing attention. Additionally, a sensory environment can help those withdrawn feel more comfortable in their surroundings allowing for positive interaction.</p>
-      </div>
-
-      <div class="rounded-2xl p-6 shadow-lg bg-white/80 border border-yellow-200">
-        <h3 class="text-xl font-bold mb-2">Sensory stimulation</h3>
-        <p>Encouraging exploration of their environment can help individuals have a better understanding of the world around them and their ability to interact and react within it.</p>
-      </div>
-
-      <div class="rounded-2xl p-6 shadow-lg bg-white/80 border border-yellow-200">
-        <h3 class="text-xl font-bold mb-2">Enhance learning through play</h3>
-        <p>Using a Montessori approach allows for self-directed activity, hands-on learning, and collaborative play. Sensory play helps children develop their senses, encourages problem-solving, and helps build nerve connections within the brain. Engaging different areas of the brain helps children absorb and retain more information.</p>
-      </div>
-
-      <div class="rounded-2xl p-6 shadow-lg bg-white/80 border border-yellow-200">
-        <h3 class="text-xl font-bold mb-2">Improve balance, movement and spatial orientation</h3>
-        <p>Use of sensory rooms helps develop visual processing, fine and gross motor skills, and facilitates day-to-day living. It is also highly beneficial to individuals with physical difficulties.</p>
-      </div>
-
-      <div class="rounded-2xl p-6 shadow-lg bg-white/80 border border-yellow-200">
-        <h3 class="text-xl font-bold mb-2">Develop communication skills</h3>
-        <p>For individuals with autism, verbal and non-verbal communication can be a challenge. Interactive sensory areas can help withdrawn individuals to engage. Focusing on the use of sensory toys with sound can also help promote vocalisation.</p>
-      </div>
-
-      <div class="rounded-2xl p-6 shadow-lg bg-white/80 border border-yellow-200">
-        <h3 class="text-xl font-bold mb-2">Improve focus</h3>
-        <p>When individuals are over-stimulated (common in ADHD), sensory equipment helps draw attention back to the task at hand. This can help people cope in environments where calm and concentration are key.</p>
-      </div>
-
-      <div class="rounded-2xl p-6 shadow-lg bg-white/80 border border-yellow-200">
-        <h3 class="text-xl font-bold mb-2">Promote socialisation</h3>
-        <p>Using a sensory room with others in a calm and stress-free environment helps develop social skills among peers and builds understanding of how actions affect others.</p>
-      </div>
+  <!-- Image Gallery -->
+  <section>
+    <h2 class="text-2xl font-semibold mb-4">📸 Community Flat Gallery</h2>
+    <div class="gallery-grid">
+      <img src="{% static 'images/1000017232.JPG' %}" alt="Community Flat Photo 1">
+      <img src="{% static 'images/1000017233.JPG' %}" alt="Community Flat Photo 2">
+      <img src="{% static 'images/1000017234.JPG' %}" alt="Community Flat Photo 3">
     </div>
   </section>
 
