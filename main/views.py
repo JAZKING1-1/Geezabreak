@@ -18,10 +18,17 @@ from core.emails import send_form_email
 logger = logging.getLogger(__name__)
 
 def home(request):
+    logger = logging.getLogger(__name__)
+    logger.info("Home view called")
     if not request.session.get('visited_home'):
         request.session['visited_home'] = True
         request.session.save()
-    comments = Comment.objects.filter(approved=True).order_by('-created_at')[:10]
+    try:
+        comments = Comment.objects.filter(approved=True).order_by('-created_at')[:10]
+        logger.info(f"Comments: {comments}")
+    except Exception as e:
+        logger.error(f"Error getting comments: {e}")
+        comments = []
     # Provide default impact images for the story wall if view doesn't pass them
     available = [
         'images/1.jpg', 'images/2.jpg', 'images/3.jpg', 'images/4.jpg',
