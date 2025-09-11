@@ -8,7 +8,7 @@ from django.db import transaction
 from django.core.mail import EmailMessage, send_mail
 from django.conf import settings
 from django.views import View
-from .models_comment import Comment
+from .models import Comment
 import logging
 from django.templatetags.static import static
 from django.contrib import messages
