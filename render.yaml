@@ -3,7 +3,7 @@ services:
     name: geezabreak
     env: python
     pythonVersion: "3.11"
-    buildCommand: "./manage.py collectstatic --noinput"
+    buildCommand: "python manage.py migrate && python manage.py collectstatic --noinput"
     startCommand: "gunicorn geezabreak.wsgi:application"
     envVars:
       - key: DJANGO_SECRET_KEY

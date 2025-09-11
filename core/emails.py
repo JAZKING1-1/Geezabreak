@@ -2,7 +2,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-def send_form_email(subject: str, message: str, recipient: str):
+def send_form_email(subject, template_name, context):
     """
     Temporary fallback email sender for production while Mailjet is disabled.
     Instead of sending a real email, this will log the message. Your forms
@@ -10,9 +10,9 @@ def send_form_email(subject: str, message: str, recipient: str):
     """
     log_message = (
         "\n--- FAKE EMAIL SEND ---\n"
-        f"To: {recipient}\n"
         f"Subject: {subject}\n"
-        f"Message:\n{message}\n"
+        f"Template: {template_name}\n"
+        f"Context: {context}\n"
         "------------------------"
     )
     logger.info(log_message)

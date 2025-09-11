@@ -1,0 +1,37 @@
+/* Care Inspectorate Logo Placeholder */
+.care-inspectorate {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  margin-top: 1rem;
+  padding: 8px 16px;
+  background: white;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  text-decoration: none;
+  color: #333;
+  width: fit-content;
+}
+
+.care-inspectorate::before {
+  content: '';
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+  background-color: #20b4ef;
+  border-radius: 50%;
+}
+
+.care-inspectorate::after {
+  content: 'REGISTERED SERVICE INFO';
+  font-size: 12px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Replace the logo placeholder with actual image when available */
+.care-inspectorate img {
+  max-height: 40px;
+  width: auto;
+}
