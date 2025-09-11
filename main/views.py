@@ -65,7 +65,13 @@ def home(request):
     })
 
 def landing(request):
-    return render(request, 'main/landing.html')
+    logger = logging.getLogger(__name__)
+    logger.info("Landing view called")
+    try:
+        return render(request, 'main/landing.html')
+    except Exception as e:
+        logger.error(f"Error in landing view: {e}")
+        raise
 
 def about(request):
     from .models import TeamMember
