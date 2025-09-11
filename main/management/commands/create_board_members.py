@@ -7,6 +7,17 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         team_members_data = [
             {
+                'name': 'Derek Sinclair',
+                'role_title': 'Chairperson',
+                'joined_date': '2009',
+                'reason_for_joining': 'I wanted to support the local community and be involved in a great grassroots organisation that provides much needed practical support for children and families',
+                'role_description': 'working alongside the CEO, my fellow Trustees and the Finance Officer to oversee the strategy, direction, and good governance of the organisation. Promoting the organisation and telling the impact of the services that support local people in the local northeast communities. Supporting fundraising activities.',
+                'favorite_aspect': 'the variety involved in being part of such a long-standing organisation that really puts children, young people, and families at the heart of its services',
+                'fun_fact': 'Go to the football and spending quality time with my family',
+                'image_path': 'images/l_e51z28ys_img_3207.jpeg',
+                'order': 1
+            },
+            {
                 'name': 'Mark Mulholland',
                 'role_title': 'Treasurer',
                 'joined_date': '2011',  # 15 years since 2011
@@ -15,7 +26,7 @@ class Command(BaseCommand):
                 'favorite_aspect': 'the variety involved in being part of such a long-standing organisation that really puts children, young people, and families at the heart of its services',
                 'fun_fact': 'Go to the football and spending quality time with my family',
                 'image_path': 'images/staff/Mark_Mulholland_Treasurer.jpg',
-                'order': 1
+                'order': 2
             },
             {
                 'name': 'Elaine Mitchell',
@@ -26,7 +37,7 @@ class Command(BaseCommand):
                 'favorite_aspect': 'Seeing the tangible impact our services have on families and watching children thrive with the support we provide.',
                 'fun_fact': 'I love gardening and have converted my entire back garden into a vegetable patch.',
                 'image_path': 'images/staff/Elaine_Mitchell_Trustee.jpeg',
-                'order': 2
+                'order': 3
             },
             {
                 'name': 'Nancy Ross',
@@ -36,7 +47,7 @@ class Command(BaseCommand):
                 'role_description': 'I provide guidance on HR policies, staff development, and ensuring we create a supportive environment for our team so they can best serve our families.',
                 'favorite_aspect': 'The collaborative atmosphere where everyone shares ideas freely and works together to improve our services.',
                 'fun_fact': 'I\'m a keen baker and often bring my latest experiments to meetings.',
-                'order': 3
+                'order': 4
             }
         ]
 
