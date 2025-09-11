@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: geezabreak
+    env: python
+    buildCommand: "./manage.py collectstatic --noinput"
+    startCommand: "gunicorn geezabreak.wsgi:application"
+    envVars:
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DJANGO_ALLOWED_HOSTS
+        value: "geezabreak.onrender.com"
+      - key: DEBUG
+        value: "False"
+
+databases:
+  - name: geezabreak-db
+    plan: free
