@@ -2,6 +2,7 @@ services:
   - type: web
     name: geezabreak
     env: python
+    pythonVersion: "3.11"
     buildCommand: "./manage.py collectstatic --noinput"
     startCommand: "gunicorn geezabreak.wsgi:application"
     envVars:
