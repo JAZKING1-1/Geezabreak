@@ -32,8 +32,8 @@ media/
 !**/migrations/__init__.py
 
 # Static files (collected via `collectstatic`)
-staticfiles/
-static/
+/staticfiles/   # collected static files (don’t commit)
+/*.log
 
 # ======================
 # Build / Packaging
@@ -84,3 +84,8 @@ Desktop.ini
 *.bak
 *.db
 .env
+# Environment & local DB
+.env
+db.sqlite3
+*.sqlite3
+ngrok.exe

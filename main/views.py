@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from .models import Feedback, Referral, Criterion, VolunteerInterest
 from .forms import ReferralForm, ReferralChildFormSet
 from django.urls import reverse_lazy
@@ -12,8 +12,7 @@ from .models_comment import Comment
 import logging
 from django.templatetags.static import static
 from django.contrib import messages
-from .forms import VolunteerInterestForm
-from .models import ROLE_CHOICES
+from core.emails import send_form_email
 
 # Set up logging for email issues
 logger = logging.getLogger(__name__)
@@ -134,6 +133,9 @@ def about(request):
     return render(request, 'main/about.html', {
         'team_members': enriched,
     })
+
+def community_flat(request):
+    return render(request, "main/community_flat.html")
 
 def services(request):
     return render(request, 'main/services.html')
@@ -352,52 +354,31 @@ def fun_zone(request):
     return render(request, 'main/fun_zone.html', {'games': games})
 
 def contact(request):
-    return render(request, 'main/contact.html')
-
-def impact(request):
-    return render(request, 'main/impact.html')
-
-def news(request):
-    return render(request, 'main/news.html')
-
-def fundraise(request):
-    return render(request, 'main/fundraise.html')
-
-def partners(request):
-    return render(request, 'main/partners.html')
-
-def donate(request):
-    return render(request, 'main/donate.html')
-
-def news(request):
-    return render(request, 'main/news.html')
-
-def impact(request):
-    return render(request, 'main/impact.html')
-
-def get_help(request):
-    return render(request, 'main/get_help.html')
-
-def volunteer(request):
     if request.method == "POST":
-        form = VolunteerInterestForm(request.POST)
-        if form.is_valid():
-            entry = form.save(commit=False)
-            # store roles as comma-separated keys
-            entry.roles = ",".join(form.cleaned_data["roles"])
-            entry.save()
-            messages.success(request, "Thanks! We’ve received your interest and will be in touch.")
-            return redirect("volunteer")
-        else:
-            messages.error(request, "Please fix the errors below.")
-    else:
-        form = VolunteerInterestForm()
+        name = request.POST.get("name","").strip()
+        email = request.POST.get("email","").strip()
+        phone = request.POST.get("phone","").strip()
+        message = request.POST.get("message","").strip()
 
-    role_map = dict(ROLE_CHOICES)
-    return render(request, "main/volunteer.html", {
-        "form": form,
-        "role_map": role_map,
-    })
+        if not (name and email and message):
+            messages.error(request, "Please fill in your name, email, and message.")
+            return redirect("main:contact")
+
+        subject = f"Website Contact: {name}"
+        body = (
+            f"New message from the Geeza Break website\n\n"
+            f"Name: {name}\nEmail: {email}\nPhone: {phone}\n\n"
+            f"Message:\n{message}\n"
+        )
+
+        # Send to both inboxes you monitor
+        recipients = ["info@geezabreak.org.uk", "ds16022004@gmail.com"]  # adjust as needed
+        send_mail(subject, body, settings.DEFAULT_FROM_EMAIL, recipients, fail_silently=False)
+
+        messages.success(request, "Thanks for reaching out — we'll be in touch soon.")
+        return redirect("main:contact")
+
+    return render(request, "main/contact.html")
 
 def email_status(request):
     """
@@ -667,6 +648,54 @@ def donate(request):
     """Display donate page"""
     return render(request, 'main/donate.html')
 
-def community_flat(request):
-    """Display community flat page"""
-    return render(request, 'main/community_flat.html')
+def contact(request):
+    if request.method == "POST":
+        name = request.POST.get("name","").strip()
+        email = request.POST.get("email","").strip()
+        phone = request.POST.get("phone","").strip()
+        message = request.POST.get("message","").strip()
+
+        if not (name and email and message):
+            messages.error(request, "Please fill in your name, email, and message.")
+            return redirect("main:contact")
+
+        subject = f"Website Contact: {name}"
+        body = (
+            f"New message from the Geeza Break website\n\n"
+            f"Name: {name}\nEmail: {email}\nPhone: {phone}\n\n"
+            f"Message:\n{message}\n"
+        )
+
+        # Send to both inboxes you monitor
+        recipients = ["info@geezabreak.org.uk", "ds16022004@gmail.com"]  # adjust as needed
+        send_mail(subject, body, settings.DEFAULT_FROM_EMAIL, recipients, fail_silently=False)
+
+        messages.success(request, "Thanks for reaching out — we'll be in touch soon.")
+        return redirect("main:contact")
+
+    return render(request, "main/contact.html")
+
+def test_mailjet(request):
+    """
+    A simple test endpoint to send a Mailjet email and verify everything works.
+    Visiting /test-mailjet/ in the browser should trigger this email.
+    """
+    try:
+        # Build dummy context data for template rendering
+        dummy_ref = {
+            "child_name": "Test Child",
+            "parent_name": "Test Parent",
+            "email": "test@example.com",
+            "phone": "0000",
+            "notes": "This is a test email triggered from the test_mailjet view.",
+        }
+
+        # Call the Mailjet email helper
+        send_form_email(
+            subject="✅ Test Email from Geeza Break (Mailjet Integration)",
+            template_name="emails/referral.html",  # reuse referral template for now
+            context={"ref": dummy_ref},
+        )
+        return HttpResponse("✅ Mailjet test email sent successfully. Check your Outlook inbox.")
+    except Exception as e:
+        return HttpResponse(f"❌ Mailjet test failed: {e}")
