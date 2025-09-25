@@ -93,13 +93,7 @@
     <div class="container">
     <h2 class="text-center mb-5 fade-in">Board Members</h2>
         <div class="row">
-            <!-- Gillian Middleton moved to Geezabreak Staff section -->
-
-            {# David Greenwood moved to Geezabreak Staff section below #}
-
-            {# Placeholder for former 'Jane Wilson' now 'Nancy Ross' moved to staff section - if she was a board member remove from here #}
-
-            <!-- Derek Sinclair - Chairperson -->
+            <!-- Derek Sinclair -->
             <div class="col-lg-4 col-md-6 mb-4">
                 <div class="card team-card h-100">
                     <div class="team-image-wrapper">
@@ -108,7 +102,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Derek Sinclair</h5>
                         <h6 class="card-subtitle mb-2 text-muted">Chairperson</h6>
-                        <p><strong>2009</strong></p>
+                        <p><strong>Trustee since 2009</strong></p>
                         <p><strong>Why I got involved:</strong> I wanted to support the local community and be involved in a great grassroots organisation that provides much needed practical support for children and families</p>
                         <p><strong>My role:</strong> working alongside the CEO, my fellow Trustees and the Finance Officer to oversee the strategy, direction, and good governance of the organisation. Promoting the organisation and telling the impact of the services that support local people in the local northeast communities. Supporting fundraising activities.</p>
                         <p><strong>What I like best:</strong> the variety involved in being part of such a long-standing organisation that really puts children, young people, and families at the heart of its services</p>
@@ -117,51 +111,60 @@
                 </div>
             </div>
 
-            {% for member in team_members %}
+            <!-- Nancy Ross -->
             <div class="col-lg-4 col-md-6 mb-4">
                 <div class="card team-card h-100">
-                    {% if member.image_path %}
                     <div class="team-image-wrapper">
-                        <img src="{% static member.image_path %}" alt="{{ member.name }}">
+                        <img src="{% static 'images/staff/1t.jpg' %}" alt="Nancy Ross">
                     </div>
-                    {% elif member.image %}
-                    <div class="team-image-wrapper">
-                        <img src="{{ member.image.url }}" alt="{{ member.name }}">
-                    </div>
-                    {% else %}
-                    <div class="team-image-placeholder">
-                        <span class="display-4">{{ member.name|slice:":1" }}</span>
-                    </div>
-                    {% endif %}
-
                     <div class="card-body">
-                        <h5 class="card-title">{{ member.display_name }}</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">{{ member.role_title }}</h6>
-                        <p><strong>{{ member.tenure_display }}</strong></p>
-
-                        {% if member.reason_for_joining %}
-                        <p><strong>Why I got involved:</strong> {{ member.reason_for_joining }}</p>
-                        {% endif %}
-
-                        {% if member.role_description %}
-                        <p><strong>My role:</strong> {{ member.role_description }}</p>
-                        {% endif %}
-
-                        {% if member.favorite_aspect %}
-                        <p><strong>What I like best:</strong> {{ member.favorite_aspect }}</p>
-                        {% endif %}
-
-                        {% if member.fun_fact %}
-                        <p><strong>For a break:</strong> {{ member.fun_fact }}</p>
-                        {% endif %}
+                        <h5 class="card-title">Nancy Ross</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Trustee</h6>
+                        <p><strong>Board member for 18 months</strong></p>
+                        <p>Geeza Break is a unique charity working with young people and families to facilitate change and empower them to reach their full potential. A small charity with a huge heart for the community.</p>
+                        <p>I have worked with young people and families all my life. I was in teaching at various levels for 40 years working in areas of deprivation. I was blessed over the years to see young people transformed into amazing adults.</p>
+                        <p>I was a trustee on the UK board for a Kenyan charity. I ran skills camps in Kenya for the young people and staff. Witnessing so many success stories♥️. Young people with a future!</p>
+                        <p>I feel a real love for the east end community through the Charter, my church, and being part of this charity. I truly feel working together we can make a difference.</p>
+                        <p><strong>For a break:</strong> My fun times are with family and friends... 5 granddogs and 7 grandchildren. Doing lots of activities that certainly challenge and keep me fit... ish😂</p>
                     </div>
                 </div>
             </div>
-            {% empty %}
-            <div class="col-12 text-center">
-                <p>Our team member profiles are coming soon!</p>
+
+            <!-- Mark Mulholland -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card team-card h-100">
+                    <div class="team-image-wrapper">
+                        <img src="{% static 'images/staff/Mark_Mulholland_Treasurer.jpg' %}" alt="Mark Mulholland">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Mark Mulholland</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Treasurer</h6>
+                        <p><strong>Treasurer for nearly 15 years</strong></p>
+                        <p><strong>My role:</strong> I work closely with the CEO and Finance officer, reviewing budgets, cash flows and the up-to-date funding position of the charity. I also liaise with the auditors and ensure that the annual accounts properly reflect the financial position of the charity. I also work with the other Trustees, explaining the numbers at Board meetings and highlighting any financial matters that will allow the board to make decisions as a group.</p>
+                        <p><strong>What I like best:</strong> Having adopted two children nearly 25 years ago, I understood the challenges of bringing up a family and Geeza Break, naturally appealed to me. I enjoy working with numbers, and the fundraising team, to ensure the charity continues to thrive and prosper. I had the privilege of attending a recent Christmas Party with my Granddaughter and it was wonderful to see all of the children and their families having such great time and made the teams efforts seem so worthwhile.</p>
+                        <p><strong>For a break:</strong> I collect Lego and have a large collection. I find building models helps me relax and destress.</p>
+                    </div>
+                </div>
             </div>
-            {% endfor %}
+
+            <!-- Elaine Mitchell -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card team-card h-100">
+                    <div class="team-image-wrapper">
+                        <img src="{% static 'images/staff/Elaine_Mitchell_Trustee.jpeg' %}" alt="Elaine Mitchell">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Elaine Mitchell</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Trustee</h6>
+                        <p><strong>Trustee for 6 years</strong></p>
+                        <p>I was born in Parkhead and, although I moved away from the area many years ago, I am a member of Parkhead Congregational Church.</p>
+                        <p>This is where I first heard of the amazing work Geeza Break does with local families and offered the support of our church. Previously, I was involved with a charity helping children in foreign countries but, during Covid, I realised there were so many families needing support in Glasgow and, especially in the east end.</p>
+                        <p><strong>My role:</strong> to attend regular Board meetings, discuss all charity business, and to support the CEO and staff in any way possible.</p>
+                        <p><strong>What I like best:</strong> One of my favourite tasks is to help organise the Easter and Christmas parties for our families. It's a great opportunity to engage with service users, support staff, and have a fun day.</p>
+                        <p><strong>For a break:</strong> When I have free time, you will find me supporting Scotland at rugby matches or hand making craft items with my family, to raise funds for Geeza Break.</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -310,7 +313,16 @@
             <div class="col-lg-4 col-md-6 mb-4">
                 <div class="card team-card h-100">
                     <div class="team-image-wrapper">
-                        <img src="{% static 'images/IMG_4212.jpeg' %}" alt="Jack Anderson">
+                        <div class="abstract-avatar" aria-hidden="true">
+                            <!-- simple abstract human SVG -->
+                            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Avatar">
+                                <g fill="none" fill-rule="evenodd">
+                                    <circle cx="32" cy="20" r="12" fill="#20b4ef" />
+                                    <path d="M8 56c0-13.255 10.745-24 24-24s24 10.745 24 24" fill="#0275e2" />
+                                    <circle cx="32" cy="20" r="6" fill="#fff" opacity="0.08" />
+                                </g>
+                            </svg>
+                        </div>
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">Jack Anderson</h5>
@@ -361,48 +373,6 @@
                         <p>Provide overnight respite care in my home for children under 4, including dinner, playtime, bathtime and bedtime stories. Carers sometimes meet so children can play together.</p>
                         <p><strong>What I like best:</strong> Helping families, building trust with parents and seeing children thrive.</p>
                         <p><strong>For a break:</strong> I enjoy travelling and exploring new experiences — heading to Italy soon!</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Patty Nelson -->
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card team-card h-100">
-                    <div class="team-image-wrapper">
-                        <img src="{% static 'images/IMG_1761.jpg' %}" alt="Patty Nelson">
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">Patty Nelson</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Young Persons Support Worker</h6>
-                        <p><strong>13 years</strong></p>
-                        <p>Working with young people, listening and supporting them, following a planned programme including group work and activity sessions.</p>
-                        <p><strong>What I like best:</strong> It's local for me, and I get to meet loads of young people, I see the change in the young people at the end of the programme, good staff team.</p>
-                        <p><strong>For a break:</strong> Relax or do something Arty.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Jan McGinn -->
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card team-card h-100">
-                    <div class="team-image-wrapper">
-                        <div class="abstract-avatar" aria-hidden="true">
-                            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Avatar">
-                                <g fill="none" fill-rule="evenodd">
-                                    <circle cx="32" cy="20" r="12" fill="#20b4ef" />
-                                    <path d="M8 56c0-13.255 10.745-24 24-24s24 10.745 24 24" fill="#0275e2" />
-                                    <circle cx="32" cy="20" r="6" fill="#fff" opacity="0.08" />
-                                </g>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">Jan McGinn</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Overnight Respite Foster Carer</h6>
-                        <p><strong>24–25 years</strong></p>
-                        <p>I take children into my home and provide overnight care, make them feel part of my home.</p>
-                        <p><strong>What I like best:</strong> I like that I am able to give the parents/grandparents/guardian a well deserved break even if its just to recharge.</p>
-                        <p><strong>For a break:</strong> I really enjoy aquafit. I like to craft esp lego :)</p>
                     </div>
                 </div>
             </div>

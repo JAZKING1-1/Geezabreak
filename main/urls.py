@@ -28,6 +28,7 @@ urlpatterns = [
     path('privacy-policy/', views.privacy_policy, name='privacy'),
     # Email testing and monitoring routes
     path('test-email/', views.test_email, name='test_email'),
+    path('test-referral-email/', views.test_referral_email, name='test_referral_email'),
     path('email-status/', views.email_status, name='email_status'),
     path('resend-email/<int:referral_id>/', views.resend_email, name='resend_email'),
     path('community-flat/', views.community_flat, name='community_flat'),

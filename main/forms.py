@@ -60,6 +60,9 @@ class ReferralForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        # Set default city if not provided
+        if not self.data and not self.initial.get('city'):
+            self.initial['city'] = 'Glasgow'
         # If bound and any trigger service selected then shrink ward choices
         if self.is_bound:
             data = self.data
@@ -83,6 +86,8 @@ class ReferralForm(forms.ModelForm):
 
     def clean(self):
         cleaned = super().clean()
+        print(f"DEBUG: Form clean() called with cleaned_data keys: {list(cleaned.keys())}")
+        
         services = [
             cleaned.get("srv_family_support"),
             cleaned.get("srv_respite_sitting"),
@@ -90,20 +95,26 @@ class ReferralForm(forms.ModelForm):
             cleaned.get("srv_geezachance"),
             cleaned.get("srv_kinship_care"),
         ]
+        print(f"DEBUG: Services selected: {services}")
         if not any(services):
+            print("DEBUG: No services selected - raising validation error")
             raise forms.ValidationError("Please select at least one service requested.")
 
         if cleaned.get("interpreter_required") and not (cleaned.get("preferred_language") or "").strip():
+            print("DEBUG: Interpreter required but no preferred language - adding error")
             self.add_error("preferred_language", "Please tell us the preferred language.")
 
         if cleaned.get("is_rereferral") and not (cleaned.get("last_support_when") or "").strip():
+            print("DEBUG: Is rereferral but no last support when - adding error")
             self.add_error("last_support_when", "Please tell us approximately when we last supported this family.")
 
         # Enforce ward restriction regardless of client-side JS
         trigger_on = any(cleaned.get(f) for f in self.RESTRICT_TRIGGER_FIELDS)
         ward_val = cleaned.get('ward')
         if trigger_on and ward_val and ward_val not in self.RESTRICTED_WARD_IDS:
+            print(f"DEBUG: Ward restriction violated - ward {ward_val} not in restricted wards")
             self.add_error('ward', "Selected ward is not available for chosen service(s).")
+        print(f"DEBUG: Form clean() completed, errors: {self.errors}")
         return cleaned
         
 

@@ -30,7 +30,7 @@
     </div>
     {% endif %}
     
-    <form id="referral-form" method="post" novalidate aria-describedby="form-help">
+  <form id="referral-form" method="post" novalidate aria-describedby="form-help" action="{% url 'main:referral' %}" data-client-validate="true">
       {% csrf_token %}
       <p id="form-help" class="visually-hidden">All fields have clear labels and errors will appear below each input.</p>
       
@@ -330,56 +330,19 @@
     }
   })();
 
-  // Basic form validation before submission
-  document.getElementById('referral-form').addEventListener('submit', function(e) {
-    const requiredFields = [
-      'id_referrer_name',
-      'id_referrer_email', 
-      'id_primary_carer_name',
-      'id_address_line1',
-      'id_city',
-      'id_postcode',
-      'id_hscp_locality',
-      'id_ward',
-      'id_consent_privacy'
-    ];
-
-    let hasErrors = false;
-    let firstErrorField = null;
-
-    requiredFields.forEach(fieldId => {
-      const field = document.getElementById(fieldId);
-      if (field) {
-        // Check if field is empty
-        let isEmpty = false;
-        if (field.type === 'checkbox') {
-          isEmpty = !field.checked;
-        } else {
-          isEmpty = !field.value.trim();
-        }
-
-        if (isEmpty) {
-          field.style.borderColor = 'red';
-          hasErrors = true;
-          if (!firstErrorField) {
-            firstErrorField = field;
-          }
-        } else {
-          field.style.borderColor = '';
-        }
-      }
-    });
-
-    if (hasErrors) {
-      e.preventDefault();
-      alert('Please fill in all required fields marked with *');
-      if (firstErrorField) {
-        firstErrorField.focus();
-        firstErrorField.scrollIntoView({behavior: 'smooth', block: 'center'});
-      }
-      return false;
+  // Basic form validation before submission (guarded)
+  ;(function(){
+    const rf = document.getElementById('referral-form');
+    if (!rf) return;
+    // If client-side validation is enabled (opt-in), keep helpful logs; otherwise let server handle it.
+    if (rf.dataset && rf.dataset.clientValidate === 'true') {
+      rf.addEventListener('submit', function(e){
+        console.log('🚨 FORM SUBMIT EVENT TRIGGERED (client validation enabled)');
+        // Let HTML5 validation and main.js handle preventing submission if needed.
+        // No forced preventDefault here — allow normal POST to Django when valid.
+      });
     }
-  });
+  })();
 </script>
 <script src="{% static 'js/referral-a11y.js' %}?v=3"></script>
 <script src="{% static 'js/referral-dynamic.js' %}?v=3"></script>

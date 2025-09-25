@@ -1,0 +1,219 @@
+/* Core Feedback Styles */
+.feedback-trigger {
+  position: fixed;
+  right: 20px;
+  bottom: 100px;
+  z-index: 999;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 10px 20px;
+}
+
+.feedback-trigger:hover {
+    transform: translateY(-2px);
+    background-color: var(--secondary-color);
+}
+
+.feedback-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.feedback-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: var(--shadow-lg);
+}
+
+.feedback-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.close-feedback {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-color);
+    transition: transform 0.3s ease;
+}
+
+.close-feedback:hover {
+    transform: rotate(90deg);
+}
+
+.feedback-form .feedback-submit {
+    display: inline-block;
+    width: 100%;                /* make it stretch across form */
+    padding: 12px 20px;
+    margin-top: 15px;
+    background-color: #007bbe;  /* Geeza Break brand blue */
+    color: #fff;                /* white text */
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;         /* rounded corners */
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,123,187,0.2);
+}
+
+.feedback-form .feedback-submit:hover {
+    background-color: #005a8d;  /* darker blue on hover */
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,123,187,0.3);
+}
+
+.feedback-form .feedback-submit:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0,123,187,0.2);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .feedback-form .feedback-submit {
+        padding: 14px 16px;
+        font-size: 16px; /* Prevent zoom on iOS */
+    }
+}
+
+/* Thank You Animation */
+.thank-you-animation {
+    text-align: center;
+    padding: 2rem;
+    animation: fadeInUp 0.5s ease;
+}
+
+.thank-you-content {
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.thank-you-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    animation: bounce 0.6s ease;
+}
+
+.thank-you-content h3 {
+    color: #007bbe;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.thank-you-content p {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+.feedback-message {
+    display: none;
+    text-align: center;
+    padding: 1rem;
+    margin-top: 1rem;
+    border-radius: 4px;
+}
+
+.feedback-message.success {
+    background: #d4edda;
+    color: #155724;
+}
+
+.feedback-message.error {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Dark mode support */
+.dark-mode .feedback-content {
+    background: #1f2937;
+    color: white;
+}
+
+.dark-mode .form-group input,
+.dark-mode .form-group select,
+.dark-mode .form-group textarea {
+    background: #374151;
+    border-color: #4b5563;
+    color: white;
+}
+
+.dark-mode .close-feedback {
+    color: white;
+}

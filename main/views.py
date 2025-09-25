@@ -17,6 +17,12 @@ from core.emails import send_form_email
 # Set up logging for email issues
 logger = logging.getLogger(__name__)
 
+def _form_recipients():
+    recipients_setting = getattr(settings, "FORMS_TO_EMAIL", "")
+    if isinstance(recipients_setting, (list, tuple)):
+        return [email.strip() for email in recipients_setting if email and email.strip()]
+    return [email.strip() for email in str(recipients_setting).split(',') if email and email.strip()]
+
 def home(request):
     logger = logging.getLogger(__name__)
     logger.info("Home view called")
@@ -140,7 +146,6 @@ def about(request):
             m.tenure_display = '15 years'
         enriched.append(m)
 
-    # Sort ascending by join date then display name
     enriched.sort(key=lambda x: (x.join_date_parsed, x.display_name.lower()))
 
     return render(request, 'main/about.html', {
@@ -173,13 +178,27 @@ def submit_feedback(request):
             feedback.save()
             
             # Send feedback email using Mailjet
-            from core.emails import send_form_email
+            subject = f"New Feedback from {feedback.name}"
+            body = f"""
+                <h2>New Feedback Submission</h2>
+                <p><b>Name:</b> {feedback.name}</p>
+                <p><b>Email:</b> {feedback.email}</p>
+                <p><b>Phone:</b> {feedback.contact_number}</p>
+                <p><b>Service Used:</b> {feedback.get_service_used_display()}</p>
+                <p><b>Message:</b><br>{feedback.message}</p>
+            """
+            
+            msg = EmailMessage(
+                subject=subject,
+                body=body,
+                from_email='"Devansh Sharma" <devansh.sharma@geezabreak.org.uk>',
+                to=_form_recipients(),
+                headers={'Reply-To': feedback.email}
+            )
+            msg.content_subtype = "html"
+            
             try:
-                send_form_email(
-                    subject=f"New Feedback from {feedback.name}",
-                    template_name="emails/feedback.html",
-                    context={"feedback": feedback}
-                )
+                msg.send(fail_silently=False)
                 print(f"Feedback email sent successfully for {feedback.name}")
             except Exception as e:
                 print("EMAIL ERROR:", str(e))
@@ -211,6 +230,10 @@ class ReferralCreateView(CreateView):
     template_name = 'main/referral_form.html'
     success_url = reverse_lazy('main:referral_thanks')
 
+    def get(self, request, *args, **kwargs):
+        print("🚨🚨🚨 REFERRAL FORM GET REQUEST RECEIVED 🚨🚨🚨")
+        return super().get(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         if self.request.POST:
@@ -223,12 +246,20 @@ class ReferralCreateView(CreateView):
         return self.render_to_response(self.get_context_data(form=form, child_formset=formset))
 
     def post(self, request, *args, **kwargs):
+        print("🚨🚨🚨 REFERRAL FORM POST REQUEST RECEIVED 🚨🚨🚨")
+        print(f"POST data keys: {list(request.POST.keys())}")
+        print(f"Action: {request.POST.get('action', 'NO ACTION')}")
+        print("DEBUG: ReferralCreateView.post() called")
         self.object = None
         form = self.get_form()
         child_formset = ReferralChildFormSet(request.POST, prefix='children')
         action = request.POST.get('action', 'submit')
+        print(f"DEBUG: Action = {action}")
+
         if action == 'review':
+            print("DEBUG: Processing review action")
             if form.is_valid() and child_formset.is_valid():
+                print("DEBUG: Form and formset are valid for review")
                 cd = form.cleaned_data.copy()
                 crit_ids = [c.id for c in cd.pop('criteria', [])]
                 cd['criteria_ids'] = crit_ids
@@ -246,36 +277,153 @@ class ReferralCreateView(CreateView):
                     })
                 request.session['referral_draft'] = {'ref': cd, 'children': kids}
                 request.session.modified = True
+                print("DEBUG: Redirecting to review page")
                 return redirect('main:referral_review')
+            else:
+                print("DEBUG: Form or formset invalid for review")
+                print(f"DEBUG: Form errors: {form.errors}")
+                print(f"DEBUG: Formset errors: {child_formset.errors}")
+                print(f"DEBUG: Formset non_form_errors: {child_formset.non_form_errors()}")
             return self.render_invalid(form, child_formset)
+
         # direct submit
+        print("DEBUG: Processing direct submit")
+        print(f"DEBUG: Form is valid: {form.is_valid()}")
+        print(f"DEBUG: Formset is valid: {child_formset.is_valid()}")
+        print(f"DEBUG: Formset total forms: {child_formset.total_form_count()}")
+        print(f"DEBUG: Formset initial forms: {child_formset.initial_form_count()}")
+        
+        if not form.is_valid():
+            print(f"DEBUG: Form errors: {form.errors}")
+        if not child_formset.is_valid():
+            print(f"DEBUG: Formset errors: {child_formset.errors}")
+            print(f"DEBUG: Formset non_form_errors: {child_formset.non_form_errors()}")
+            # Debug each form in the formset
+            for i, form_errors in enumerate(child_formset.errors):
+                if form_errors:
+                    print(f"DEBUG: Child form {i} errors: {form_errors}")
+            for i, child_form in enumerate(child_formset.forms):
+                if child_form.is_bound and not child_form.is_valid():
+                    print(f"DEBUG: Child form {i} is invalid, data: {child_form.data}")
+
         if form.is_valid() and child_formset.is_valid():
+            print("DEBUG: Both form and formset are valid, calling _save_and_redirect")
             return self._save_and_redirect(form, child_formset)
+        else:
+            print("DEBUG: Form or formset invalid, rendering invalid form")
         return self.render_invalid(form, child_formset)
 
     @transaction.atomic
     def _save_and_redirect(self, form, formset):
-        self.object = form.save()
-        formset.instance = self.object
-        formset.save()
-        self._send_emails(self.object)
-        return redirect(self.get_success_url())
+        print("DEBUG: _save_and_redirect called")
+        try:
+            self.object = form.save()
+            print(f"DEBUG: Referral saved with ID: {self.object.id}")
+            formset.instance = self.object
+            formset.save()
+            print(f"DEBUG: Formset saved, {formset.save()} children saved")
+            print("DEBUG: Calling _send_emails")
+            # Build children summary from saved ReferralChild objects
+            try:
+                from .models import ReferralChild
+                children_qs = ReferralChild.objects.filter(referral=self.object)
+                children = []
+                for c in children_qs:
+                    children.append({
+                        'full_name': getattr(c, 'full_name', ''),
+                        'dob': getattr(c, 'dob', None).isoformat() if getattr(c, 'dob', None) else '',
+                        'relationship': getattr(c, 'relationship', ''),
+                        'has_asn': bool(getattr(c, 'has_asn', False)),
+                        'school_nursery': getattr(c, 'school_nursery', ''),
+                    })
+            except Exception:
+                children = []
 
-    def _send_emails(self, referral: Referral):
+            # Pass the cleaned form data to the email builder so all submitted fields are included
+            self._send_emails(self.object, form_data=getattr(form, 'cleaned_data', None), children=children)
+            print("DEBUG: _send_emails completed, redirecting to success URL")
+            return redirect(self.get_success_url())
+        except Exception as e:
+            print(f"DEBUG: Exception in _save_and_redirect: {str(e)}")
+            import traceback
+            traceback.print_exc()
+            raise
+
+    def _send_emails(self, referral: Referral, form_data=None, children=None):
         """
         Send email notification about a new referral using Mailjet.
         """
-        from core.emails import send_form_email
-        
+        print(f"DEBUG: _send_emails called for referral ID: {referral.id}")
         logger.info(f"Preparing email notification for referral ID: {referral.id}")
         
         try:
-            # Send email using Mailjet
-            send_form_email(
-                subject=f"Referral: {referral.primary_carer_name} ({referral.postcode})",
-                template_name="emails/referral.html",
-                context={"referral": referral}
+            print("DEBUG: Building email message")
+            # If form_data provided, build the email body from submitted fields
+            from django.db.models.query import QuerySet
+
+            def fmt_value(v):
+                if isinstance(v, QuerySet):
+                    return ', '.join(str(x) for x in v)
+                if isinstance(v, (list, tuple, set)):
+                    return ', '.join(str(x) for x in v)
+                if isinstance(v, bool):
+                    return 'Yes' if v else 'No'
+                if v is None:
+                    return ''
+                return str(v)
+
+            body = '<h2>New Referral Submission</h2>'
+            if form_data:
+                for field, value in form_data.items():
+                    # Skip internal values like management forms or cleaned QueryDict markers
+                    try:
+                        label = field.replace('_', ' ').title()
+                    except Exception:
+                        label = str(field)
+                    body += f"<p><b>{label}:</b> {fmt_value(value)}</p>"
+            else:
+                # Fallback: build body from referral model attributes (safe subset)
+                model_vals = {}
+                for attr in ['primary_carer_name','referrer_name','referrer_email','referrer_phone','address_line1','address_line2','city','postcode','reason','joint_visit_required']:
+                    val = getattr(referral, attr, None)
+                    if val is not None:
+                        label = attr.replace('_',' ').title()
+                        body += f"<p><b>{label}:</b> {fmt_value(val)}</p>"
+
+            # Append children information if available
+            if children and isinstance(children, (list, tuple)) and len(children) > 0:
+                body += '<h3>Children</h3>'
+                for i, c in enumerate(children, start=1):
+                    body += f"<p><b>Child {i}:</b> {fmt_value(c.get('full_name',''))} — DOB: {fmt_value(c.get('dob',''))} — Relationship: {fmt_value(c.get('relationship',''))} — ASN: {fmt_value(c.get('has_asn',''))}</p>"
+
+            # If children not provided, attempt to load from DB
+            if (not children) and hasattr(referral, 'id'):
+                try:
+                    from .models import ReferralChild
+                    kids = ReferralChild.objects.filter(referral=referral)
+                    if kids.exists():
+                        body += '<h3>Children</h3>'
+                        for i, k in enumerate(kids, start=1):
+                            dob = getattr(k, 'dob', None)
+                            dob_str = dob.isoformat() if dob else ''
+                            body += f"<p><b>Child {i}:</b> {getattr(k,'full_name','')} — DOB: {dob_str} — Relationship: {getattr(k,'relationship','')} — ASN: {'Yes' if getattr(k,'has_asn',False) else 'No'}</p>"
+                except Exception:
+                    pass
+
+            subject = f"Referral: {getattr(referral, 'primary_carer_name', 'Referral')} ({getattr(referral, 'postcode', '')})"
+
+            print("DEBUG: Creating EmailMessage")
+            msg = EmailMessage(
+                subject=subject,
+                body=body,
+                from_email='"Devansh Sharma" <devansh.sharma@geezabreak.org.uk>',
+                to=_form_recipients(),
+                headers={'Reply-To': (form_data.get('referrer_email') if form_data and form_data.get('referrer_email') else getattr(referral, 'referrer_email', 'devansh.sharma@geezabreak.org.uk'))}
             )
+            msg.content_subtype = "html"
+            print("DEBUG: Sending email")
+            msg.send(fail_silently=False)
+            print("DEBUG: Email sent successfully")
             
             # Log success
             print(f"Referral email notification sent successfully for {referral.primary_carer_name}")
@@ -284,16 +432,21 @@ class ReferralCreateView(CreateView):
             # Save a record of the sent email to database
             referral.email_sent = True
             referral.save(update_fields=['email_sent'])
+            print("DEBUG: Email sent flag updated in database")
             
         except Exception as e:
             # Detailed error logging
             error_msg = f"ERROR sending email notification: {str(e)}"
             print(error_msg)
+            print(f"DEBUG: Exception details: {str(e)}")
+            import traceback
+            traceback.print_exc()
             logger.error(f"Failed to send email notification for referral ID: {referral.id}, Error: {str(e)}")
             
             # Ensure email_sent is set to False if sending failed
             referral.email_sent = False
             referral.save(update_fields=['email_sent'])
+            print("DEBUG: Email sent flag set to False due to error")
             
             # Don't re-raise the exception to avoid breaking the form submission
             # The referral is still saved to the database, just the email failed
@@ -311,19 +464,26 @@ class ReferralReviewView(View):
 
     @transaction.atomic
     def post(self, request):
+        print("DEBUG: ReferralReviewView.post called")
         data = request.session.get('referral_draft')
         if not data:
+            print("DEBUG: No referral draft in session, redirecting to referral")
             return redirect('main:referral')
         ref = data['ref'].copy()
         crit_ids = ref.pop('criteria_ids', [])
+        print(f"DEBUG: Creating referral with data: {ref}")
         # create referral (exclude M2M for now)
         r = Referral.objects.create(**{k:v for k,v in ref.items() if k not in ['criteria','criteria_other']})
+        print(f"DEBUG: Referral created with ID: {r.id}")
         if crit_ids:
             r.criteria.set(Criterion.objects.filter(id__in=crit_ids))
+            print(f"DEBUG: Set {len(crit_ids)} criteria")
         if ref.get('criteria_other'):
             r.criteria_other = ref['criteria_other']
             r.save(update_fields=['criteria_other'])
+            print("DEBUG: Saved criteria_other")
         from .models import ReferralChild
+        children_count = 0
         for c in data['children']:
             ReferralChild.objects.create(
                 referral=r,
@@ -333,7 +493,18 @@ class ReferralReviewView(View):
                 has_asn=c['has_asn'],
                 school_nursery=c['school_nursery'],
             )
-        ReferralCreateView()._send_emails(r)
+            children_count += 1
+        print(f"DEBUG: Created {children_count} children")
+        print("DEBUG: Calling _send_emails from ReferralReviewView")
+        # Try to include children and any session form data when sending email
+        session_data = request.session.get('referral_draft') or {}
+        form_data = session_data.get('ref') if isinstance(session_data, dict) else None
+        children = session_data.get('children') if isinstance(session_data, dict) else None
+        try:
+            ReferralCreateView()._send_emails(r, form_data=form_data, children=children)
+        except Exception as e:
+            print(f"DEBUG: _send_emails from ReferralReviewView raised: {e}")
+        print("DEBUG: Clearing session and redirecting to thanks page")
         request.session.pop('referral_draft', None)
         return redirect(reverse_lazy('main:referral_thanks'))
 
@@ -365,33 +536,6 @@ def fun_zone(request):
         {'title': 'Chess for Kids', 'url': 'https://www.chesskid.com/play/fast', 'thumb': 'images/games/chess.jpg', 'category': 'strategy', 'desc': 'Play chess with hints and tips.'},
     ]
     return render(request, 'main/fun_zone.html', {'games': games})
-
-def contact(request):
-    if request.method == "POST":
-        name = request.POST.get("name","").strip()
-        email = request.POST.get("email","").strip()
-        phone = request.POST.get("phone","").strip()
-        message = request.POST.get("message","").strip()
-
-        if not (name and email and message):
-            messages.error(request, "Please fill in your name, email, and message.")
-            return redirect("main:contact")
-
-        subject = f"Website Contact: {name}"
-        body = (
-            f"New message from the Geeza Break website\n\n"
-            f"Name: {name}\nEmail: {email}\nPhone: {phone}\n\n"
-            f"Message:\n{message}\n"
-        )
-
-        # Send to both inboxes you monitor
-        recipients = ["info@geezabreak.org.uk", "ds16022004@gmail.com"]  # adjust as needed
-        send_mail(subject, body, settings.DEFAULT_FROM_EMAIL, recipients, fail_silently=False)
-
-        messages.success(request, "Thanks for reaching out — we'll be in touch soon.")
-        return redirect("main:contact")
-
-    return render(request, "main/contact.html")
 
 def email_status(request):
     """
@@ -452,156 +596,26 @@ def resend_email(request, referral_id):
         })
 
 def test_email(request):
+    subject = "Test Email from Geeza Break Website"
+    body = """
+        <h2>Hello Devansh,</h2>
+        <p>This is a test email sent from the Geeza Break Django site using Mailjet.</p>
+        <p>If you see this in your Outlook inbox, Mailjet + Django integration works! ✅</p>
     """
-    Test view to verify email functionality.
-    - GET: Shows a test form with email settings
-    - POST: Sends a test email and returns JSON response
-    """
-    import sys
-    import datetime
-    
-    # Common email configuration settings
-    from_email = getattr(settings, 'DEFAULT_FROM_EMAIL', 'no-reply@geezabreak.org.uk')
-    recipient_list = getattr(settings, 'REFERRAL_NOTIFICATION_RECIPIENTS', ['ds16022004@gmail.com'])
-    
-    # Handle GET request - display the test form
-    if request.method == 'GET':
-        context = {
-            'email_backend': settings.EMAIL_BACKEND,
-            'from_email': from_email,
-            'recipients': recipient_list,
-        }
-        return render(request, 'main/test_email.html', context)
-    
-    # Handle POST request - send test email and return JSON response
-    # Prepare response data
-    response_data = {
-        'timestamp': datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-        'email_backend': settings.EMAIL_BACKEND,
-        'python_version': f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}",
-        'django_settings': {
-            'DEBUG': settings.DEBUG,
-            'DEFAULT_FROM_EMAIL': from_email,
-            'REFERRAL_NOTIFICATION_RECIPIENTS': recipient_list,
-        }
-    }
-    
+
+    msg = EmailMessage(
+        subject=subject,
+        body=body,
+        from_email='"Devansh Sharma" <devansh.sharma@geezabreak.org.uk>',  # use your validated sender
+        to=_form_recipients(),       # recipient list
+        headers={'Reply-To': "devansh.sharma@geezabreak.org.uk"}          # will later become visitor email
+    )
+    msg.content_subtype = "html"
     try:
-        # Check if we have recipients
-        if not recipient_list:
-            logger.error("No recipients configured for test email")
-            response_data['success'] = False
-            response_data['message'] = "No recipients configured. Check REFERRAL_NOTIFICATION_RECIPIENTS in settings."
-            return JsonResponse(response_data)
-        
-        # Get email settings
-        subject = 'Geeza Break Email Test'
-        message = (
-            f"This is a test email sent at {datetime.datetime.now()}\n\n"
-            f"This email confirms that the Geeza Break website's email notification system is working.\n\n"
-            f"Email configuration:\n"
-            f"- Backend: {settings.EMAIL_BACKEND}\n"
-            f"- From: {from_email}\n"
-            f"- To: {', '.join(recipient_list)}\n\n"
-            f"If you received this email, your referral notifications should be working correctly."
-        )
-        
-        # Log the attempt
-        logger.info(f"Attempting to send test email to {recipient_list}")
-        print(f"\n{'='*40}\nSending test email to {recipient_list}\n{'='*40}")
-        
-        # For better diagnostics, try all methods separately
-        send_results = []
-        
-        # Method 1: Using send_mail
-        try:
-            send_mail(
-                subject=f"{subject} (send_mail method)",
-                message=message,
-                from_email=from_email,
-                recipient_list=recipient_list,
-                fail_silently=False,
-            )
-            send_results.append("send_mail: SUCCESS")
-            print("send_mail method: SUCCESS")
-        except Exception as e1:
-            err_msg = f"send_mail method failed: {str(e1)}"
-            send_results.append(err_msg)
-            print(err_msg)
-            logger.exception("send_mail failed in test_email view")
-        
-        # Method 2: Using EmailMessage
-        try:
-            email = EmailMessage(
-                subject=f"{subject} (EmailMessage method)",
-                body=message,
-                from_email=from_email,
-                to=recipient_list,
-            )
-            email.send(fail_silently=False)
-            send_results.append("EmailMessage: SUCCESS")
-            print("EmailMessage method: SUCCESS")
-        except Exception as e2:
-            err_msg = f"EmailMessage method failed: {str(e2)}"
-            send_results.append(err_msg)
-            print(err_msg)
-            logger.exception("EmailMessage failed in test_email view")
-        
-        # Method 3: Using Mailjet
-        try:
-            from core.emails import send_form_email
-            send_form_email(
-                subject=f"{subject} (Mailjet method)",
-                template_name="emails/feedback.html",  # Using feedback template for test
-                context={
-                    "feedback": type('TestFeedback', (), {
-                        'name': 'Test User',
-                        'contact_number': '01234567890',
-                        'email': 'test@example.com',
-                        'service_used': 'test',
-                        'get_service_used_display': lambda: 'Test Service',
-                        'message': message
-                    })()
-                }
-            )
-            send_results.append("Mailjet: SUCCESS")
-            print("Mailjet method: SUCCESS")
-        except Exception as e3:
-            err_msg = f"Mailjet method failed: {str(e3)}"
-            send_results.append(err_msg)
-            print(err_msg)
-            logger.exception("Mailjet failed in test_email view")
-        
-        # Check if at least one method worked
-        success = any("SUCCESS" in result for result in send_results)
-        
-        if success:
-            logger.info("Test email sent successfully by at least one method")
-            response_data['success'] = True
-            response_data['message'] = (
-                f"Test email sent to {', '.join(recipient_list)}. "
-                f"Check your inbox and spam folder. Results: {', '.join(send_results)}"
-            )
-        else:
-            logger.error("All email methods failed")
-            response_data['success'] = False
-            response_data['message'] = f"All email methods failed: {', '.join(send_results)}"
-            response_data['error_details'] = send_results
-        
-        print(f"{'='*40}\nTest email result: {'SUCCESS' if success else 'FAILED'}\n{'='*40}\n")
-        return JsonResponse(response_data)
-    
+        msg.send(fail_silently=False)
+        return HttpResponse("✅ Test email sent successfully. Check Outlook inbox.")
     except Exception as e:
-        logger.exception("Unexpected error in test_email view")
-        print(f"Error in test_email view: {str(e)}")
-        import traceback
-        traceback.print_exc()
-        
-        response_data['success'] = False
-        response_data['message'] = f"Unexpected error: {str(e)}"
-        response_data['error_details'] = traceback.format_exc()
-        
-        return JsonResponse(response_data)
+        return HttpResponse(f"❌ Email sending failed: {e}")
 
 def terms(request):
     """Display terms and conditions page"""
@@ -619,7 +633,6 @@ def volunteer(request):
     """Handle volunteer interest form display and submission"""
     from .forms import VolunteerInterestForm
     from .models import VolunteerInterest
-    from core.emails import send_form_email
 
     if request.method == 'POST':
         form = VolunteerInterestForm(request.POST)
@@ -628,12 +641,31 @@ def volunteer(request):
             volunteer_interest = form.save()
 
             # Send email notification using Mailjet
+            subject = f"New Volunteer Interest from {volunteer_interest.full_name}"
+            body = f"""
+                <h2>New Volunteer Interest</h2>
+                <p><b>Name:</b> {volunteer_interest.full_name}</p>
+                <p><b>Email:</b> {volunteer_interest.email}</p>
+                <p><b>Phone:</b> {volunteer_interest.phone}</p>
+                <p><b>Roles:</b> {volunteer_interest.roles}</p>
+                <p><b>Availability:</b> {volunteer_interest.availability}</p>
+                <p><b>Is Student:</b> {'Yes' if volunteer_interest.is_student else 'No'}</p>
+                <p><b>Course/Discipline:</b> {volunteer_interest.course_or_discipline}</p>
+                <p><b>Message:</b><br>{volunteer_interest.message}</p>
+                <p><b>Consent to Contact:</b> {'Yes' if volunteer_interest.consent_contact else 'No'}</p>
+            """
+            
+            msg = EmailMessage(
+                subject=subject,
+                body=body,
+                from_email='"Devansh Sharma" <devansh.sharma@geezabreak.org.uk>',
+                to=_form_recipients(),
+                headers={'Reply-To': volunteer_interest.email}
+            )
+            msg.content_subtype = "html"
+            
             try:
-                send_form_email(
-                    subject=f"New Volunteer Interest from {volunteer_interest.full_name}",
-                    template_name="emails/volunteer.html",
-                    context={"volunteer": volunteer_interest}
-                )
+                msg.send(fail_silently=False)
                 print(f"Volunteer interest email sent successfully for {volunteer_interest.full_name}")
                 messages.success(request, 'Thank you for your interest! We will be in touch soon.')
             except Exception as e:
@@ -672,43 +704,63 @@ def contact(request):
             messages.error(request, "Please fill in your name, email, and message.")
             return redirect("main:contact")
 
+        # Send email notification using Mailjet
         subject = f"Website Contact: {name}"
-        body = (
-            f"New message from the Geeza Break website\n\n"
-            f"Name: {name}\nEmail: {email}\nPhone: {phone}\n\n"
-            f"Message:\n{message}\n"
+        body = f"""
+            <h2>New Contact Form Submission</h2>
+            <p><b>Name:</b> {name}</p>
+            <p><b>Email:</b> {email}</p>
+            <p><b>Phone:</b> {phone}</p>
+            <p><b>Message:</b><br>{message}</p>
+        """
+        
+        msg = EmailMessage(
+            subject=subject,
+            body=body,
+            from_email='"Devansh Sharma" <devansh.sharma@geezabreak.org.uk>',
+            to=_form_recipients(),
+            headers={'Reply-To': email}
         )
+        msg.content_subtype = "html"
+        
+        try:
+            msg.send(fail_silently=False)
+            messages.success(request, "Thanks for reaching out — we'll be in touch soon.")
+        except Exception as e:
+            messages.error(request, f"There was an error sending your message: {str(e)}")
+            return redirect("main:contact")
 
-        # Send to both inboxes you monitor
-        recipients = ["info@geezabreak.org.uk", "ds16022004@gmail.com"]  # adjust as needed
-        send_mail(subject, body, settings.DEFAULT_FROM_EMAIL, recipients, fail_silently=False)
-
-        messages.success(request, "Thanks for reaching out — we'll be in touch soon.")
         return redirect("main:contact")
 
     return render(request, "main/contact.html")
 
-def test_mailjet(request):
+def test_referral_email(request):
     """
-    A simple test endpoint to send a Mailjet email and verify everything works.
-    Visiting /test-mailjet/ in the browser should trigger this email.
+    Test view to send a sample referral email to Outlook
     """
     try:
-        # Build dummy context data for template rendering
-        dummy_ref = {
-            "child_name": "Test Child",
-            "parent_name": "Test Parent",
-            "email": "test@example.com",
-            "phone": "0000",
-            "notes": "This is a test email triggered from the test_mailjet view.",
-        }
+        # Create a mock referral object
+        from .models import Referral
+        mock_referral = type('MockReferral', (), {
+            'id': 999,
+            'primary_carer_name': 'Test Parent',
+            'primary_carer_email': 'test@example.com',
+            'primary_carer_phone': '01234567890',
+            'postcode': 'NE1 1AA',
+            'referral_reason': 'Testing the referral email system',
+            'joint_visit_required': True,
+            'email_sent': False,
+        })()
 
-        # Call the Mailjet email helper
+        # Send email using the same method as the actual referral form
+        from core.emails import send_form_email
         send_form_email(
-            subject="✅ Test Email from Geeza Break (Mailjet Integration)",
-            template_name="emails/referral.html",  # reuse referral template for now
-            context={"ref": dummy_ref},
+            subject=f"Referral: {mock_referral.primary_carer_name} ({mock_referral.postcode})",
+            template_name="emails/referral.html",
+            context={"referral": mock_referral}
         )
-        return HttpResponse("✅ Mailjet test email sent successfully. Check your Outlook inbox.")
+
+        return HttpResponse("✅ Test referral email sent to Outlook. Check your inbox!")
+
     except Exception as e:
-        return HttpResponse(f"❌ Mailjet test failed: {e}")
+        return HttpResponse(f"❌ Test referral email failed: {str(e)}")

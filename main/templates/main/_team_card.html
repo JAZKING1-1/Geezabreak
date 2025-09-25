@@ -1,0 +1,62 @@
+{% load static %}
+{# This include accepts either a `member` object or individual vars passed with the include tag. #}
+{# Priority: use member.attr when provided, otherwise fall back to local variables. #}
+<div class="col-lg-4 col-md-6 mb-4">
+    <div class="card team-card h-100">
+        {# Resolve a safe name and image path using available inputs. #}
+        {% with safe_name=member.display_name|default_if_none:"" safe_image_path=member.image_path|default:image_path|default_if_none:"" %}
+
+
+            {% if safe_image_path %}
+                <div class="team-image-wrapper">
+                    <img src="{% static safe_image_path %}" alt="{{ safe_name }}">
+                </div>
+            {% elif member and member.image %}
+                <div class="team-image-wrapper">
+                    <img src="{{ member.image.url }}" alt="{{ safe_name }}">
+                </div>
+            {% elif safe_name %}
+                <div class="team-image-placeholder">
+                    <span class="display-4">{{ safe_name|slice:":1" }}</span>
+                </div>
+            {% else %}
+                <div class="team-image-placeholder">
+                    <span class="display-4">?</span>
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <div class="card-body">
+            {% with safe_title=member.display_name|default:"Unnamed Member" safe_role=member.role_title|default:role_title %}
+            {% if safe_title or safe_role %}
+                <h5 class="card-title">{{ safe_title|default:"Unnamed Member" }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ safe_role|default:"Role not set" }}</h6>
+            {% endif %}
+            {% endwith %}
+
+            {% if member.tenure_display or tenure_display %}
+            <p><strong>{{ member.tenure_display|default:tenure_display }}</strong></p>
+            {% endif %}
+
+            {% if member.reason_for_joining or reason_for_joining %}
+            <p><strong>Why I got involved:</strong> {{ member.reason_for_joining|default:reason_for_joining }}</p>
+            {% endif %}
+
+            {% if member.role_description or role_description %}
+            <p><strong>My role:</strong> {{ member.role_description|default:role_description }}</p>
+            {% endif %}
+
+            {% if member.favorite_aspect or favorite_aspect %}
+            <p><strong>What I like best:</strong> {{ member.favorite_aspect|default:favorite_aspect }}</p>
+            {% endif %}
+
+            {% if member.fun_fact or fun_fact %}
+            <p><strong>For a break:</strong> {{ member.fun_fact|default:fun_fact }}</p>
+            {% endif %}
+
+            {% if member.bio %}
+            {{ member.bio|safe }}
+            {% endif %}
+        </div>
+    </div>
+</div>

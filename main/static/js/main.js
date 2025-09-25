@@ -42,12 +42,34 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Referral form client-side validation
+  // This handler only activates if the form has data-client-validate="true" to avoid interfering
+  // with server-rendered forms on pages that include multiple referral templates.
   const form = document.getElementById('referral-form');
-  if (form) form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    if (!form.checkValidity()) { alert('Please fill all required fields.'); return; }
-    alert('Referral submitted successfully!'); form.reset();
-  });
+  if (form && form.dataset && form.dataset.clientValidate === 'true') {
+    form.addEventListener('submit', function (e) {
+      // perform HTML5 validity check, but allow normal submission to proceed when valid
+      if (!form.checkValidity()) {
+        e.preventDefault();
+        alert('Please fill all required fields.');
+        return;
+      }
+      console.log('🚨 FORM SUBMIT EVENT TRIGGERED - Form is valid, proceeding with submission');
+      // Show a friendly confirmation immediately (will not prevent normal POST)
+      try { alert('✅ Thanks — we\'ve received your referral.'); } catch (err) { /* ignore */ }
+      // allow the browser to submit the form normally so Django receives the POST
+    });
+  }
+
+  // Volunteer form confirmation
+  const volunteerForm = document.getElementById('volunteer-form') || document.querySelector('.interest-form');
+  if (volunteerForm) {
+    volunteerForm.addEventListener('submit', function (e) {
+      // Let HTML5 validation run; show confirmation for UX
+      setTimeout(() => {
+        try { alert('✅ Thanks — we\'ve received your volunteer interest.'); } catch (err) { /* ignore */ }
+      }, 20);
+    });
+  }
 
   // Anonymous comment toggle
   const anonBtn = document.getElementById('anonymousBtn');
@@ -308,22 +330,26 @@ document.addEventListener('DOMContentLoaded', () => {
 })();
 
 // Swiper initialization for testimonials
-var swiper = new Swiper(".mySwiper", {
-    slidesPerView: 1,
-    spaceBetween: 20,
-    loop: true,
-    autoplay: { delay: 5000 },
-    pagination: { el: ".swiper-pagination", clickable: true },
-    navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
-    breakpoints: {
-      768: { slidesPerView: 2 },
-      1024: { slidesPerView: 3 }
-    }
-  });
+if (document.querySelector(".mySwiper")) {
+  var swiper = new Swiper(".mySwiper", {
+      slidesPerView: 1,
+      spaceBetween: 20,
+      loop: true,
+      autoplay: { delay: 5000 },
+      pagination: { el: ".swiper-pagination", clickable: true },
+      navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+      breakpoints: {
+        768: { slidesPerView: 2 },
+        1024: { slidesPerView: 3 }
+      }
+    });
+}
 
 // Community Flat Image Carousel
 document.addEventListener("DOMContentLoaded", () => {
   const images = document.querySelectorAll("#flatCarousel .carousel-images img");
+  if (images.length === 0) return; // Exit if carousel doesn't exist on this page
+  
   let currentIndex = 0;
 
   function showImage(index) {
@@ -332,15 +358,22 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  document.getElementById("prevBtn").addEventListener("click", () => {
-    currentIndex = (currentIndex - 1 + images.length) % images.length;
-    showImage(currentIndex);
-  });
+  const prevBtn = document.getElementById("prevBtn");
+  const nextBtn = document.getElementById("nextBtn");
+  
+  if (prevBtn) {
+    prevBtn.addEventListener("click", () => {
+      currentIndex = (currentIndex - 1 + images.length) % images.length;
+      showImage(currentIndex);
+    });
+  }
 
-  document.getElementById("nextBtn").addEventListener("click", () => {
-    currentIndex = (currentIndex + 1) % images.length;
-    showImage(currentIndex);
-  });
+  if (nextBtn) {
+    nextBtn.addEventListener("click", () => {
+      currentIndex = (currentIndex + 1) % images.length;
+      showImage(currentIndex);
+    });
+  }
 
   // Auto-slide every 5s
   setInterval(() => {

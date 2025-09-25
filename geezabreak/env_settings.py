@@ -28,7 +28,7 @@ EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND', 'django.core.mail.backends.smtp.
 DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'no-reply@geezabreak.org.uk')
 REFERRAL_NOTIFICATION_RECIPIENTS = os.environ.get(
 	'REFERRAL_NOTIFICATION_RECIPIENTS',
-	'ds16022004@gmail.com,info@geezabreak.org.uk'
+    'ds16022004@gmail.com,info@geezabreak.org.uk,Samantha@geezabreak.org.uk'
 ).split(',')
 
 # Optional SMTP settings
