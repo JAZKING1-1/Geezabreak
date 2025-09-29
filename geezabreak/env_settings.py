@@ -7,7 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Load environment variables from .env file if it exists
 if os.environ.get("DJANGO_ENV") != "production":
     try:
-        from dotenv import load_dotenv
+        from dotenv import load_dotenv  # type: ignore
         load_dotenv(BASE_DIR / ".env")
     except ImportError:
         pass  # python-dotenv not installed, skip
@@ -25,7 +25,7 @@ ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(','
 # referral notifications go to both inboxes. Override via the REFERRAL_NOTIFICATION_RECIPIENTS
 # environment variable if you prefer a different list (comma-separated).
 EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND', 'django.core.mail.backends.smtp.EmailBackend')
-DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'no-reply@geezabreak.org.uk')
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'devansh.sharma@geezabreak.org.uk')
 REFERRAL_NOTIFICATION_RECIPIENTS = os.environ.get(
 	'REFERRAL_NOTIFICATION_RECIPIENTS',
     'ds16022004@gmail.com,info@geezabreak.org.uk,Samantha@geezabreak.org.uk'

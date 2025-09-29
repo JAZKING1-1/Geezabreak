@@ -82,8 +82,12 @@
                                     <span>{{ from_email }}</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <strong>Recipients:</strong>
-                                    <span>{{ recipients|join:", " }}</span>
+                                    <strong>Referral Recipients:</strong>
+                                    <span>{{ recipients_referral|join:", " }}</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <strong>General Recipients:</strong>
+                                    <span>{{ recipients_general|join:", " }}</span>
                                 </li>
                             </ul>
                         </div>

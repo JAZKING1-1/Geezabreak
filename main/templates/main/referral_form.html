@@ -196,9 +196,10 @@
                         {{ cf.dob }}
                         {% include "main/partials/field_errors.html" with field=cf.dob %}
                       </div>
-                      <div class="field">
-                        <label for="{{ cf.relationship.id_for_label }}">Relationship*</label>
-                        {{ cf.relationship }}
+                        <div class="field">
+                          <label for="{{ cf.relationship.id_for_label }}">Relationship*<span class="visually-hidden"> required</span></label>
+                          {{ cf.relationship }}
+                          {% include "main/partials/field_errors.html" with field=cf.relationship %}
                       </div>
                     </div>
                     <div class="grid-2">

@@ -1,5 +1,5 @@
 import logging
-from django.core.mail import send_mail
+from mailjet_rest import Client
 from django.conf import settings
 from django.template.loader import render_to_string
 
@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 
 def send_form_email(subject, template_name, context):
     """
-    Send form email using Django's send_mail with Outlook SMTP.
+    Send form email using Mailjet REST API.
     Renders the template and sends to the configured recipients.
     """
     try:
@@ -18,21 +18,32 @@ def send_form_email(subject, template_name, context):
         recipients_str = settings.FORMS_TO_EMAIL
         recipients = [email.strip() for email in recipients_str.split(',')]
 
-        # Send the email
-        send_mail(
-            subject=subject,
-            message="",  # Plain text version (empty for now)
-            html_message=html_message,
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            recipient_list=recipients,
-            fail_silently=False,
+        # Send via Mailjet
+        mailjet = Client(
+            auth=(settings.MAILJET_API_KEY, settings.MAILJET_API_SECRET),
+            version="v3.1"
         )
 
-        logger.info(f"Email sent successfully: {subject} to {recipients}")
-        print(f"Email sent successfully: {subject}")
-        return True
+        data = {
+            "Messages": [
+                {
+                    "From": {
+                        "Email": settings.DEFAULT_FROM_EMAIL,
+                        "Name": "Geeza Break Website"
+                    },
+                    "To": [{"Email": email} for email in recipients],
+                    "Subject": subject,
+                    "HTMLPart": html_message,
+                }
+            ]
+        }
+
+        result = mailjet.send.create(data=data)
+        logger.info(f"Mailjet response: {result.status_code} - {subject} to {recipients}")
+        print(f"📤 Mailjet response: {result.status_code}")
+        return result.status_code == 200
 
     except Exception as e:
         logger.error(f"Failed to send email: {str(e)}")
-        print(f"EMAIL ERROR: {str(e)}")
+        print(f"🚨 Mailjet send failed: {e}")
         raise  # Re-raise to let calling code handle it

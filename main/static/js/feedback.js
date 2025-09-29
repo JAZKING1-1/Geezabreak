@@ -38,13 +38,32 @@ window.addEventListener('keydown', function(e) {
     }
 });
 
-function showFeedbackMessage(message, type) {
+let feedbackHideTimer;
+
+function showFeedbackMessage(message, type = 'info') {
     const msgBox = document.getElementById('feedbackMessage');
-    msgBox.textContent = "✨ " + message + " ✨";
-    msgBox.classList.remove('hidden');
-    setTimeout(() => {
-        msgBox.classList.add('hidden');
-    }, 4000);
+    if (!msgBox) return;
+
+    if (feedbackHideTimer) {
+        clearTimeout(feedbackHideTimer);
+        feedbackHideTimer = null;
+    }
+
+    msgBox.textContent = message;
+    msgBox.setAttribute('role', 'alert');
+    msgBox.setAttribute('aria-live', 'assertive');
+    msgBox.style.display = 'block';
+    msgBox.classList.remove('success', 'error');
+    if (type === 'error') {
+        msgBox.classList.add('error');
+    } else if (type === 'success') {
+        msgBox.classList.add('success');
+    }
+
+    feedbackHideTimer = setTimeout(() => {
+        msgBox.style.display = 'none';
+        msgBox.classList.remove('success', 'error');
+    }, 6000);
 }
 
 function getCookie(name) {
@@ -66,18 +85,28 @@ async function submitFeedback(event) {
     event.preventDefault();
     const form = event.target;
     const submitButton = form.querySelector('button[type="submit"]');
+    const originalLabel = submitButton.textContent;
     submitButton.disabled = true;
+    submitButton.textContent = 'Sending…';
     try {
         const formData = new FormData(form);
         const response = await fetch('/submit-feedback/', {
             method: 'POST',
             body: formData,
             headers: {
-                'X-CSRFToken': getCookie('csrftoken')
-            }
+                'X-CSRFToken': getCookie('csrftoken'),
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+            credentials: 'same-origin',
         });
-        const data = await response.json();
-        if (data.status === 'success') {
+        let data;
+        try {
+            data = await response.json();
+        } catch (err) {
+            data = { status: 'error', message: 'Unexpected response from the server.' };
+        }
+
+        if (response.ok && data.status === 'success') {
             // Hide form, show thank you animation
             form.style.display = 'none';
             document.getElementById('thankYouAnimation').style.display = 'flex';
@@ -87,15 +116,23 @@ async function submitFeedback(event) {
                 document.getElementById('thankYouAnimation').style.display = 'none';
                 form.style.display = '';
                 form.reset();
-                document.getElementById('feedbackMessage').classList.add('hidden');
+                const msgBox = document.getElementById('feedbackMessage');
+                if (msgBox) {
+                    msgBox.style.display = 'none';
+                    msgBox.classList.remove('success', 'error');
+                }
             }, 2500);
+            showFeedbackMessage('Thank you for sharing your feedback!', 'success');
         } else {
-            showFeedbackMessage(data.message, 'error');
+            const errorMessage = data && data.message ? data.message : 'Sorry, something went wrong. Please try again.';
+            showFeedbackMessage(errorMessage, 'error');
         }
     } catch (error) {
-        showFeedbackMessage('An error occurred. Please try again.', 'error');
+        console.error('Feedback submission failed:', error);
+        showFeedbackMessage('We could not submit your feedback right now. Please try again shortly.', 'error');
     } finally {
         submitButton.disabled = false;
+        submitButton.textContent = originalLabel;
     }
 }
 

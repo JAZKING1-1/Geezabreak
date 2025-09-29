@@ -133,6 +133,18 @@ class ReferralChildForm(forms.ModelForm):
             "school_nursery": forms.TextInput(attrs={"placeholder": "Optional"}),
         }
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        relationship_field = self.fields["relationship"]
+        # Ensure the dropdown prompts users to select an option explicitly
+        choices = [(value, label) for value, label in relationship_field.choices if value]
+        relationship_field.choices = [("", "— Select relationship —")] + choices
+        relationship_field.widget.attrs.update({
+            "required": "required",
+            "aria-required": "true",
+            "class": (relationship_field.widget.attrs.get("class", "") + " required-field").strip(),
+        })
+
 
 ReferralChildFormSet = inlineformset_factory(
     Referral, ReferralChild,
