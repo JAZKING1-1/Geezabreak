@@ -1,89 +1,113 @@
 {% extends "main/base.html" %}
 {% load static %}
 
+{% block title %}Community Flat | Geeza Break{% endblock %}
+
 {% block content %}
-<div class="max-w-5xl mx-auto px-6 py-10 space-y-12">
+<main class="cf-page">
 
-  <!-- Page Header -->
-  <section class="text-center">
-    <h1 class="text-4xl font-bold text-gray-900 mb-4">Geeza Break Community Flat</h1>
-    <p class="text-lg text-gray-700 max-w-3xl mx-auto">
-      The <strong>Geeza Break Community Flat</strong> is a welcoming and fully equipped space,
-      designed to support families by offering a safe, homely environment. It includes a
-      <strong>kitchen</strong> and a <strong>toy room</strong>, making it perfect for
-      <em>respite care, cooking, arts & crafts, board games, and family support services</em>.
-    </p>
-  </section>
+  <!-- Page heading in a slim banner so the whole page stays blue -->
+  <header class="cf-header" role="banner">
+    <h1>Geeza Break Community Flat</h1>
+    <p class="cf-tag">A calm, fully equipped space for families.</p>
+  </header>
 
-  <!-- Video Section -->
-  <section>
-    <h2 class="text-2xl font-semibold mb-4">🎥 Sensory Room Tour</h2>
-    <div class="video-container">
-      <video autoplay loop muted playsinline controls>
-        <source src="{% static 'images/Sensory room.MP4' %}" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-    </div>
-  </section>
+  <!-- Top cards: what the flat offers -->
+  <section class="cf-section">
+    <ul class="cf-cards" role="list">
+      <li class="cf-card">
+        <h2 class="cf-card__title">Exclusive to Geeza Break</h2>
+        <p class="cf-card__text">A homely flat for our families — safe, welcoming, and private.</p>
+      </li>
 
-  <!-- Additional Uses -->
-  <section>
-    <h2 class="text-2xl font-semibold mb-3">✨ How the Community Flat is Used</h2>
-    <ul class="list-disc list-inside space-y-2 text-gray-700">
-      <li><strong>Cooking sessions</strong> – learn, cook, and share meals together.</li>
-      <li><strong>Arts & Crafts</strong> – creative activities for children and families.</li>
-      <li><strong>Board Games</strong> – fun, interactive sessions that encourage bonding.</li>
-      <li><strong>Family Support Services</strong> – safe and supportive environment for families.</li>
-      <li><strong>Contact Visits</strong> – a nurturing space for children in care or those being reunited with family.</li>
+      <li class="cf-card">
+        <h2 class="cf-card__title">Fully Equipped</h2>
+        <p class="cf-card__text">Kitchen, toy room, and comfortable lounge area for relaxed time together.</p>
+      </li>
+
+      <li class="cf-card">
+        <h2 class="cf-card__title">What You Can Do</h2>
+        <ul class="cf-list">
+          <li>Respites &amp; quiet time</li>
+          <li>Cooking &amp; meal basics</li>
+          <li>Arts &amp; crafts</li>
+          <li>Board games &amp; play</li>
+          <li>Family Support services</li>
+        </ul>
+      </li>
+
+      <li class="cf-card">
+        <h2 class="cf-card__title">Contact Visits</h2>
+        <p class="cf-card__text">
+          The flat also supports <strong>contact visits</strong> for children in care or
+          working towards rehabilitation within the family home.
+        </p>
+      </li>
     </ul>
   </section>
 
-  <!-- Sensory Room Benefits -->
-  <section>
-    <h2 class="text-2xl font-semibold mb-6">🌈 The Sensory Room</h2>
-    <p class="text-gray-700 mb-6">
-      Our Community Flat features a dedicated <strong>Sensory Room</strong> that supports the
-      health and well-being of both children and parents. This calming and interactive space
-      provides opportunities for comfort, play, and personal growth.
-    </p>
+  <!-- Sensory Room: benefits + media -->
+  <section class="cf-section">
+    <div class="cf-card cf-card--wide">
+      <div class="cf-flex">
+        <div class="cf-flex__col">
+          <h2 class="cf-card__title">Why a Sensory Room?</h2>
+          <p class="cf-card__text">
+            A sensory environment can improve the health and wellbeing of both parents and children.
+            Here are key benefits:
+          </p>
 
-    <div class="grid md:grid-cols-2 gap-6">
-      <div class="bg-yellow-100 p-6 rounded-2xl shadow">
-        <h3 class="font-bold text-xl mb-2">🧘 De-stress</h3>
-        <p>Helps calm overstimulated minds, providing comfort and refocusing attention.</p>
-      </div>
-      <div class="bg-sky-100 p-6 rounded-2xl shadow">
-        <h3 class="font-bold text-xl mb-2">👀 Sensory Stimulation</h3>
-        <p>Encourages exploration and supports understanding of the world through senses.</p>
-      </div>
-      <div class="bg-lime-100 p-6 rounded-2xl shadow">
-        <h3 class="font-bold text-xl mb-2">🎨 Learning Through Play</h3>
-        <p>Montessori-inspired activities build problem-solving, creativity, and brain connections.</p>
-      </div>
-      <div class="bg-blue-100 p-6 rounded-2xl shadow">
-        <h3 class="font-bold text-xl mb-2">⚖️ Balance & Movement</h3>
-        <p>Improves motor skills, coordination, and spatial awareness.</p>
-      </div>
-      <div class="bg-yellow-100 p-6 rounded-2xl shadow">
-        <h3 class="font-bold text-xl mb-2">🗣️ Communication Skills</h3>
-        <p>Encourages verbal and non-verbal interaction, especially supportive for children with autism.</p>
-      </div>
-      <div class="bg-sky-100 p-6 rounded-2xl shadow">
-        <h3 class="font-bold text-xl mb-2">🤝 Socialisation</h3>
-        <p>Provides a safe and calm environment for building relationships and empathy.</p>
+          <ul class="cf-list cf-list--bullets">
+            <li><strong>De-stress:</strong> helps calm an overstimulated mind and supports positive interaction for withdrawn individuals.</li>
+            <li><strong>Sensory stimulation:</strong> encourages exploration and understanding of the world and our responses to it.</li>
+            <li><strong>Learning through play:</strong> Montessori-style, hands-on activities develop senses, problem-solving, and brain connections.</li>
+            <li><strong>Balance &amp; movement:</strong> supports visual processing and motor skills; beneficial for physical difficulties.</li>
+            <li><strong>Communication skills:</strong> interactive areas can promote verbal and non-verbal engagement, including vocalisation.</li>
+            <li><strong>Improved focus:</strong> draws attention back to the task — helpful for individuals who are over-stimulated.</li>
+            <li><strong>Socialisation:</strong> calm, shared play builds social understanding and empathy.</li>
+          </ul>
+        </div>
+
+        <div class="cf-flex__col">
+          <!-- Video + photos -->
+          <figure class="cf-media">
+            <video class="cf-media__video" controls preload="metadata"
+                   poster="{% static 'images/1000017232.JPG' %}">
+              <source src="{% static 'images/Sensory room.MP4' %}" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <figcaption>Take a look inside our calming sensory room.</figcaption>
+          </figure>
+
+          <div class="cf-gallery">
+            <figure class="cf-gallery__item">
+              <img src="{% static 'images/1000017232.JPG' %}" alt="Soft-lit sensory wall with gentle visuals" loading="lazy">
+            </figure>
+            <figure class="cf-gallery__item">
+              <img src="{% static 'images/1000017233.JPG' %}" alt="Comfortable seating and tactile toys in the sensory room" loading="lazy">
+            </figure>
+            <figure class="cf-gallery__item">
+              <img src="{% static 'images/1000017234.JPG' %}" alt="Play area with shapes, stars, and cosy lighting" loading="lazy">
+            </figure>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Image Gallery -->
-  <section>
-    <h2 class="text-2xl font-semibold mb-4">📸 Community Flat Gallery</h2>
-    <div class="gallery-grid">
-      <img src="{% static 'images/1000017232.JPG' %}" alt="Community Flat Photo 1">
-      <img src="{% static 'images/1000017233.JPG' %}" alt="Community Flat Photo 2">
-      <img src="{% static 'images/1000017234.JPG' %}" alt="Community Flat Photo 3">
+  <!-- Final CTA -->
+  <section class="cf-section">
+    <div class="cf-cta cf-card">
+      <div>
+        <h2 class="cf-card__title">Want to use the Community Flat?</h2>
+        <p class="cf-card__text">We’ll help plan a visit that suits your family.</p>
+      </div>
+      <div class="cf-cta__actions">
+        <a href="{% url 'main:contact' %}" class="cf-btn cf-btn--dark">Get Support</a>
+        <a href="{% url 'main:donate' %}" class="cf-btn cf-btn--ghost">Donate</a>
+      </div>
     </div>
   </section>
 
-</div>
+</main>
 {% endblock %}

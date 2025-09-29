@@ -235,9 +235,11 @@
       <form id="commentForm" class="mb-4" onsubmit="submitComment(event)">
         {% csrf_token %}
         <div class="row g-2 justify-content-center">
-          <div class="col-md-3 d-flex">
-            <input type="text" name="name" id="commentName" class="form-control me-2" placeholder="Your Name">
-            <button type="button" class="btn btn-outline-secondary" id="anonymousBtn" tabindex="0">Anonymous</button>
+          <div class="col-md-4">
+            <div class="input-group">
+              <input type="text" name="name" id="commentName" class="form-control" placeholder="Your Name">
+              <button type="button" class="btn btn-outline-secondary" id="anonymousBtn" tabindex="0">Anonymous</button>
+            </div>
           </div>
           <div class="col-md-6">
             <input type="text" name="message" class="form-control" placeholder="How did you find our service?" required>

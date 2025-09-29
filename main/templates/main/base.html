@@ -216,15 +216,15 @@
                 </button>
                 <button id="gb-tab-text" class="gb-support-option" role="tab" aria-selected="false" tabindex="-1" data-option="text" aria-controls="gb-panel-text">
                     <i class="fas fa-sms"></i>
-                    <span>Text</span>
+                    <span>Text 07596 879 251</span>
                 </button>
                 <button id="gb-tab-email" class="gb-support-option" role="tab" aria-selected="false" tabindex="-1" data-option="email" aria-controls="gb-panel-email">
                     <i class="fas fa-envelope"></i>
                     <span>Email</span>
                 </button>
-                <button id="gb-tab-chat" class="gb-support-option" role="tab" aria-selected="false" tabindex="-1" data-option="chat" aria-controls="gb-panel-chat">
-                    <i class="fas fa-comments"></i>
-                    <span>Web Chat</span>
+                <button id="gb-tab-services" class="gb-support-option" role="tab" aria-selected="false" tabindex="-1" data-option="services" aria-controls="gb-panel-services">
+                    <i class="fas fa-hands-helping"></i>
+                    <span>Services</span>
                 </button>
             </div>
 
@@ -239,7 +239,8 @@
                 <section id="gb-panel-text" class="gb-support-panel" role="tabpanel" data-panel="text" aria-label="Text support" aria-labelledby="gb-tab-text" hidden>
                     <h3>Text Us</h3>
                     <p>Send us a message and we’ll reply ASAP.</p>
-                    <a href="sms:+447537404282" class="btn btn-primary">Text 07537 404 282</a>
+                    <p class="gb-support-note">Texts will be answered during office hours.</p>
+                    <a href="sms:+447596879251" class="btn btn-primary">Text 07596 879 251</a>
                 </section>
 
                 <section id="gb-panel-email" class="gb-support-panel" role="tabpanel" data-panel="email" aria-label="Email support" aria-labelledby="gb-tab-email" hidden>
@@ -258,10 +259,10 @@
                     </form>
                 </section>
 
-                <section id="gb-panel-chat" class="gb-support-panel" role="tabpanel" data-panel="chat" aria-label="Web chat support" aria-labelledby="gb-tab-chat" hidden>
-                    <h3>Start a Chat</h3>
-                    <p>Connect with our team in real time.</p>
-                    <a href="{% url 'main:contact' %}#chat" class="btn btn-primary">Open Web Chat</a>
+                <section id="gb-panel-services" class="gb-support-panel" role="tabpanel" data-panel="services" aria-label="Service information" aria-labelledby="gb-tab-services" hidden>
+                    <h3>Explore Our Services</h3>
+                    <p>Learn more about the support we provide for families.</p>
+                    <a href="{% url 'main:services' %}" class="btn btn-primary">View Services</a>
                 </section>
             </div>
         </div>

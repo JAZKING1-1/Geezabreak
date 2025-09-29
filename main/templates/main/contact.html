@@ -64,6 +64,14 @@
         <div class="card-body">
           <h3 class="card-title">Get in Touch</h3>
 
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-{{ message.tags|default:'info' }}" role="alert">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+
           <form method="post" action="{% url 'main:contact' %}" novalidate>
             {% csrf_token %}
 

@@ -18,6 +18,24 @@ document.addEventListener('DOMContentLoaded', () => {
   window.openFeedback = function() { const m = document.getElementById('feedbackModal'); if(m) m.style.display = 'block'; }
   window.closeFeedback = function() { const m = document.getElementById('feedbackModal'); if(m) m.style.display = 'none'; }
 
+  // Accessible accordion for Community Flat page
+  document.querySelectorAll('[data-accordion]').forEach(acc => {
+    acc.addEventListener('click', e => {
+      if (!e.target.classList.contains('accordion__trigger')) return;
+      const btn = e.target;
+      const panel = btn.nextElementSibling;
+      if (!panel) return;
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!expanded));
+      panel.hidden = expanded;
+    });
+
+    acc.querySelectorAll('.accordion__trigger').forEach(btn => {
+      const panel = btn.nextElementSibling;
+      if (panel) panel.hidden = btn.getAttribute('aria-expanded') !== 'true';
+    });
+  });
+
   // Pointer vs keyboard nav helper
   document.addEventListener('mousedown', () => document.body.classList.remove('keyboard-nav'));
 

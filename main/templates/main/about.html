@@ -313,16 +313,7 @@
             <div class="col-lg-4 col-md-6 mb-4">
                 <div class="card team-card h-100">
                     <div class="team-image-wrapper">
-                        <div class="abstract-avatar" aria-hidden="true">
-                            <!-- simple abstract human SVG -->
-                            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Avatar">
-                                <g fill="none" fill-rule="evenodd">
-                                    <circle cx="32" cy="20" r="12" fill="#20b4ef" />
-                                    <path d="M8 56c0-13.255 10.745-24 24-24s24 10.745 24 24" fill="#0275e2" />
-                                    <circle cx="32" cy="20" r="6" fill="#fff" opacity="0.08" />
-                                </g>
-                            </svg>
-                        </div>
+                        <img src="{% static 'images/IMG_4212.jpeg' %}" alt="Jack Anderson">
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">Jack Anderson</h5>
@@ -356,15 +347,7 @@
             <div class="col-lg-4 col-md-6 mb-4">
                 <div class="card team-card h-100">
                     <div class="team-image-wrapper">
-                        <div class="abstract-avatar" aria-hidden="true">
-                            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Avatar">
-                                <g fill="none" fill-rule="evenodd">
-                                    <circle cx="32" cy="20" r="12" fill="#20b4ef" />
-                                    <path d="M8 56c0-13.255 10.745-24 24-24s24 10.745 24 24" fill="#0275e2" />
-                                    <circle cx="32" cy="20" r="6" fill="#fff" opacity="0.08" />
-                                </g>
-                            </svg>
-                        </div>
+                        <img src="{% static 'images/4bff2e02-3708-456b-8170-a27d34ba2639.jpeg' %}" alt="Gerry (Geraldine)">
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">Gerry (Geraldine)</h5>
@@ -373,6 +356,22 @@
                         <p>Provide overnight respite care in my home for children under 4, including dinner, playtime, bathtime and bedtime stories. Carers sometimes meet so children can play together.</p>
                         <p><strong>What I like best:</strong> Helping families, building trust with parents and seeing children thrive.</p>
                         <p><strong>For a break:</strong> I enjoy travelling and exploring new experiences — heading to Italy soon!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card team-card h-100">
+                    <div class="team-image-wrapper">
+                        <img src="{% static 'images/IMG_1761.jpg' %}" alt="Patty Nelson">
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Patty Nelson</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Young Persons Support Worker</h6>
+                        <p><strong>13 years since 2012</strong></p>
+                        <p>I work with young people, listening and supporting them while following planned programmes that include group work and activity sessions.</p>
+                        <p><strong>What I like best:</strong> Geeza Break is local for me and I meet loads of young people. Seeing the change in them at the end of the programme is amazing, and we have a great staff team.</p>
+                        <p><strong>For a break:</strong> I love to relax or do something arty.</p>
                     </div>
                 </div>
             </div>
@@ -388,7 +387,7 @@
             <p class="lead">Join us in supporting Glasgow families</p>
             <a href="{% url 'main:donate' %}" class="btn btn-primary m-2">Donate Now</a>
             <a href="#volunteer" class="btn btn-outline-primary m-2">Volunteer With Us</a>
-            <a href="{% url 'main:referral' %}" class="btn btn-success m-2">Make a Referral</a>
+            <a href="{% url 'main:referral' %}" class="btn btn-referral m-2">Make a Referral</a>
         </div>
     </div>
 </section>

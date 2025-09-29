@@ -34,16 +34,6 @@ def home(request):
 
     available = [
         {
-            'src': static('images/IMG_4212.jpeg'),
-            'caption': 'Outdoor play makes happy memories.',
-            'alt': 'Child smiling during an outdoor activity',
-        },
-        {
-            'src': static('images/IMG_2891.jpg'),
-            'caption': 'Kinship carers getting a well-deserved break.',
-            'alt': 'Carers enjoying a community event',
-        },
-        {
             'src': static('images/i3.jpg'),
             'caption': 'Creative arts session with volunteers.',
             'alt': 'Volunteer leading an arts activity with young people',
@@ -704,7 +694,10 @@ def volunteer(request):
                 settings.GENERAL_RECIPIENTS
             )
             
-            messages.success(request, 'Thank you for your interest! We will be in touch soon.')
+            messages.success(
+                request,
+                "Thanks for submitting your volunteer interest form! We'll be in touch soon.",
+            )
             return redirect('main:volunteer')
         else:
             print("Volunteer form is invalid")
@@ -744,8 +737,8 @@ def contact(request):
             formatted_body,
             settings.GENERAL_RECIPIENTS
         )
-        
-        messages.success(request, "Thanks for reaching out — we'll be in touch soon.")
+
+        messages.success(request, "Thanks for submitting your message! We'll be in touch soon.")
         return redirect("main:contact")
 
     return render(request, "main/contact.html")
