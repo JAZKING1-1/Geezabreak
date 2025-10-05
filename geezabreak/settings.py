@@ -30,16 +30,20 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "replace-me-in-prod")
 # SECURITY WARNING: don’t run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "0") in {"1", "true", "True", "yes"}
 
-# Allowed hosts
-ALLOWED_HOSTS = os.getenv(
-    "DJANGO_ALLOWED_HOSTS",
-    "127.0.0.1,localhost"
-).split(",")
+# --- Allowed hosts from env, trimmed ---
+DJANGO_ALLOWED = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost")
+ALLOWED_HOSTS = [h.strip() for h in DJANGO_ALLOWED.split(",") if h.strip()]
 
+# --- TEMP: accept every host when toggled on Render ---
+if os.getenv("ALLOW_ALL_HOSTS", "") == "1":
+    ALLOWED_HOSTS = ["*"]
+
+# --- CSRF trusted origins from env, trimmed ---
 CSRF_TRUSTED_ORIGINS = [
     o.strip() for o in os.getenv("CSRF_TRUSTED_ORIGINS", "").split(",") if o.strip()
 ]
 
+# --- Tell Django we're behind a proxy using https ---
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # Application definition

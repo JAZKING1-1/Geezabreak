@@ -177,6 +177,15 @@ def about(request):
 def community_flat(request):
     return render(request, "main/community_flat.html")
 
+
+def healthz(request):
+    return JsonResponse({
+        "ok": True,
+        "host": request.get_host(),
+        "allowed_hosts": settings.ALLOWED_HOSTS,
+    })
+
+
 def services(request):
     return render(request, 'main/services.html')
 
