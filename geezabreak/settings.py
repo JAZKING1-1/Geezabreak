@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 from django.core.exceptions import ImproperlyConfigured
 import dj_database_url
 
