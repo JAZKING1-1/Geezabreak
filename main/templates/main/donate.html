@@ -13,15 +13,7 @@
   <h1>Support Geeza Break</h1>
   <p>Your donation helps families in Glasgow thrive. Together, we can make a difference.</p>
   
-  <!-- Donation Progress Bar -->
-  <div class="donation-progress">
-    <div class="progress-bar">
-      <div class="progress-filled" id="progressBar"></div>
-    </div>
-    <div class="progress-stats">
-      <span id="progressText">Loading...</span>
-    </div>
-  </div>
+  {# Audit-sensitive progress bar removed per request — do not show non-audited figures #}
 </section>
 
 <!-- Donation Amount Selection -->
@@ -51,6 +43,20 @@
       <span><i class="fas fa-lock"></i> Secure payment</span>
       <span><i class="fas fa-shield-alt"></i> Protected by JustGiving</span>
     </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="card">
+    <h2 class="section__title">Support via Glasgow Community Lottery</h2>
+    <p>Families can support Geeza Break through the Glasgow Community Lottery.</p>
+    <p>
+      <a class="btn btn--primary"
+         href="https://www.glasgowlottery.scot/support/geeza-break"
+         target="_blank" rel="noopener">
+        Join the Community Lottery
+      </a>
+    </p>
   </div>
 </section>
 
@@ -170,8 +176,6 @@
     // Set initial active button (£10)
     document.querySelector('[data-amount="10"]').classList.add('active');
     
-    // Animated progress bar (for demonstration)
-    setTimeout(setupProgressBar, 1000);
     // Add click animation for amount buttons
     amountButtons.forEach(button => {
       button.addEventListener('click', function() {
@@ -195,26 +199,6 @@
     const donateButton = document.getElementById('donateButton');
     donateButton.textContent = `Donate £${amount} Now`;
     donateButton.href = `https://www.justgiving.com/geezabreak?amount=${amount}`;
-  }
-  
-  function setupProgressBar() {
-    // This would ideally get real data from JustGiving API
-    // For now, we'll simulate it with static data
-    const target = 10000;
-    const current = 6540;
-    const percentage = Math.min((current / target) * 100, 100);
-    
-    const progressBar = document.getElementById('progressBar');
-    const progressText = document.getElementById('progressText');
-    
-    progressBar.style.width = '0%';
-    
-    // Animate the progress bar
-    setTimeout(() => {
-      progressBar.style.transition = 'width 1.5s ease-out';
-      progressBar.style.width = percentage + '%';
-      progressText.textContent = `£${current.toLocaleString()} raised of £${target.toLocaleString()} goal`;
-    }, 300);
   }
   
   // Create sparkle effect when buttons are clicked
