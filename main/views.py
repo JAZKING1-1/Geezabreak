@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse
 from .models import Feedback, Referral, Criterion, VolunteerInterest
 from .forms import ReferralForm, ReferralChildFormSet
+from .fun_games import GAMES
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView
 from django.db import transaction
@@ -180,8 +181,13 @@ def community_flat(request):
 def services(request):
     return render(request, 'main/services.html')
 
+
 def extra_support(request):
     return render(request, "main/extra_support.html")
+
+
+def get_help(request):
+    return render(request, 'main/get_help.html')
 
 
 def cookies(request):
@@ -191,9 +197,6 @@ def cookies(request):
 def sitemap(request):
     return render(request, "main/sitemap.html")
 
-
-def get_help(request):
-    return render(request, 'main/get_help.html')
 
 def submit_feedback(request):
     print("Feedback view called")
@@ -207,15 +210,21 @@ def submit_feedback(request):
                 message=request.POST.get('message')
             )
             feedback.save()
-            
-            # Send feedback email using new mailer
-            formatted_body = f"New Feedback Form Submission\n\nName: {feedback.name}\nEmail: {feedback.email}\nPhone: {feedback.contact_number}\nService Used: {feedback.get_service_used_display()}\nMessage: {feedback.message}"
+
+            formatted_body = (
+                "New Feedback Form Submission\n\n"
+                f"Name: {feedback.name}\n"
+                f"Email: {feedback.email}\n"
+                f"Phone: {feedback.contact_number}\n"
+                f"Service Used: {feedback.get_service_used_display()}\n"
+                f"Message: {feedback.message}"
+            )
             send_form_email(
                 "Feedback Form Submission",
                 formatted_body,
                 settings.GENERAL_RECIPIENTS
             )
-            
+
             return JsonResponse({'status': 'success', 'message': 'Thank you for your feedback!'})
         except Exception as e:
             return JsonResponse({'status': 'error', 'message': str(e)})
@@ -559,29 +568,7 @@ class ReferralThanksView(TemplateView):
     template_name = 'main/referral_thanks.html'
 
 def fun_zone(request):
-    games = [
-        {'title': 'Memory Match', 'url': 'https://www.memozor.com/memory-games', 'thumb': 'images/games/memory.jpg', 'category': 'iq', 'desc': 'Improve your memory by matching cards!'},
-        {'title': 'Math Playground', 'url': 'https://www.mathplayground.com/', 'thumb': 'images/games/math.jpg', 'category': 'iq', 'desc': 'Solve math puzzles and logic games.'},
-        {'title': 'Simon Says', 'url': 'https://www.memozor.com/simon-game', 'thumb': 'images/games/simon.jpg', 'category': 'iq', 'desc': 'Repeat the color sequence.'},
-        {'title': 'Sudoku for Kids', 'url': 'https://www.primarygames.com/puzzles/sudoku/', 'thumb': 'images/games/sudoku.jpg', 'category': 'iq', 'desc': 'Simple sudoku puzzles for beginners.'},
-        {'title': 'Pattern Blocks', 'url': 'https://www.nctm.org/Classroom-Resources/Illuminations/Interactives/Pattern-Blocks/', 'thumb': 'images/games/pattern.jpg', 'category': 'iq', 'desc': 'Build and recognize patterns.'},
-        {'title': 'Space Invaders', 'url': 'https://www.retrogames.cc/arcade-games/space-invaders.html', 'thumb': 'images/games/space-invaders.jpg', 'category': 'arcade', 'desc': 'Classic arcade shooter. Quick reflexes needed!'},
-        {'title': 'Pac-Man', 'url': 'https://www.google.com/doodles/30th-anniversary-of-pac-man', 'thumb': 'images/games/pacman.jpg', 'category': 'arcade', 'desc': 'Eat the dots, avoid ghosts!'},
-        {'title': 'Tetris', 'url': 'https://tetris.com/play-tetris', 'thumb': 'images/games/tetris.jpg', 'category': 'arcade', 'desc': 'Fit the falling blocks.'},
-        {'title': 'Snake', 'url': 'https://playsnake.org/', 'thumb': 'images/games/snake.jpg', 'category': 'arcade', 'desc': 'Grow your snake, don’t hit the wall.'},
-        {'title': 'Flappy Bird', 'url': 'https://flappybird.io/', 'thumb': 'images/games/flappy.jpg', 'category': 'arcade', 'desc': 'Tap to fly through pipes.'},
-        {'title': 'Drawing Pad', 'url': 'https://sketch.io/sketchpad/', 'thumb': 'images/games/draw.jpg', 'category': 'creative', 'desc': 'Express creativity by painting online.'},
-        {'title': 'Online Piano', 'url': 'https://www.onlinepianist.com/virtual-piano', 'thumb': 'images/games/piano.jpg', 'category': 'creative', 'desc': 'Play music with your keyboard.'},
-        {'title': 'Coloring Book', 'url': 'https://www.thecolor.com/', 'thumb': 'images/games/coloring.jpg', 'category': 'creative', 'desc': 'Color fun pictures online.'},
-        {'title': 'Make a Comic', 'url': 'https://www.makebeliefscomix.com/Comix/', 'thumb': 'images/games/comic.jpg', 'category': 'creative', 'desc': 'Create your own comic strips.'},
-        {'title': 'LEGO Builder', 'url': 'https://www.lego.com/en-us/kids/build', 'thumb': 'images/games/lego.jpg', 'category': 'creative', 'desc': 'Build with virtual LEGO bricks.'},
-        {'title': 'Jigsaw Puzzles', 'url': 'https://www.jigsawplanet.com/', 'thumb': 'images/games/jigsaw.jpg', 'category': 'puzzle', 'desc': 'Solve digital jigsaws.'},
-        {'title': '2048', 'url': 'https://play2048.co/', 'thumb': 'images/games/2048.jpg', 'category': 'puzzle', 'desc': 'Slide tiles to reach 2048.'},
-        {'title': 'Minesweeper', 'url': 'https://minesweeperonline.com/', 'thumb': 'images/games/minesweeper.jpg', 'category': 'puzzle', 'desc': 'Classic logic puzzle game.'},
-        {'title': 'Tangram', 'url': 'https://www.transum.org/Maths/Investigation/Tangram/', 'thumb': 'images/games/tangram.jpg', 'category': 'puzzle', 'desc': 'Arrange shapes to match a picture.'},
-        {'title': 'Chess for Kids', 'url': 'https://www.chesskid.com/play/fast', 'thumb': 'images/games/chess.jpg', 'category': 'strategy', 'desc': 'Play chess with hints and tips.'},
-    ]
-    return render(request, 'main/fun_zone.html', {'games': games})
+    return render(request, 'main/fun_zone.html', {'games': GAMES})
 
 def email_status(request):
     """Display the status of email notifications for referrals."""

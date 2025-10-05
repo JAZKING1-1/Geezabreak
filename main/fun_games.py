@@ -1,0 +1,23 @@
+# main/fun_games.py
+GAMES = [
+    {"title": "LEGO Builder (official)", "url": "https://www.lego.com/kids", "slug": "lego", "emoji": "🧱"},
+    {"title": "Simon Says", "url": "https://toytheater.com/simon/", "slug": "simon", "emoji": "🔵"},
+    {"title": "Pattern Blocks", "url": "https://toytheater.com/pattern-blocks/", "slug": "pattern", "emoji": "🧩"},
+    {"title": "Tangram (how-to + puzzles)", "url": "https://www.mathsisfun.com/geometry/tangrams.html", "slug": "tangram", "emoji": "🔷"},
+    {"title": "Chess", "url": "https://www.chess.com/play/online", "slug": "chess", "emoji": "♟️"},
+    {"title": "Space Invaders (direct)", "url": "https://freeinvaders.org/", "slug": "spaceinvaders", "emoji": "👾"},
+    {"title": "2048", "url": "https://play2048.co/", "slug": "2048", "emoji": "🔢"},
+    {"title": "Minesweeper", "url": "https://minesweeperonline.com/", "slug": "minesweeper", "emoji": "💣"},
+    {"title": "Pac-Man", "url": "https://freepacman.org/", "slug": "pacman", "emoji": "🟡"},
+    {"title": "Memory Match", "url": "https://matchthememory.com/play", "slug": "memory", "emoji": "🧠"},
+    {"title": "Sketch & Draw", "url": "https://kleki.com/", "slug": "draw", "emoji": "✏️"},
+    {"title": "Jigsaw Puzzles", "url": "https://www.jigsawplanet.com/", "slug": "jigsaw", "emoji": "🧩"},
+    {"title": "Coloring Book", "url": "https://www.thecolor.com/", "slug": "coloring", "emoji": "🎨"},
+    {"title": "Snake", "url": "https://playsnake.org/", "slug": "snake", "emoji": "🐍"},
+    {"title": "Flappy Bird", "url": "https://flappybird.io/", "slug": "flappy", "emoji": "🐦"},
+    {"title": "Virtual Piano", "url": "https://virtualpiano.net/", "slug": "piano", "emoji": "🎹"},
+    {"title": "Tetris (official)", "url": "https://tetris.com/play-tetris", "slug": "tetris", "emoji": "🧊"},
+    {"title": "Sudoku", "url": "https://sudoku.com/", "slug": "sudoku", "emoji": "9️⃣"},
+    {"title": "Math Playground", "url": "https://www.mathplayground.com/", "slug": "math", "emoji": "➗"},
+    {"title": "Comic Creator", "url": "https://www.makebeliefscomix.com/Comix/", "slug": "comic", "emoji": "💬"},
+]

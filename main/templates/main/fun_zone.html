@@ -1,9 +1,36 @@
 {% extends 'main/base.html' %}
+{% load static %}
+
 {% block title %}Fun Zone | Geeza Break{% endblock %}
+
+{% block extra_css %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'css/fun-zone.css' %}">
+{% endblock %}
+
 {% block content %}
 <section class="fun-zone container py-5">
   <h1 class="fun-zone-title mb-4">Fun Zone</h1>
   <p class="text-center lead mb-4">Discover, play, and learn with our handpicked games!</p>
-  {% include "main/_fun_links.html" %}
+
+  <div class="fun-grid" role="list">
+    {% for g in games %}
+      <article class="fun-card" role="listitem">
+        <div class="fun-thumb thumb--{{ g.slug }}" data-emoji="{{ g.emoji|default:"🎮" }}" aria-hidden="true"></div>
+        <div class="fun-card__body">
+          <h3 class="fun-card__title">{{ g.title }}</h3>
+          <a class="fun-card__cta" href="{{ g.url }}" target="_blank" rel="noopener"
+             aria-label="Open {{ g.title }} in a new tab">Play</a>
+        </div>
+      </article>
+    {% endfor %}
+  </div>
 </section>
+
+{# Optional fallback: keep old plain list for quick rollback #}
+{#
+<ul>
+  {% for g in games %}<li><a href="{{ g.url }}" target="_blank" rel="noopener">{{ g.title }}</a></li>{% endfor %}
+</ul>
+#}
 {% endblock %}

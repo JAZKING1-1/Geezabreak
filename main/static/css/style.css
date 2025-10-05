@@ -142,6 +142,7 @@ html.scrolled .gb-navbar{box-shadow:0 8px 20px rgba(0,0,0,.12);}
 
 /* Cards */
 .card{background:#a6ce39;color:#000000;transition:transform .3s;box-shadow:var(--gb-shadow);border:1px solid rgba(166,206,57,.25);border-radius:20px;padding:1.25rem;}
+.card--light{background:#ffffff;color:#13210a;border:1px solid rgba(0,0,0,.05);box-shadow:0 12px 32px rgba(0,0,0,.08);} 
 .card .card-title,
 .card .card-body,
 .card .card-body h3,
