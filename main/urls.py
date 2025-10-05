@@ -27,6 +27,8 @@ urlpatterns = [
     path('donate/', views.donate, name='donate'),
     path('terms-and-conditions/', views.terms, name='terms'),
     path('privacy-policy/', views.privacy_policy, name='privacy'),
+    path('cookies/', views.cookies, name='cookies'),
+    path('sitemap/', views.sitemap, name='sitemap'),
     # Email testing and monitoring routes
     path('test-email/', views.test_email, name='test_email'),
     path('test-referral-email/', views.test_referral_email, name='test_referral_email'),

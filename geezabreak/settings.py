@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-import os
 from django.core.exceptions import ImproperlyConfigured
 import dj_database_url
 
@@ -27,23 +26,24 @@ if os.environ.get("DJANGO_ENV") != "production":
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "replace-me-in-prod")
 
-# SECURITY WARNING: don’t run with debug turned on in production!
-DEBUG = os.getenv("DEBUG", "0") in {"1", "true", "True", "yes"}
+# ---- Debug from env ----
+import os
 
-# --- Allowed hosts from env, trimmed ---
+DEBUG = os.getenv("DEBUG", "0") == "1"
+
+# ---- Hosts from env (with emergency wildcard toggle) ----
 DJANGO_ALLOWED = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost")
 ALLOWED_HOSTS = [h.strip() for h in DJANGO_ALLOWED.split(",") if h.strip()]
 
-# --- TEMP: accept every host when toggled on Render ---
 if os.getenv("ALLOW_ALL_HOSTS", "") == "1":
     ALLOWED_HOSTS = ["*"]
 
-# --- CSRF trusted origins from env, trimmed ---
+# ---- CSRF trusted origins from env ----
 CSRF_TRUSTED_ORIGINS = [
     o.strip() for o in os.getenv("CSRF_TRUSTED_ORIGINS", "").split(",") if o.strip()
 ]
 
-# --- Tell Django we're behind a proxy using https ---
+# ---- Render / proxy SSL header ----
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # Application definition

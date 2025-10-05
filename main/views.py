@@ -192,6 +192,15 @@ def services(request):
 def extra_support(request):
     return render(request, "main/extra_support.html")
 
+
+def cookies(request):
+    return render(request, "main/cookies.html")
+
+
+def sitemap(request):
+    return render(request, "main/sitemap.html")
+
+
 def get_help(request):
     return render(request, 'main/get_help.html')
 
