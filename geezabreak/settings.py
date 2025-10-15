@@ -30,7 +30,12 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "replace-me-in-prod")
 # ---- Debug from env ----
 import os
 
-DEBUG = os.getenv("DEBUG", "0") == "1"
+if os.environ.get("DJANGO_ENV") == "production":
+    DEBUG = False
+else:
+    DEBUG = str(os.getenv("DEBUG", "1")).lower() in ("1", "true", "yes", "on")
+
+print(f"DEBUG = {DEBUG}")  # Debug print
 
 # ---- Hosts from env (with emergency wildcard toggle) ----
 DJANGO_ALLOWED = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost")
@@ -146,9 +151,12 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 # HTTPS Security Settings for Render (only in production, not during development)
 if not DEBUG:
+    print("Setting SSL redirect and HSTS")  # Debug print
     SECURE_SSL_REDIRECT = True
     CSRF_COOKIE_SECURE = True
     SESSION_COOKIE_SECURE = True
     SECURE_HSTS_SECONDS = 31536000  # 1 year
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
+else:
+    print("Not setting SSL redirect (DEBUG=True)")  # Debug print

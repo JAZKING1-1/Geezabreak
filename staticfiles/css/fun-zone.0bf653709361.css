@@ -1,0 +1,70 @@
+/* --- Layout --- */
+.fun-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0 2rem;
+}
+
+.fun-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0,0,0,.08);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.fun-card:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(0,0,0,.12); }
+
+.fun-thumb {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  position: relative;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-size: 2.75rem;
+  user-select: none;
+}
+
+/* Emoji overlay */
+.fun-thumb::after {
+  content: attr(data-emoji);
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,.25));
+}
+
+/* Card body */
+.fun-card__body { padding: .9rem 1rem; display: grid; gap: .45rem; }
+.fun-card__title { font-weight: 600; font-size: 1rem; line-height: 1.35; }
+.fun-card__cta {
+  justify-self: start;
+  border-radius: 999px;
+  padding: .48rem .9rem;
+  background: #0ea5e9; color: #fff; text-decoration: none;
+}
+.fun-card__cta:focus { outline: 3px solid #93c5fd; outline-offset: 2px; }
+
+/* --- CSS-only thumbnails (gradients + emoji) --- */
+.thumb--lego{ background: radial-gradient(ellipse at 30% 30%, #fde68a, #f59e0b); }
+.thumb--simon{ background: conic-gradient(#22d3ee, #f43f5e, #f59e0b, #10b981, #22d3ee); }
+.thumb--pattern{ background: repeating-linear-gradient(45deg,#a78bfa 0 8px,#f0abfc 8px 16px); }
+.thumb--tangram{ background: linear-gradient(135deg,#34d399 0 50%,#60a5fa 50%); }
+.thumb--chess{ background: repeating-linear-gradient(45deg,#111 0 20px,#fff 20px 40px); }
+.thumb--spaceinvaders{ background: linear-gradient(135deg,#0ea5e9,#312e81); }
+.thumb--2048{ background: linear-gradient(135deg,#f59e0b,#fbbf24); }
+.thumb--minesweeper{ background: linear-gradient(135deg,#94a3b8,#1e293b); }
+.thumb--pacman{ background: radial-gradient(circle at 25% 50%,#fde047 0 25%,#0f172a 26% 100%); }
+.thumb--memory{ background: linear-gradient(135deg,#f472b6,#a78bfa); }
+.thumb--draw{ background: linear-gradient(135deg,#60a5fa,#f472b6); }
+.thumb--jigsaw{ background: linear-gradient(135deg,#10b981,#22d3ee); }
+.thumb--coloring{ background: conic-gradient(#ef4444,#f59e0b,#10b981,#3b82f6,#8b5cf6,#ef4444); }
+.thumb--snake{ background: linear-gradient(135deg,#22c55e,#16a34a); }
+.thumb--flappy{ background: linear-gradient(135deg,#22d3ee,#0ea5e9); }
+.thumb--piano{ background: repeating-linear-gradient(90deg,#111 0 20px,#fff 20px 40px); }
+.thumb--tetris{ background: linear-gradient(135deg,#fb7185,#f59e0b,#84cc16,#22d3ee,#a78bfa); }
+.thumb--sudoku{ background: repeating-linear-gradient(0deg,#e5e7eb 0 24px,#cbd5e1 24px 25px); }
+.thumb--math{ background: linear-gradient(135deg,#0ea5e9,#22c55e); }
+.thumb--comic{ background: radial-gradient(circle at 30% 30%,#f472b6,#f59e0b); }
+
+/* Accessible emoji choices listed in template */

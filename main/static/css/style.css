@@ -261,6 +261,10 @@ h1, h2, h3, h4, h5, h6 {
   .navbar-toggler {
     display: none;
   }
+  /* Hide the old left sidebar on mobile since we have the new right menu */
+  .sidebar, .sidebar-toggle, .sidebar-overlay {
+    display: none !important;
+  }
 }
 
 .sidebar-overlay {
