@@ -1,7 +1,7 @@
 import re
 from django import forms
 from django.forms import inlineformset_factory
-from .models import Referral, ReferralChild, Criterion, GLASGOW_WARDS
+from .models import Referral, ReferralChild, Criterion, GLASGOW_WARDS, ETHNICITY_CHOICES, REFERRAL_REASON_CHOICES
 
 UK_POSTCODE_RE = re.compile(r"^[A-Z]{1,2}\d[A-Z\d]?\s*\d[A-Z]{2}$", re.I)
 
@@ -31,7 +31,8 @@ class ReferralForm(forms.ModelForm):
         model = Referral
         fields = [
             "referrer_agency","referrer_name","referrer_email","referrer_phone","preferred_contact_times",
-            "primary_carer_name","address_line1","address_line2","city","postcode",
+            "primary_carer_name","primary_carer_contact_number","primary_carer_dob","ethnicity",
+            "address_line1","address_line2","city","postcode","referral_reason",
             "interpreter_required","preferred_language",
             "joint_visit_required",
             "is_rereferral","last_support_when",
@@ -45,6 +46,10 @@ class ReferralForm(forms.ModelForm):
             "referrer_email": forms.EmailInput(attrs={"autocomplete": "email"}),
             "referrer_phone": forms.TextInput(attrs={"autocomplete": "tel", "placeholder": "Optional"}),
             "preferred_contact_times": forms.TextInput(attrs={"placeholder": "e.g., Weekdays 10–2"}),
+            "primary_carer_contact_number": forms.TextInput(attrs={"autocomplete": "tel", "placeholder": "e.g., 0141 555 1234"}),
+            "primary_carer_dob": forms.DateInput(attrs={"type": "date"}),
+            "ethnicity": forms.Select(attrs={"class": "form-select"}),
+            "referral_reason": forms.Select(attrs={"class": "form-select"}),
             "address_line1": forms.TextInput(attrs={"autocomplete": "address-line1"}),
             "address_line2": forms.TextInput(attrs={"autocomplete": "address-line2"}),
             "city": forms.TextInput(attrs={"autocomplete": "address-level2"}),
@@ -63,6 +68,11 @@ class ReferralForm(forms.ModelForm):
         # Set default city if not provided
         if not self.data and not self.initial.get('city'):
             self.initial['city'] = 'Glasgow'
+            
+        # Add placeholder for ethnicity and referral reason dropdowns
+        self.fields['ethnicity'].empty_label = "Select ethnicity (optional)"
+        self.fields['referral_reason'].empty_label = "Select reason for referral"
+        
         # If bound and any trigger service selected then shrink ward choices
         if self.is_bound:
             data = self.data
@@ -83,6 +93,18 @@ class ReferralForm(forms.ModelForm):
         if not UK_POSTCODE_RE.match(pc):
             raise forms.ValidationError("Please enter a valid UK postcode (e.g. G31 4ST).")
         return pc
+
+    def clean_primary_carer_contact_number(self):
+        contact_number = self.cleaned_data.get("primary_carer_contact_number")
+        if not contact_number or not contact_number.strip():
+            raise forms.ValidationError("Contact number is required.")
+        
+        # Basic UK phone number validation
+        cleaned_number = ''.join(filter(str.isdigit, contact_number))
+        if len(cleaned_number) < 10 or len(cleaned_number) > 11:
+            raise forms.ValidationError("Please enter a valid UK phone number.")
+        
+        return contact_number.strip()
 
     def clean(self):
         cleaned = super().clean()

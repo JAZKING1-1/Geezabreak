@@ -38,6 +38,28 @@
         </div>
 
         <div class="field">
+            <strong>Contact Number:</strong> {{ ref.primary_carer_contact_number }}
+        </div>
+
+        {% if ref.primary_carer_dob %}
+        <div class="field">
+            <strong>Parent/Carer DOB:</strong> {{ ref.primary_carer_dob }}
+        </div>
+        {% endif %}
+
+        {% if ref.ethnicity %}
+        <div class="field">
+            <strong>Ethnicity:</strong> {{ ref.get_ethnicity_display }}
+        </div>
+        {% endif %}
+
+        {% if ref.referral_reason %}
+        <div class="field">
+            <strong>Referral Reason:</strong> {{ ref.get_referral_reason_display }}
+        </div>
+        {% endif %}
+
+        <div class="field">
             <strong>Address:</strong><br>
             {{ ref.address_line1 }}<br>
             {% if ref.address_line2 %}{{ ref.address_line2 }}<br>{% endif %}

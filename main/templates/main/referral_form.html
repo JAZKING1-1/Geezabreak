@@ -84,6 +84,34 @@
             {{ form.primary_carer_name }}
             {% include "main/partials/field_errors.html" with field=form.primary_carer_name %}
           </div>
+          <div class="grid-2">
+            <div class="field">
+              <label for="{{ form.primary_carer_contact_number.id_for_label }}">Contact number<span class="req">*</span></label>
+              {{ form.primary_carer_contact_number }}
+              <small class="hint">Mandatory contact number for the family</small>
+              {% include "main/partials/field_errors.html" with field=form.primary_carer_contact_number %}
+            </div>
+            <div class="field">
+              <label for="{{ form.primary_carer_dob.id_for_label }}">Date of birth (Parent/Carer)</label>
+              {{ form.primary_carer_dob }}
+              <small class="hint">Date of birth of the parent/carer</small>
+              {% include "main/partials/field_errors.html" with field=form.primary_carer_dob %}
+            </div>
+          </div>
+          <div class="grid-2">
+            <div class="field">
+              <label for="{{ form.ethnicity.id_for_label }}">Ethnicity</label>
+              {{ form.ethnicity }}
+              <small class="hint">Please select your ethnicity (optional)</small>
+              {% include "main/partials/field_errors.html" with field=form.ethnicity %}
+            </div>
+            <div class="field">
+              <label for="{{ form.referral_reason.id_for_label }}">Reason for referral</label>
+              {{ form.referral_reason }}
+              <small class="hint">Primary reason for this referral</small>
+              {% include "main/partials/field_errors.html" with field=form.referral_reason %}
+            </div>
+          </div>
           <div class="field">
             <label for="{{ form.address_line1.id_for_label }}">Street address<span class="req">*</span></label>
             {{ form.address_line1 }}

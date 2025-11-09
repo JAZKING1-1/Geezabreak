@@ -13,9 +13,9 @@ class ReferralChildInline(admin.TabularInline):
 
 @admin.register(Referral)
 class ReferralAdmin(admin.ModelAdmin):
-	list_display = ("primary_carer_name", "postcode", "hscp_locality", "ward", "created_at")
-	list_filter = ("hscp_locality", "ward", "srv_family_support", "srv_respite_sitting", "srv_respite_care", "srv_geezachance", "srv_kinship_care")
-	search_fields = ("primary_carer_name", "referrer_name", "postcode")
+	list_display = ("primary_carer_name", "primary_carer_contact_number", "postcode", "hscp_locality", "ward", "referral_reason", "created_at")
+	list_filter = ("hscp_locality", "ward", "ethnicity", "referral_reason", "srv_family_support", "srv_respite_sitting", "srv_respite_care", "srv_geezachance", "srv_kinship_care")
+	search_fields = ("primary_carer_name", "referrer_name", "postcode", "primary_carer_contact_number")
 	inlines = [ReferralChildInline]
 
 @admin.register(Criterion)

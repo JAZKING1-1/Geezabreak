@@ -22,7 +22,6 @@ class Feedback(models.Model):
         return f"Feedback from {self.name} - {self.service_used}"
 
 
-# --- Geography choices for Referral ---
 HSCP_LOCALITIES = [
     ("NE", "North East"),
     ("NW", "North West"),
@@ -38,6 +37,45 @@ GLASGOW_WARDS = [
     (20, "Baillieston"), (21, "North East"), (22, "Dennistoun"), (23, "Partick East/Kelvindale"),
 ]
 
+# Ethnicity choices
+ETHNICITY_CHOICES = [
+    ('white_british', 'White British'),
+    ('white_irish', 'White Irish'),
+    ('white_other', 'White Other'),
+    ('mixed_white_black_caribbean', 'Mixed White and Black Caribbean'),
+    ('mixed_white_black_african', 'Mixed White and Black African'),
+    ('mixed_white_asian', 'Mixed White and Asian'),
+    ('mixed_other', 'Mixed Other'),
+    ('asian_indian', 'Asian Indian'),
+    ('asian_pakistani', 'Asian Pakistani'),
+    ('asian_bangladeshi', 'Asian Bangladeshi'),
+    ('asian_chinese', 'Asian Chinese'),
+    ('asian_other', 'Asian Other'),
+    ('black_african', 'Black African'),
+    ('black_caribbean', 'Black Caribbean'),
+    ('black_other', 'Black Other'),
+    ('arab', 'Arab'),
+    ('other', 'Other'),
+    ('prefer_not_to_say', 'Prefer not to say'),
+]
+
+# Referral reason choices - updated to include new options
+REFERRAL_REASON_CHOICES = [
+    ('family_support_needed', 'Family Support Needed'),
+    ('respite_care_required', 'Respite Care Required'),
+    ('child_behavioral_issues', 'Child Behavioral Issues'),
+    ('parent_disability', 'Parent Disability'),
+    ('mental_health_conditions', 'Mental Health Conditions'),
+    ('financial_difficulties', 'Financial Difficulties'),
+    ('social_isolation', 'Social Isolation'),
+    ('housing_issues', 'Housing Issues'),
+    ('domestic_violence', 'Domestic Violence'),
+    ('substance_abuse', 'Substance Abuse'),
+    ('kinship_care_support', 'Kinship Care Support'),
+    ('additional_support_needs', 'Additional Support Needs'),
+    ('other', 'Other'),
+]
+
 
 class Referral(models.Model):
     # Referrer (agency)
@@ -49,10 +87,16 @@ class Referral(models.Model):
 
     # Family / person referred
     primary_carer_name = models.CharField("Parent/Carer name", max_length=120)
+    primary_carer_contact_number = models.CharField("Contact number", max_length=20, blank=True, null=True, help_text="Contact number for the family")
+    primary_carer_dob = models.DateField("Date of birth (Parent/Carer)", null=True, blank=True, help_text="Date of birth of the parent/carer")
+    ethnicity = models.CharField("Ethnicity", max_length=50, choices=ETHNICITY_CHOICES, blank=True, help_text="Ethnicity of the family")
     address_line1 = models.CharField(max_length=160)
     address_line2 = models.CharField(max_length=160, blank=True)
     city = models.CharField(max_length=80, default="Glasgow")
     postcode = models.CharField(max_length=10)
+
+    # Referral reason - new dropdown field
+    referral_reason = models.CharField("Reason for referral", max_length=50, choices=REFERRAL_REASON_CHOICES, blank=True, help_text="Primary reason for this referral")
 
     # Language / interpreter
     interpreter_required = models.BooleanField(default=False)
@@ -174,6 +218,7 @@ ROLE_CHOICES = [
     ("carer", "Volunteer respite carer"),
     ("office", "Office-based (reception/admin/fundraising/group work/events)"),
     ("student", "Student placement enquiry"),
+    ("interpreter", "Interpreter"),
 ]
 
 class VolunteerInterest(models.Model):

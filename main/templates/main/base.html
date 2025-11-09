@@ -49,6 +49,26 @@
                 max-height: 60px !important;
             }
         }
+        
+        /* Footer Legal Text Styling */
+        .footer-legal {
+            color: #e9ecef;
+        }
+        
+        .footer-legal p {
+            margin: 0;
+            font-size: 14px;
+        }
+        
+        .footer-legal strong {
+            color: #ffffff;
+        }
+        
+        @media (max-width: 768px) {
+            .footer-legal p {
+                font-size: 12px;
+            }
+        }
     </style>
 </head>
 <body class="{% block body_class %}{% endblock %}">
@@ -275,6 +295,8 @@
             <div class="col-md-3">
                 <h5>About</h5>
                 <p>Geeza Break is a registered charity.</p>
+                <p><strong>Company Number: 357219 | Charity Number: SC019637</strong></p>
+                <p class="text-muted">Place of Registration: Scotland</p>
             </div>
             <div class="col-md-3">
                 <h5>Website information</h5>
@@ -320,22 +342,16 @@
                         <img src="{% static 'images/dc_badge1.png' %}" alt="Disability Confident" class="img-fluid" style="max-height: 80px;">
                     </div>
                     <div class="accreditation-logo">
-                        <img src="{% static 'images/images.png' %}" alt="Accreditation Logo" class="img-fluid" style="max-height: 80px;">
+                        <img src="{% static 'images/WhatsApp Image 2025-11-09 at 19.39.26_9e1192eb.jpg' %}" alt="Shared Care Scotland Logo" class="img-fluid" style="max-height: 80px;">
                     </div>
                     <div class="accreditation-logo">
                         <img src="{% static 'images/SSSC-logo(2).jpeg' %}" alt="SSSC Logo" class="img-fluid" style="max-height: 80px;">
                     </div>
                     <div class="accreditation-logo">
-                        <img src="{% static 'images/download (1).jpeg' %}" alt="Accreditation Logo" class="img-fluid" style="max-height: 80px;">
-                    </div>
-                    <div class="accreditation-logo">
                         <img src="{% static 'images/exbqflfy_gcclogo-66x110.png' %}" alt="GCC Logo" class="img-fluid" style="max-height: 80px;">
                     </div>
                     <div class="accreditation-logo">
-                        <img src="{% static 'images/SCS Short Breaks Fund logo RGB (1).png' %}" alt="SCS Short Breaks Fund Logo" class="img-fluid" style="max-height: 80px;">
-                    </div>
-                    <div class="accreditation-logo">
-                        <img src="{% static 'images/NLA4A-Scotland-Logos-TNL-Community-Fund.png' %}" alt="NLA Scotland Community Fund Logo" class="img-fluid" style="max-height: 80px;">
+                        <img src="{% static 'images/national-lottery-community-fund-digital-logo-white-background-colour-text.webp' %}" alt="National Lottery Community Fund Logo" class="img-fluid" style="max-height: 80px;">
                     </div>
             </div>
         </div>
