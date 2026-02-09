@@ -32,6 +32,10 @@
     
   <form id="referral-form" method="post" novalidate aria-describedby="form-help" action="{% url 'main:referral' %}" data-client-validate="true">
       {% csrf_token %}
+      <div class="hp-field" aria-hidden="true" hidden>
+        <label for="company_website">Company website</label>
+        <input type="text" id="company_website" name="company_website" tabindex="-1" autocomplete="off">
+      </div>
       <p id="form-help" class="visually-hidden">All fields have clear labels and errors will appear below each input.</p>
       
       <!-- Referrer Details -->
@@ -139,6 +143,12 @@
             <label>{{ form.interpreter_required }} Interpreter required?</label>
             <small class="hint">Where possible, Geeza Break will ask the referring agency to provide the interpreter so support can take place.</small>
             {% include "main/partials/field_errors.html" with field=form.interpreter_required %}
+          </div>
+          <div class="field">
+            <label for="{{ form.preferred_language.id_for_label }}">Preferred language<span class="req">*</span></label>
+            {{ form.preferred_language }}
+            <small class="hint">If an interpreter is required, please specify the language.</small>
+            {% include "main/partials/field_errors.html" with field=form.preferred_language %}
           </div>
           <div class="field check">
             <label>{{ form.joint_visit_required }} Joint visit required?</label>

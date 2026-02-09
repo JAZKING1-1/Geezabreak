@@ -83,6 +83,25 @@
 .error-text{color:#c62828;margin:.35rem 0 0;font-size:.85rem;font-weight:600}
 .req{color:#c62828;margin-left:2px}
 
+/* ---- Required field highlight ---- */
+.field.field-error label{color:#b71c1c}
+.field.field-error :where(input[type="text"],input[type="email"],input[type="tel"],select,textarea){
+  border-color:#c62828;
+  box-shadow:0 0 0 3px rgba(198,40,40,.15);
+}
+.field.field-error .hint{color:#b71c1c}
+
+/* Honeypot field (anti-spam) fallback */
+.hp-field {
+  position: absolute !important;
+  left: -10000px !important;
+  top: auto !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  opacity: 0 !important;
+}
+
 /* ---- Criteria ---- */
 .criteria-grid ul{list-style:none;margin:0;padding:0;columns:2;column-gap:1.4rem}
 .criteria-grid li{break-inside:avoid;margin:.35rem 0}

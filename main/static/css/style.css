@@ -3268,3 +3268,16 @@ body.extra-support-page{background:linear-gradient(135deg, #007bbe, #99dfef) !im
     color: #0b2330 !important;
   }
 }
+
+/* Honeypot field (anti-spam) */
+.hp-field {
+  position: absolute !important;
+  left: -10000px !important;
+  top: auto !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  display: none !important;
+}

@@ -650,6 +650,10 @@ body {
 
         <form method="post" class="interest-form" id="volunteer-form" novalidate>
             {% csrf_token %}
+            <div class="hp-field" aria-hidden="true" hidden>
+                <label for="company_website">Company website</label>
+                <input type="text" id="company_website" name="company_website" tabindex="-1" autocomplete="off">
+            </div>
 
             <div class="form-group">
                 <label for="{{ form.full_name.id_for_label }}">Full Name *</label>

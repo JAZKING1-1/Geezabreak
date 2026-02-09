@@ -74,6 +74,10 @@
 
           <form method="post" action="{% url 'main:contact' %}" novalidate>
             {% csrf_token %}
+            <div class="hp-field" aria-hidden="true" hidden>
+              <label for="company_website">Company website</label>
+              <input id="company_website" name="company_website" type="text" tabindex="-1" autocomplete="off">
+            </div>
 
             <div class="mb-3">
               <label for="name" class="form-label fw-semibold">Name *</label>

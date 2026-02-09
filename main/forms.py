@@ -6,6 +6,33 @@ from .models import Referral, ReferralChild, Criterion, GLASGOW_WARDS, ETHNICITY
 UK_POSTCODE_RE = re.compile(r"^[A-Z]{1,2}\d[A-Z\d]?\s*\d[A-Z]{2}$", re.I)
 
 class ReferralForm(forms.ModelForm):
+    PREFERRED_LANGUAGE_CHOICES = [
+        ("", "— Select language —"),
+        ("arabic", "Arabic"),
+        ("bengali", "Bengali"),
+        ("cantonese", "Cantonese"),
+        ("farsi", "Farsi"),
+        ("french", "French"),
+        ("gujarati", "Gujarati"),
+        ("hindi", "Hindi"),
+        ("italian", "Italian"),
+        ("kurdish", "Kurdish"),
+        ("mandarin", "Mandarin"),
+        ("polish", "Polish"),
+        ("portuguese", "Portuguese"),
+        ("punjabi", "Punjabi"),
+        ("romanian", "Romanian"),
+        ("spanish", "Spanish"),
+        ("turkish", "Turkish"),
+        ("urdu", "Urdu"),
+        ("other", "Other / Not listed"),
+    ]
+
+    preferred_language = forms.ChoiceField(
+        required=False,
+        choices=PREFERRED_LANGUAGE_CHOICES,
+        widget=forms.Select(attrs={"class": "form-select"}),
+    )
     # Section 3 criteria dynamic checklist
     criteria = forms.ModelMultipleChoiceField(
         queryset=Criterion.objects.filter(active=True).order_by("order", "label"),
@@ -57,11 +84,7 @@ class ReferralForm(forms.ModelForm):
             "reason": forms.Textarea(attrs={"rows": 4}),
         }
 
-    # --- Dynamic Ward Restriction (server-side) ---
-    RESTRICT_TRIGGER_FIELDS = [
-        "srv_family_support", "srv_respite_sitting", "srv_respite_care"
-    ]
-    RESTRICTED_WARD_IDS = {9, 17, 19, 20, 21, 22, 18}  # Calton, Springburn/Robroyston, Shettleston, Baillieston, North East, Dennistoun, East Centre
+    # --- Ward filtering disabled (show full ward list for all localities) ---
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -73,17 +96,6 @@ class ReferralForm(forms.ModelForm):
         self.fields['ethnicity'].empty_label = "Select ethnicity (optional)"
         self.fields['referral_reason'].empty_label = "Select reason for referral"
         
-        # If bound and any trigger service selected then shrink ward choices
-        if self.is_bound:
-            data = self.data
-            trigger_on = any(self._coerce_bool(data.get(f)) for f in self.RESTRICT_TRIGGER_FIELDS)
-            if trigger_on:
-                # Filter GLASGOW_WARDS preserving label order in desired display order
-                desired_order = [9, 17, 19, 20, 21, 22, 18]
-                ward_map = {vid: label for vid, label in GLASGOW_WARDS if vid in self.RESTRICTED_WARD_IDS}
-                restricted_choices = [(vid, ward_map[vid]) for vid in desired_order if vid in ward_map]
-                self.fields['ward'].choices = restricted_choices
-                self.fields['ward'].help_text = (self.fields['ward'].help_text or '') + " (Filtered for selected service(s))"
 
     def _coerce_bool(self, v):
         return str(v).lower() in {"1","true","on","yes"}
@@ -130,12 +142,6 @@ class ReferralForm(forms.ModelForm):
             print("DEBUG: Is rereferral but no last support when - adding error")
             self.add_error("last_support_when", "Please tell us approximately when we last supported this family.")
 
-        # Enforce ward restriction regardless of client-side JS
-        trigger_on = any(cleaned.get(f) for f in self.RESTRICT_TRIGGER_FIELDS)
-        ward_val = cleaned.get('ward')
-        if trigger_on and ward_val and ward_val not in self.RESTRICTED_WARD_IDS:
-            print(f"DEBUG: Ward restriction violated - ward {ward_val} not in restricted wards")
-            self.add_error('ward', "Selected ward is not available for chosen service(s).")
         print(f"DEBUG: Form clean() completed, errors: {self.errors}")
         return cleaned
         

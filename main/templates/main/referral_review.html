@@ -10,11 +10,11 @@
   <section class="review-card">
     <h2>Referrer</h2>
     <dl>
-      {% for k,v in ref.items %}
-        {% if k in "referrer_agency referrer_name referrer_email referrer_phone preferred_contact_times".split %}
-          <div><dt>{{ k|capfirst|replace:"_"," " }}</dt><dd>{{ v }}</dd></div>
-        {% endif %}
-      {% endfor %}
+      <div><dt>Referrer agency</dt><dd>{{ ref.referrer_agency }}</dd></div>
+      <div><dt>Referrer name</dt><dd>{{ ref.referrer_name }}</dd></div>
+      <div><dt>Referrer email</dt><dd>{{ ref.referrer_email }}</dd></div>
+      <div><dt>Referrer phone</dt><dd>{{ ref.referrer_phone }}</dd></div>
+      <div><dt>Preferred contact times</dt><dd>{{ ref.preferred_contact_times }}</dd></div>
     </dl>
   </section>
 

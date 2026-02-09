@@ -210,6 +210,8 @@ def sitemap(request):
 def submit_feedback(request):
     print("Feedback view called")
     if request.method == 'POST':
+        if request.POST.get("company_website"):
+            return JsonResponse({'status': 'success', 'message': 'Thank you for your feedback!'} )
         try:
             feedback = Feedback(
                 name=request.POST.get('name'),
@@ -393,6 +395,8 @@ class ReferralCreateView(CreateView):
         print(f"POST data keys: {list(request.POST.keys())}")
         print(f"Action: {request.POST.get('action', 'NO ACTION')}")
         print("DEBUG: ReferralCreateView.post() called")
+        if request.POST.get("company_website"):
+            return redirect('main:referral_thanks')
         self.object = None
         form = self.get_form()
         child_formset = ReferralChildFormSet(request.POST, prefix='children')
@@ -404,6 +408,10 @@ class ReferralCreateView(CreateView):
             if form.is_valid() and child_formset.is_valid():
                 print("DEBUG: Form and formset are valid for review")
                 cd = form.cleaned_data.copy()
+                # Make cleaned_data JSON-serializable for session storage
+                for key, value in list(cd.items()):
+                    if hasattr(value, "isoformat"):
+                        cd[key] = value.isoformat()
                 crit_ids = [c.id for c in cd.pop('criteria', [])]
                 cd['criteria_ids'] = crit_ids
                 kids = []
@@ -686,6 +694,12 @@ def volunteer(request):
     from .models import VolunteerInterest
 
     if request.method == 'POST':
+        if request.POST.get("company_website"):
+            messages.success(
+                request,
+                "Thanks for submitting your volunteer interest form! We'll be in touch soon.",
+            )
+            return redirect('main:volunteer')
         form = VolunteerInterestForm(request.POST)
         if form.is_valid():
             # Save the volunteer interest
@@ -726,6 +740,9 @@ def donate(request):
 
 def contact(request):
     if request.method == "POST":
+        if request.POST.get("company_website"):
+            messages.success(request, "Thanks for submitting your message! We'll be in touch soon.")
+            return redirect("main:contact")
         name = request.POST.get("name","").strip()
         email = request.POST.get("email","").strip()
         phone = request.POST.get("phone","").strip()

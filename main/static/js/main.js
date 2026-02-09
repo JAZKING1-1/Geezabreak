@@ -69,12 +69,37 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!form.checkValidity()) {
         e.preventDefault();
         alert('Please fill all required fields.');
+        const requiredFields = form.querySelectorAll('input[required], select[required], textarea[required]');
+        requiredFields.forEach((el) => {
+          const fieldWrap = el.closest('.field');
+          const isEmpty = (el.type === 'checkbox' || el.type === 'radio') ? !el.checked : !String(el.value || '').trim();
+          if (fieldWrap) {
+            fieldWrap.classList.toggle('field-error', isEmpty);
+          }
+        });
         return;
       }
-      console.log('🚨 FORM SUBMIT EVENT TRIGGERED - Form is valid, proceeding with submission');
-      // Show a friendly confirmation immediately (will not prevent normal POST)
-      try { alert('✅ Thanks — we\'ve received your referral.'); } catch (err) { /* ignore */ }
+      const errorFields = form.querySelectorAll('.field.field-error');
+      errorFields.forEach((wrap) => wrap.classList.remove('field-error'));
       // allow the browser to submit the form normally so Django receives the POST
+    });
+
+    form.addEventListener('input', (e) => {
+      const el = e.target;
+      if (!el.matches('input, select, textarea')) return;
+      const fieldWrap = el.closest('.field');
+      if (!fieldWrap) return;
+      const isEmpty = (el.type === 'checkbox' || el.type === 'radio') ? !el.checked : !String(el.value || '').trim();
+      fieldWrap.classList.toggle('field-error', el.hasAttribute('required') && isEmpty);
+    });
+
+    form.addEventListener('change', (e) => {
+      const el = e.target;
+      if (!el.matches('input, select, textarea')) return;
+      const fieldWrap = el.closest('.field');
+      if (!fieldWrap) return;
+      const isEmpty = (el.type === 'checkbox' || el.type === 'radio') ? !el.checked : !String(el.value || '').trim();
+      fieldWrap.classList.toggle('field-error', el.hasAttribute('required') && isEmpty);
     });
   }
 
