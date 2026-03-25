@@ -319,7 +319,7 @@ def build_referral_email_content(referral, base_data=None, children=None):
 
     if children is None:
         try:
-            related = referral.referralchild_set.all()
+            related = referral.children.all()
             children = list(related)
         except Exception:  # pragma: no cover – relation may not exist in tests
             children = []
@@ -556,7 +556,7 @@ class ReferralReviewView(View):
         logger = logging.getLogger(__name__)
         subject, body_text, html_body = build_referral_email_content(
             r,
-            children=r.referralchild_set.all(),
+            children=r.children.all(),
         )
 
         email_sent = send_form_email(
