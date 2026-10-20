@@ -39,11 +39,9 @@ def send_form_email(subject, template_name, context):
         }
 
         result = mailjet.send.create(data=data)
-        logger.info(f"Mailjet response: {result.status_code} - {subject} to {recipients}")
-        print(f"📤 Mailjet response: {result.status_code}")
+        logger.info("Form email service returned status %s", result.status_code)
         return result.status_code == 200
 
     except Exception as e:
-        logger.error(f"Failed to send email: {str(e)}")
-        print(f"🚨 Mailjet send failed: {e}")
+        logger.error("Form email could not be delivered.")
         raise  # Re-raise to let calling code handle it

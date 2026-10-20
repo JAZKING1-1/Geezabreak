@@ -1,0 +1,71 @@
+{% extends 'main/brighter/base.html' %}
+{% load static %}
+{% block service_content %}
+<section class="bb-wrap bb-detail-hero bb-brighter-hero" aria-labelledby="brighter-heading">
+  <div class="bb-hero-copy">
+    <a class="bb-back-link" href="{% url 'main:services' %}">← All services</a>
+    <p class="bb-eyebrow">Peer support · A space to be you again</p>
+    <h1 id="brighter-heading">Brighter<br><span>Beginnings.</span></h1>
+    <p class="bb-lead">A 10-week peer support group for parents and carers in the north east of Glasgow who care for children and young people with additional support needs (ASN).</p>
+    <p>Come together to give and receive emotional, social and practical support. Shared experiences. Understanding faces. A little time for you.</p>
+    <div class="bb-hero-actions">
+      <a class="bb-button" href="https://form.jotform.com/253312026680348" aria-describedby="brighter-registration-help">Register for Brighter Beginnings <span aria-hidden="true">↗</span></a>
+      <a class="bb-text-link" href="#about-group">About the group <span aria-hidden="true">↓</span></a>
+      <a class="bb-text-link" href="#family-voices">Hear from our families</a>
+    </div>
+    <p class="bb-hero-footnote" id="brighter-registration-help">Opens our ASN Peer Support Group registration form on Jotform.</p>
+    <p class="bb-hero-footnote">Supported through funding awarded by The National Lottery.</p>
+  </div>
+  <figure class="bb-flyer-figure"><a href="{% static 'images/brighter-beginnings/flyer.jpg' %}" aria-label="View the Brighter Beginnings flyer at full size"><img src="{% static 'images/brighter-beginnings/flyer.jpg' %}" alt="Brighter Beginnings peer support group. A safe, non-judgemental space for emotional, social and practical support. Also includes 1:1 family support, respite provision and access to a bespoke sensory room. Supported by the National Lottery Community Fund." width="905" height="1280"></a><figcaption><span>The Brighter Beginnings flyer</span><a href="{% static 'images/brighter-beginnings/flyer.jpg' %}">View full size <span aria-hidden="true">↗</span></a></figcaption></figure>
+</section>
+<section class="bb-wrap bb-support-facts" aria-label="At a glance"><div><span class="bb-fact-number">10</span><strong>weeks of peer support</strong><span>Meet weekly, for up to 10 weeks</span></div><div><span class="bb-fact-number">1:1</span><strong>support for your family</strong><span>Practical and emotional support</span></div><div><span class="bb-fact-number bb-fact-word">A space</span><strong>to feel understood</strong><span>Peer led, with a Geeza Break facilitator</span></div></section>
+<section class="bb-wrap bb-joining-panel" aria-labelledby="joining-heading">
+  <div><p class="bb-eyebrow">You’re welcome here</p><h2 id="joining-heading">Who can join?</h2><p>Parents and carers living in the north east of Glasgow, with children or young people in their care who have additional support needs.</p></div>
+  <div>
+    <h3>How to join</h3>
+    <p>Parents and carers can refer themselves directly or be referred through a multi-agency referral. Use our registration form to tell us about your family and the support you need.</p>
+    <a class="bb-button" href="https://form.jotform.com/253312026680348" aria-describedby="joining-form-help">Register for Brighter Beginnings <span aria-hidden="true">↗</span></a>
+    <p class="bb-hero-footnote" id="joining-form-help">The registration form opens on Jotform. Need help completing it? <a class="bb-text-link" href="tel:01415732900">Call 0141 573 2900</a></p>
+    <div class="bb-session-updates">
+      <h3>Upcoming groups</h3>
+      <p>Check our Facebook page for announcements about new Brighter Beginnings sessions.</p>
+      <a class="bb-text-link" href="https://www.facebook.com/geezabreak92/">See upcoming groups on Facebook <span aria-hidden="true">↗</span></a>
+      <p class="bb-hero-footnote">Prefer to speak to someone? Call our team for the latest group information.</p>
+    </div>
+  </div>
+</section>
+<section class="bb-wrap bb-section bb-story-layout" id="about-group" aria-labelledby="about-heading"><div class="bb-section-intro"><p class="bb-eyebrow">About Brighter Beginnings</p><h2 id="about-heading">Support for you.<br>Care for your family.</h2><p>A welcoming group, with wraparound support beyond the weekly sessions.</p></div><div class="bb-prose">{% for paragraph in bio %}<p>{{ paragraph }}</p>{% endfor %}</div></section>
+<section class="bb-soft-section"><div class="bb-wrap bb-section"><p class="bb-eyebrow">More than a weekly group</p><h2>Support that goes a little further.</h2><div class="bb-three-grid"><article class="bb-simple-card"><span class="bb-small-symbol" aria-hidden="true">♡</span><h3>1:1 family support</h3><p>Support for parents, carers and children with additional support needs, in the family home or our community flat.</p></article><article class="bb-simple-card"><span class="bb-small-symbol" aria-hidden="true">✳</span><h3>A private sensory room</h3><p>Access to a bespoke sensory room within our community flat as part of the support offered to your family.</p></article><article class="bb-simple-card"><span class="bb-small-symbol" aria-hidden="true">☀</span><h3>Respite provision</h3><p>Where appropriate, respite for children in the family who do not have additional support needs, with individual care plans.</p></article></div></div></section>
+<section class="bb-wrap bb-section" id="family-voices" aria-labelledby="voices-heading">
+  <div class="bb-showcase-heading">
+    <p class="bb-eyebrow">Hear from our families</p>
+    <h2 id="voices-heading">The difference support makes.</h2>
+    <p class="bb-lead">From a listening ear to practical family support, hear what Brighter Beginnings means to the parents and carers who come to us.</p>
+  </div>
+  <div class="bb-video-feature">
+    <figure class="bb-video-figure">
+      <video class="bb-testimonial-video" controls playsinline preload="metadata" width="1920" height="1024"
+             poster="{% static 'images/brighter-beginnings/robyn-testimonial-poster.jpg' %}"
+             aria-labelledby="testimonial-video-heading" aria-describedby="testimonial-video-description">
+        <source src="{% static 'videos/brighter-beginnings/robyn-testimonial-website.mp4' %}" type="video/mp4">
+        Your browser does not support video playback. <a href="{% static 'videos/brighter-beginnings/robyn-testimonial-website.mp4' %}">Open the testimonial video</a>.
+      </video>
+      <figcaption>
+        <span>Robyn’s story · 1 min 56 sec</span>
+        <a href="{% static 'videos/brighter-beginnings/robyn-testimonial-website.mp4' %}">Open video <span aria-hidden="true">↗</span></a>
+      </figcaption>
+    </figure>
+    <div class="bb-video-story">
+      <p class="bb-eyebrow">A family’s story</p>
+      <h3 id="testimonial-video-heading">Robyn’s experience of Brighter Beginnings</h3>
+      <p id="testimonial-video-description">Hear Robyn share her experience of the group in this illustrated interview.</p>
+      <p>Press play to listen. You can pause, adjust the volume or view the video full screen using the player controls.</p>
+      <a class="bb-text-link" href="#joining-heading">Find support for your family <span aria-hidden="true">↑</span></a>
+    </div>
+  </div>
+  <h3 class="bb-written-voices-heading">More voices from our community</h3>
+  <div class="bb-testimonial-grid">{% for quote in testimonials %}<figure class="bb-testimonial"><span class="bb-quote-mark" aria-hidden="true">“</span><blockquote>{% for paragraph in quote.paragraphs %}<p>{{ paragraph }}</p>{% endfor %}</blockquote><figcaption>{% include "main/brighter/parent_identity.html" with name=quote.name avatar=quote.avatar only %}</figcaption></figure>{% endfor %}</div>
+  <p class="bb-avatar-credit">Illustrative avatars by <a href="https://www.dicebear.com/styles/open-peeps/">DiceBear / Open Peeps</a>.</p>
+</section>
+<div class="bb-wrap bb-related-link"><span>More ways to connect</span><a class="bb-text-link" href="{% url 'main:services' %}#family-support-group-work">Explore Family Support Group Work <span aria-hidden="true">→</span></a></div>
+{% endblock %}

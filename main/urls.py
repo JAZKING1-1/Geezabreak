@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from . import service_pages
 from .views import ReferralCreateView, ReferralThanksView, ReferralReviewView
 
 app_name = "main"
@@ -10,6 +11,9 @@ urlpatterns = [
     path('healthz/', views.healthz, name='healthz'),
     path('about/', views.about, name='about'),
     path('services/', views.services, name='services'),
+    path('services/brighter-beginnings/', service_pages.brighter_beginnings, name='brighter_beginnings'),
+    path('services/family-support-group-work/', service_pages.family_support_groups, name='family_support_groups'),
+    path('services/adrs-respite-sitting/', service_pages.adrs_respite_sitting, name='adrs_respite_sitting'),
     path("extra-support/", views.extra_support, name="extra_support"),
     path('contact/', views.contact, name='contact'),
     path('submit-feedback/', views.submit_feedback, name='submit_feedback'),

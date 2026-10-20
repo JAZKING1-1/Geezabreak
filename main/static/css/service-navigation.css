@@ -1,0 +1,14 @@
+/* Scoped Services navigation shared by the public website. */
+.gb-services-menu{position:relative;align-self:center}
+.gb-services-menu>summary{list-style:none;cursor:pointer;color:#fff;font-weight:700;min-height:44px;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px}
+.gb-services-menu>summary::-webkit-details-marker{display:none}
+.gb-services-menu>summary::after{content:'';width:8px;height:8px;border:solid currentColor;border-width:0 2px 2px 0;transform:rotate(45deg);margin-top:-4px}
+.gb-services-menu[open]>summary::after{transform:rotate(225deg);margin-top:4px}
+.gb-services-menu[open]>summary,.gb-services-menu>summary:hover{background:#ffffff26}
+.gb-services-links{position:absolute;top:100%;left:0;z-index:1080;width:300px;max-width:calc(100vw - 32px);padding:8px;border-radius:12px;background:#fff;box-shadow:0 12px 30px #14374733;border:1px solid #b7d5dd}
+.gb-services-links a{display:block;padding:12px 14px;min-height:48px;color:#07566b;font-weight:650;line-height:1.5;border-radius:6px;text-decoration:underline;text-underline-offset:3px;white-space:normal}
+.gb-services-links a:hover,.gb-services-links a[aria-current]{background:#e7f8fe}
+.gb-services-menu summary:focus-visible,.gb-services-links a:focus-visible,.gb-services-subnav a:focus-visible{outline:3px solid #173e49;outline-offset:2px;box-shadow:0 0 0 5px #ffe367}
+.gb-services-subnav{padding-left:18px;list-style:none;border-left:3px solid #a6ce39;margin:4px 0 12px}
+.gb-services-subnav a{display:block;min-height:44px;padding:10px 6px;line-height:1.5;color:#07566b;text-decoration:underline}
+@media(max-width:991px){.gb-services-menu{width:100%}.gb-services-links{position:static;width:100%;max-width:100%;box-shadow:none}.gb-services-menu>summary{justify-content:center}}

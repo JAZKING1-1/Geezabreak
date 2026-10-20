@@ -63,13 +63,14 @@ class ReferralForm(forms.ModelForm):
             "interpreter_required","preferred_language",
             "joint_visit_required",
             "is_rereferral","last_support_when",
-            "srv_family_support","srv_respite_sitting","srv_respite_care","srv_geezachance","srv_kinship_care",
+            "srv_family_support","srv_respite_sitting","srv_adrs","srv_geezachance","srv_kinship_care",
             "reason",
             "hscp_locality","ward","neighbourhood",
             # new criteria fields
             "criteria","criteria_other",
         ]
         widgets = {
+            "srv_adrs": forms.CheckboxInput(attrs={"aria-describedby": "adrs-service-help"}),
             "referrer_email": forms.EmailInput(attrs={"autocomplete": "email"}),
             "referrer_phone": forms.TextInput(attrs={"autocomplete": "tel", "placeholder": "Optional"}),
             "preferred_contact_times": forms.TextInput(attrs={"placeholder": "e.g., Weekdays 10–2"}),
@@ -95,6 +96,11 @@ class ReferralForm(forms.ModelForm):
         # Add placeholder for ethnicity and referral reason dropdowns
         self.fields['ethnicity'].empty_label = "Select ethnicity (optional)"
         self.fields['referral_reason'].empty_label = "Select reason for referral"
+        self.fields['referral_reason'].choices = [
+            choice
+            for choice in self.fields['referral_reason'].choices
+            if choice[0] != 'respite_care_required'
+        ]
         
 
     def _coerce_bool(self, v):
@@ -125,7 +131,7 @@ class ReferralForm(forms.ModelForm):
         services = [
             cleaned.get("srv_family_support"),
             cleaned.get("srv_respite_sitting"),
-            cleaned.get("srv_respite_care"),
+            cleaned.get("srv_adrs"),
             cleaned.get("srv_geezachance"),
             cleaned.get("srv_kinship_care"),
         ]

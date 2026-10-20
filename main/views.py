@@ -3,6 +3,7 @@ from django.http import JsonResponse, HttpResponse
 from .models import Feedback, Referral, Criterion, VolunteerInterest
 from .forms import ReferralForm, ReferralChildFormSet
 from .fun_games import GAMES
+from .brighter_content import ADRS_COPY
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView
 from django.db import transaction
@@ -10,11 +11,12 @@ from django.conf import settings
 from django.views import View
 from .models import Comment
 import logging
-import hashlib
 import os
 from django.templatetags.static import static
 from django.contrib import messages
-from django.views.decorators.http import require_GET
+from django.views.decorators.http import require_GET, require_POST
+from django.contrib.admin.views.decorators import staff_member_required
+from django.views.decorators.csrf import ensure_csrf_cookie
 from .utils.mailer import send_form_email
 
 
@@ -182,13 +184,11 @@ def community_flat(request):
 def healthz(request):
     return JsonResponse({
         "ok": True,
-        "host": request.get_host(),
-        "allowed_hosts": settings.ALLOWED_HOSTS,
     })
 
 
 def services(request):
-    return render(request, 'main/services.html')
+    return render(request, 'main/services.html', {'adrs_copy': ADRS_COPY})
 
 
 def extra_support(request):
@@ -208,7 +208,7 @@ def sitemap(request):
 
 
 def submit_feedback(request):
-    print("Feedback view called")
+    pass  # Sensitive debug output removed.
     if request.method == 'POST':
         if request.POST.get("company_website"):
             return JsonResponse({'status': 'success', 'message': 'Thank you for your feedback!'} )
@@ -305,6 +305,18 @@ def build_referral_email_content(referral, base_data=None, children=None):
         if hasattr(referral, 'criteria'):
             data['criteria'] = [str(item) for item in referral.criteria.all()]
 
+    # Include service names in both direct submissions and review/confirm emails.
+    data['services_requested'] = [
+        label for field, label in (
+            ('srv_family_support', 'Family Support'),
+            ('srv_respite_sitting', 'Respite Sitting'),
+            ('srv_adrs', 'ADRS Respite Sitting'),
+            ('srv_respite_care', 'Respite Care'),
+            ('srv_geezachance', 'Geeza Chance'),
+            ('srv_kinship_care', 'Kinship Care'),
+        ) if getattr(referral, field, False)
+    ]
+
     text_lines = ["New referral submission", ""]
     html_lines = ["<h2>New Referral Submission</h2>", "<ul>"]
 
@@ -375,8 +387,15 @@ class ReferralCreateView(CreateView):
     template_name = 'main/referral_form.html'
     success_url = reverse_lazy('main:referral_thanks')
 
+    def get_initial(self):
+        initial = super().get_initial()
+        # Only recognise the explicit ADRS link; never override submitted choices.
+        if self.request.method == 'GET' and self.request.GET.get('service') == 'adrs':
+            initial['srv_adrs'] = True
+        return initial
+
     def get(self, request, *args, **kwargs):
-        print("🚨🚨🚨 REFERRAL FORM GET REQUEST RECEIVED 🚨🚨🚨")
+        pass  # Sensitive debug output removed.
         return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
@@ -391,22 +410,22 @@ class ReferralCreateView(CreateView):
         return self.render_to_response(self.get_context_data(form=form, child_formset=formset))
 
     def post(self, request, *args, **kwargs):
-        print("🚨🚨🚨 REFERRAL FORM POST REQUEST RECEIVED 🚨🚨🚨")
-        print(f"POST data keys: {list(request.POST.keys())}")
-        print(f"Action: {request.POST.get('action', 'NO ACTION')}")
-        print("DEBUG: ReferralCreateView.post() called")
+        pass  # Sensitive debug output removed.
+        pass  # Sensitive debug output removed.
+        pass  # Sensitive debug output removed.
+        pass  # Sensitive debug output removed.
         if request.POST.get("company_website"):
             return redirect('main:referral_thanks')
         self.object = None
         form = self.get_form()
         child_formset = ReferralChildFormSet(request.POST, prefix='children')
         action = request.POST.get('action', 'submit')
-        print(f"DEBUG: Action = {action}")
+        pass  # Sensitive debug output removed.
 
         if action == 'review':
-            print("DEBUG: Processing review action")
+            pass  # Sensitive debug output removed.
             if form.is_valid() and child_formset.is_valid():
-                print("DEBUG: Form and formset are valid for review")
+                pass  # Sensitive debug output removed.
                 cd = form.cleaned_data.copy()
                 # Make cleaned_data JSON-serializable for session storage
                 for key, value in list(cd.items()):
@@ -428,40 +447,40 @@ class ReferralCreateView(CreateView):
                     })
                 request.session['referral_draft'] = {'ref': cd, 'children': kids}
                 request.session.modified = True
-                print("DEBUG: Redirecting to review page")
+                pass  # Sensitive debug output removed.
                 return redirect('main:referral_review')
             else:
-                print("DEBUG: Form or formset invalid for review")
-                print(f"DEBUG: Form errors: {form.errors}")
-                print(f"DEBUG: Formset errors: {child_formset.errors}")
-                print(f"DEBUG: Formset non_form_errors: {child_formset.non_form_errors()}")
+                pass  # Sensitive debug output removed.
+                pass  # Sensitive debug output removed.
+                pass  # Sensitive debug output removed.
+                pass  # Sensitive debug output removed.
             return self.render_invalid(form, child_formset)
 
         # direct submit
-        print("DEBUG: Processing direct submit")
-        print(f"DEBUG: Form is valid: {form.is_valid()}")
-        print(f"DEBUG: Formset is valid: {child_formset.is_valid()}")
-        print(f"DEBUG: Formset total forms: {child_formset.total_form_count()}")
-        print(f"DEBUG: Formset initial forms: {child_formset.initial_form_count()}")
+        pass  # Sensitive debug output removed.
+        pass  # Sensitive debug output removed.
+        pass  # Sensitive debug output removed.
+        pass  # Sensitive debug output removed.
+        pass  # Sensitive debug output removed.
         
         if not form.is_valid():
-            print(f"DEBUG: Form errors: {form.errors}")
+            pass  # Sensitive debug output removed.
         if not child_formset.is_valid():
-            print(f"DEBUG: Formset errors: {child_formset.errors}")
-            print(f"DEBUG: Formset non_form_errors: {child_formset.non_form_errors()}")
+            pass  # Sensitive debug output removed.
+            pass  # Sensitive debug output removed.
             # Debug each form in the formset
             for i, form_errors in enumerate(child_formset.errors):
                 if form_errors:
-                    print(f"DEBUG: Child form {i} errors: {form_errors}")
+                    pass  # Sensitive debug output removed.
             for i, child_form in enumerate(child_formset.forms):
                 if child_form.is_bound and not child_form.is_valid():
-                    print(f"DEBUG: Child form {i} is invalid, data: {child_form.data}")
+                    pass  # Sensitive debug output removed.
 
         if form.is_valid() and child_formset.is_valid():
-            print("DEBUG: Both form and formset are valid, calling _save_and_redirect")
+            pass  # Sensitive debug output removed.
             return self._save_and_redirect(form, child_formset)
         else:
-            print("DEBUG: Form or formset invalid, rendering invalid form")
+            pass  # Sensitive debug output removed.
         return self.render_invalid(form, child_formset)
 
     @transaction.atomic
@@ -471,7 +490,7 @@ class ReferralCreateView(CreateView):
         self.object = form.save()
         formset.instance = self.object
         saved_children = formset.save()
-        print(f"DEBUG: Formset saved, {len(saved_children)} children saved")
+        pass  # Sensitive debug output removed.
 
         cleaned_data = form.cleaned_data.copy()
         criteria = cleaned_data.get('criteria')
@@ -521,24 +540,24 @@ class ReferralReviewView(View):
 
     @transaction.atomic
     def post(self, request):
-        print("DEBUG: ReferralReviewView.post called")
+        pass  # Sensitive debug output removed.
         data = request.session.get('referral_draft')
         if not data:
-            print("DEBUG: No referral draft in session, redirecting to referral")
+            pass  # Sensitive debug output removed.
             return redirect('main:referral')
         ref = data['ref'].copy()
         crit_ids = ref.pop('criteria_ids', [])
-        print(f"DEBUG: Creating referral with data: {ref}")
+        pass  # Sensitive debug output removed.
         # create referral (exclude M2M for now)
         r = Referral.objects.create(**{k:v for k,v in ref.items() if k not in ['criteria','criteria_other']})
-        print(f"DEBUG: Referral created with ID: {r.id}")
+        pass  # Sensitive debug output removed.
         if crit_ids:
             r.criteria.set(Criterion.objects.filter(id__in=crit_ids))
-            print(f"DEBUG: Set {len(crit_ids)} criteria")
+            pass  # Sensitive debug output removed.
         if ref.get('criteria_other'):
             r.criteria_other = ref['criteria_other']
             r.save(update_fields=['criteria_other'])
-            print("DEBUG: Saved criteria_other")
+            pass  # Sensitive debug output removed.
         from .models import ReferralChild
         children_count = 0
         for c in data['children']:
@@ -551,7 +570,7 @@ class ReferralReviewView(View):
                 school_nursery=c['school_nursery'],
             )
             children_count += 1
-        print(f"DEBUG: Created {children_count} children")
+        pass  # Sensitive debug output removed.
 
         logger = logging.getLogger(__name__)
         subject, body_text, html_body = build_referral_email_content(
@@ -576,7 +595,7 @@ class ReferralReviewView(View):
                 "Mailjet failed to send referral notification during review flow for referral ID %s",
                 r.id,
             )
-        print("DEBUG: Clearing session and redirecting to thanks page")
+        pass  # Sensitive debug output removed.
         request.session.pop('referral_draft', None)
         return redirect(reverse_lazy('main:referral_thanks'))
 
@@ -587,6 +606,8 @@ class ReferralThanksView(TemplateView):
 def fun_zone(request):
     return render(request, 'main/fun_zone.html', {'games': GAMES})
 
+@staff_member_required
+@ensure_csrf_cookie
 def email_status(request):
     """Display the status of email notifications for referrals."""
 
@@ -603,6 +624,8 @@ def email_status(request):
     return render(request, 'main/email_status.html', context)
 
 
+@staff_member_required
+@require_POST
 def resend_email(request, referral_id):
     """Resend the email notification for a saved referral."""
 
@@ -640,7 +663,8 @@ def resend_email(request, referral_id):
     })
 
 
-@require_GET
+@staff_member_required
+@require_POST
 def mailjet_debug(request):
     key = (settings.MAILJET_API_KEY or "").strip()
     secret = (settings.MAILJET_API_SECRET or "").strip()
@@ -649,8 +673,6 @@ def mailjet_debug(request):
         "DEFAULT_FROM_EMAIL": settings.DEFAULT_FROM_EMAIL,
         "MAILJET_API_KEY_len": len(key),
         "MAILJET_API_SECRET_len": len(secret),
-        "MAILJET_API_KEY_sig": hashlib.sha1(key.encode()).hexdigest()[:10] if key else "MISSING",
-        "MAILJET_API_SECRET_sig": hashlib.sha1(secret.encode()).hexdigest()[:10] if secret else "MISSING",
         "REFERRAL_RECIPIENTS": settings.REFERRAL_RECIPIENTS,
         "GENERAL_RECIPIENTS": settings.GENERAL_RECIPIENTS,
     }
@@ -662,6 +684,8 @@ def mailjet_debug(request):
     summary["send_ok"] = ok
     return JsonResponse(summary)
 
+@staff_member_required
+@require_POST
 def test_email(request):
     subject = "Test Email from Geeza Break Website"
     body = """
@@ -719,8 +743,8 @@ def volunteer(request):
             )
             return redirect('main:volunteer')
         else:
-            print("Volunteer form is invalid")
-            print(form.errors)
+            pass  # Sensitive debug output removed.
+            pass  # Sensitive debug output removed.
     else:
         form = VolunteerInterestForm()
 
@@ -765,6 +789,8 @@ def contact(request):
 
     return render(request, "main/contact.html")
 
+@staff_member_required
+@require_POST
 def test_referral_email(request):
     """
     Test view to send a sample referral email to Outlook

@@ -51,6 +51,7 @@
         {% if ref.srv_respite_care %}{% if ref.srv_family_support or ref.srv_respite_sitting %}, {% endif %}Respite Care{% endif %}
         {% if ref.srv_geezachance %}{% if ref.srv_family_support or ref.srv_respite_sitting or ref.srv_respite_care %}, {% endif %}Geeza Chance{% endif %}
         {% if ref.srv_kinship_care %}{% if ref.srv_family_support or ref.srv_respite_sitting or ref.srv_respite_care or ref.srv_geezachance %}, {% endif %}Kinship Care{% endif %}
+        {% if ref.srv_adrs %}{% if ref.srv_family_support or ref.srv_respite_sitting or ref.srv_respite_care or ref.srv_geezachance or ref.srv_kinship_care %}, {% endif %}ADRS Respite Sitting{% endif %}
       {% endwith %}
     </p>
   </section>

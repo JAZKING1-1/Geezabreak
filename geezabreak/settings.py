@@ -133,8 +133,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # === Mailjet via HTTPS (REST API) — PRIMARY KEY, HARD-CODED ===
 # NOTE: Hard-coding is only for quick local testing. Move to env vars for Render.
 
-MAILJET_API_KEY    = "ca51f140d3a6c9645dbebd7fcf32c757"
-MAILJET_API_SECRET = "1864985f4fbb2506b0450dfc27c09028"
+MAILJET_API_KEY = os.getenv("MAILJET_API_KEY", "").strip()
+MAILJET_API_SECRET = os.getenv("MAILJET_API_SECRET", "").strip()
 
 # Verified sender in Mailjet
 DEFAULT_FROM_EMAIL = "devansh.sharma@geezabreak.org.uk"

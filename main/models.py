@@ -117,6 +117,7 @@ class Referral(models.Model):
     # Services (simple booleans for now)
     srv_family_support = models.BooleanField(default=False)
     srv_respite_sitting = models.BooleanField(default=False)
+    srv_adrs = models.BooleanField("ADRS Respite Sitting", default=False)
     srv_respite_care = models.BooleanField(default=False)
     srv_geezachance = models.BooleanField(default=False)
     srv_kinship_care = models.BooleanField(default=False)

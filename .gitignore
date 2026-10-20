@@ -26,13 +26,11 @@ GEEZA BREAK/venv/
 local_settings.py
 media/
 
-# Migrations (optional: ignore if you don’t want them in repo)
-# Comment this out if you *do* want to keep migration history in git
-**/migrations/*.py
-!**/migrations/__init__.py
+# Keep migrations in version control so deployments receive schema changes.
 
 # Static files (collected via `collectstatic`)
-/staticfiles/   # collected static files (don’t commit)
+# Collected static files (do not add new build output).
+/staticfiles/
 /*.log
 
 # ======================
@@ -89,3 +87,6 @@ Desktop.ini
 db.sqlite3
 *.sqlite3
 ngrok.exe
+
+# Local release checks, databases and virtual environments.
+.local/

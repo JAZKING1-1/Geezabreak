@@ -3,6 +3,7 @@
 
 {% block title %}Our Services | Geeza Break{% endblock %}
 {% block body_class %}services-page{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/brighter-beginnings.css' %}">{% endblock %}
 
 {% block content %}
 <section class="hero services-hero text-center py-5 fade-in">
@@ -41,18 +42,22 @@
             </div>
         </div>
 
-        <!-- Respite Care -->
-        <div class="col-lg-6 mb-4">
+        <!-- ADRS referrals replace the former Respite Care section. -->
+        <div class="col-lg-6 mb-4" id="adrs-respite-sitting">
             <div class="card h-100">
                 <div class="card-body">
-                    <h3 class="card-title">Respite Care</h3>
-                    <p>This service provides children and young people with a safe and nurturing, home away from home experience, giving parents and carers a well-deserved extended break.</p>
-                    <ul>
-                        <li>Weekly/fortnightly sessions for up to 8 weeks</li>
-                        <li>Up to 18hrs respite provided</li>
-                        <li>Same respite provider for consistency</li>
-                        <li>Individualised care plans</li>
-                    </ul>
+                    <h3 class="card-title">ADRS referrals for Respite Sitting Service</h3>
+                    <p><strong>Joint contract in conjunction with Family Addiction Support Service (FASS)</strong></p>
+                    {% for paragraph in adrs_copy %}<p>{{ paragraph }}</p>{% endfor %}
+                    <p>Support for parents and carers, including kinship carers, alongside children and young people.</p>
+                    <div class="services-adrs-referral">
+                        <h4>Referrals through your ADRS worker</h4>
+                        <p id="adrs-route-help">For ADRS workers. Parents and carers: please speak to your ADRS worker about a referral.</p>
+                        <a class="btn btn-primary" href="{% url 'main:referral' %}?service=adrs" aria-describedby="adrs-route-help">Make an ADRS referral <span aria-hidden="true">→</span></a>
+                        <p class="services-partner-link"><a href="https://www.fassglasgow.com/">Visit our partner: Family Addiction Support Service (FASS) <span aria-hidden="true">↗</span></a></p>
+                        <p class="mt-3">ADRS Respite Sitting will already be selected on the form.</p>
+                        <p>Need help with the referral route? <a href="tel:01415732900">Call 0141 573 2900</a>.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -70,14 +75,15 @@
 </section>
 
 <!-- Family Support Groups -->
-<section class="container py-5 section-animate services-grid">
-    <h2 class="text-center mb-4 services-section-title">Family Support Group Work</h2>
+<section class="container py-5 section-animate services-grid" id="family-support-group-work" aria-labelledby="family-support-group-work-title">
+    <h2 class="text-center mb-4 services-section-title" id="family-support-group-work-title">Family Support Group Work</h2>
     <div class="row">
         <div class="col-md-6 mb-4">
             <div class="card h-100">
                 <div class="card-body">
                     <h4>Regular Groups & Workshops</h4>
                     <ul>
+                        <li><a href="{% url 'main:brighter_beginnings' %}">Brighter Beginnings peer support group</a> — 10 weeks of support for parents and carers in the north east of Glasgow who care for children and young people with additional support needs.</li>
                         <li>Health and wellbeing groups</li>
                         <li>Parent and child cookery class</li>
                         <li>Baby massage</li>
@@ -102,6 +108,18 @@
     </div>
 </section>
 
+<section class="container py-5 section-animate brighter-beginnings" id="brighter-beginnings" aria-labelledby="brighter-beginnings-title">
+    <div class="brighter-beginnings__intro brighter-beginnings__intro--summary">
+        <div class="brighter-beginnings__content">
+            <p class="brighter-beginnings__eyebrow">Peer Support Group</p>
+            <h2 id="brighter-beginnings-title">Brighter Beginnings</h2>
+            <p class="lead">A 10-week peer support group for parents and carers in the north east of Glasgow who care for children and young people with additional support needs.</p>
+            <p>Find out about the support available, how to join and what parents say about the group.</p>
+            <a href="{% url 'main:brighter_beginnings' %}" class="btn btn-primary">Explore Brighter Beginnings <span aria-hidden="true">&rarr;</span></a>
+        </div>
+    </div>
+</section>
+
 <section class="container py-5 section-animate">
     <div class="text-center fade-in services-support-cta">
         <h2>Need Support?</h2>
@@ -114,5 +132,4 @@
 
 {% block extra_scripts %}
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<script src="{% static 'js/feedback.js' %}"></script>
 {% endblock %}

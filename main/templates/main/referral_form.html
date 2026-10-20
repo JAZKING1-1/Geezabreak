@@ -13,6 +13,9 @@
     <header class="gb-header">
       <h1 id="form-title">Make a Referral</h1>
     </header>
+    {% if form.srv_adrs.value %}
+    <p class="adrs-referral-notice"><strong>ADRS Respite Sitting referrals.</strong> This service accepts referrals from an ADRS worker. Please complete your referrer details and the family’s information below.</p>
+    {% endif %}
     
     {% if form.errors or form.non_field_errors %}
     <div class="error-summary" role="alert" aria-labelledby="error-summary-title" tabindex="-1">
@@ -192,7 +195,7 @@
           <div class="service-grid">
             <label class="checkcard">{{ form.srv_family_support }} <span>Family Support</span><small>Working 1:1 with parents to focus on the needs of the family unit. This can include parenting support, help with poor mental health, and supporting children with additional support needs (ASN).</small></label>
             <label class="checkcard">{{ form.srv_respite_sitting }} <span>Respite Sitting</span><small>Support for children within the family home and in the community, for 4 hours once a week, for up to 8 weeks.</small></label>
-            <label class="checkcard">{{ form.srv_respite_care }} <span>Respite Care</span><small>Overnight respite in an approved carer's home, once a week for a period of 8 weeks.</small></label>
+            <label class="checkcard">{{ form.srv_adrs }} <span>ADRS Respite Sitting</span><small id="adrs-service-help">A planned 12-week block of community respite sitting, tailored to each child’s needs, for families affected by a loved one’s alcohol or drug misuse. Available across Glasgow through an ADRS worker referral, including support for kinship families.</small></label>
             <label class="checkcard">{{ form.srv_geezachance }} <span>Geeza Chance</span><small>A 10-week programme for children aged 8–16 in kinship care. It offers group activities and workshops designed to build confidence, social skills, and life skills.</small></label>
             <label class="checkcard">{{ form.srv_kinship_care }} <span>Kinship Care</span><small>1:1 support for carers, focusing on the needs of the family unit. This can include parenting support, advocacy, emotional support, and help with children who have additional support needs (ASN).</small></label>
           </div>

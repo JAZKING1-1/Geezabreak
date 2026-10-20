@@ -134,7 +134,7 @@
 /* Fix service cards to prevent collapsing */
 .service-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
   gap: 20px;
   margin-top: 15px;
 }
@@ -198,6 +198,48 @@ html {
 @supports (-webkit-overflow-scrolling: touch) {
   .gb-header {
     position: -webkit-sticky;
+  }
+}
+
+.referral-theme .adrs-referral-notice {
+  max-width: 70ch;
+  margin: 1rem auto 0;
+  padding: 1rem;
+  color: #153a42;
+  background: #e7f8fe;
+  border: 2px solid #00667c;
+  border-radius: 10px;
+  text-align: left;
+  line-height: 1.6;
+}
+
+/* The form title scrolls normally; only the site's navigation stays fixed. */
+.referral-theme .gb-header {
+  position: static;
+}
+
+.referral-theme .checkcard small {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-left: 0;
+}
+
+.referral-theme .checkcard:has(input:checked) {
+  border-color: #00667c;
+  background: #e7f8fe;
+  animation: none;
+}
+
+.referral-theme .checkcard:focus-within {
+  outline: 3px solid #00667c;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .referral-theme .checkcard,
+  .referral-theme .checkcard input:checked {
+    animation: none;
+    transition: none;
   }
 }
 

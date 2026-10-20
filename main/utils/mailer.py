@@ -1,4 +1,4 @@
-﻿from django.conf import settings
+from django.conf import settings
 from mailjet_rest import Client
 
 
@@ -32,8 +32,6 @@ def send_form_email(subject, body_text, recipients, html_body=None, reply_to_ema
 
     try:
         result = client.send.create(data=payload)
-        print("📤 Mailjet response:", result.status_code, result.json())
         return int(result.status_code) == 200
     except Exception as e:
-        print("🚨 Mailjet send failed:", str(e))
         return False
